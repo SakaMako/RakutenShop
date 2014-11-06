@@ -2,26 +2,21 @@ package jp.gr.java_conf.sakamako.rakuten.shop.item;
 
 import java.util.List;
 
+import com.android.volley.toolbox.NetworkImageView;
+
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
 import jp.gr.java_conf.sakamako.rakuten.shop.BaseActivity;
-import jp.gr.java_conf.sakamako.rakuten.shop.dialog.DeleteCategoryDialog;
 import jp.gr.java_conf.sakamako.rakuten.shop.dialog.ItemImageDialog;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.ItemAPI;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory;
-import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory.Category;
-import jp.gr.java_conf.sakamako.view.SortableListView;
-import jp.sharakova.android.urlimageview.UrlImageView;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -34,7 +29,7 @@ OnItemSelectedListener
 , OnClickListener
 {
 	private Item mItem = null;
-	private UrlImageView imageView;
+	private NetworkImageView imageView;
 	
 	public ItemDetailFragment(){
 	}
@@ -88,8 +83,8 @@ OnItemSelectedListener
 	@Override
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle state){
         View v = inflater.inflate(R.layout.item_detail, container, false);		
-		imageView = (UrlImageView)v.findViewById(R.id.item_image);
-        imageView.setImageUrl(mItem.getLargeImage());
+		imageView = (NetworkImageView)v.findViewById(R.id.item_image);
+        imageView.setImageUrl(mItem.getLargeImage(), App.getImageLoader());
         imageView.setOnClickListener(this);
         
         ((TextView)v.findViewById(R.id.item_name2)).setText(mItem.getName());

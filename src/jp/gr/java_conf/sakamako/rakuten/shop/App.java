@@ -4,14 +4,21 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.io.IOException;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageLoader.ImageCache;
+import com.android.volley.toolbox.Volley;
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseItemAdapter;
+import jp.gr.java_conf.sakamako.rakuten.shop.utils.CustomImageCache;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.support.v4.util.LruCache;
 
 
 public class App extends Application{
@@ -20,10 +27,28 @@ public class App extends Application{
 	  private static String mShopUrl = null;
 	  private static int mGenreId = -1;
 	  private static Properties mConf = null;
+	  private static ImageCache mImageCache= null;
+
+	private static RequestQueue mRequestQueue;
+
+	private static ImageLoader mImageLoader;
 	 
 	  public App() {
 	    super();
 	    instance = this;
+	  }
+	  
+	  public static ImageLoader getImageLoader(){
+		  if(mRequestQueue == null){
+			  mRequestQueue = Volley.newRequestQueue(App.getAppContext());
+		  }
+		  
+		  if(mImageLoader == null){
+			  mImageLoader = new ImageLoader(mRequestQueue, new CustomImageCache());
+		  }
+		  
+		  return mImageLoader;
+		  
 	  }
 	  
 	  private Properties getProperties(){

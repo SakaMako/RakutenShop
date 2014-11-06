@@ -1,12 +1,12 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.home;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import com.android.volley.toolbox.NetworkImageView;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
-import jp.sharakova.android.urlimageview.UrlImageView;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -68,8 +68,8 @@ public abstract class BaseItemAdapter extends ArrayAdapter<Item> {
 			TextView priceText = (TextView)view.findViewById(R.id.recent_item_price);
 			priceText.setText(item.getPriceString());
 			
-			UrlImageView urlImageView = (UrlImageView)view.findViewById(R.id.recent_item_icon);
-    		urlImageView.setImageUrl(item.getImage());
+			NetworkImageView urlImageView = (NetworkImageView)view.findViewById(R.id.recent_item_icon);
+    		urlImageView.setImageUrl(item.getImage(), App.getImageLoader());
     		urlImageView.setLayoutParams(new LinearLayout.LayoutParams(Item.ITEM_SIZE_LIST,Item.ITEM_SIZE_LIST));
     		urlImageView.setPadding(0, 0, 0, 0);
 
@@ -79,9 +79,9 @@ public abstract class BaseItemAdapter extends ArrayAdapter<Item> {
 	
     public View getViewGrid(Item item,View convertView,ViewGroup parent){
     	//Log.d("BaseItemAdapter", "getViewGrid");
-       	UrlImageView imageView = null;
+       	NetworkImageView imageView = null;
        	if(convertView == null ){
-       		imageView = (UrlImageView) ((LayoutInflater)App.getAppContext()
+       		imageView = (NetworkImageView) ((LayoutInflater)App.getAppContext()
        				.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
        				.inflate(R.layout.home_grid_item, null);
        		imageView.setLayoutParams(
@@ -90,9 +90,11 @@ public abstract class BaseItemAdapter extends ArrayAdapter<Item> {
        		imageView.setPadding(0, 0, 0, 0);
        	}
        	else{
-    		imageView = (UrlImageView) convertView;
+    		imageView = (NetworkImageView) convertView;
        	}
-       	imageView.setImageUrl(item.getItemListImage());
+       	
+       	imageView.setImageUrl(item.getItemListImage(), App.getImageLoader());
+       	//imageView.setDefaultImageResId(R.drawable.spinner_black_20);
       	 
        	return imageView;
     }
