@@ -14,8 +14,15 @@ import java.util.Locale;
 
 
 
+
+
+
+
+import com.squareup.otto.Subscribe;
+
 import jp.gr.java_conf.sakamako.rakuten.shop.dialog.NewCategoryDialog;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.BusHolder;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseFragment;
 import jp.gr.java_conf.sakamako.rakuten.shop.item.ItemActivity;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
@@ -28,10 +35,12 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 public abstract class BaseActivity extends ActionBarActivity {
 	
@@ -39,21 +48,20 @@ public abstract class BaseActivity extends ActionBarActivity {
 	private HashMap<Integer,MenuItem> menuHash = new HashMap<Integer,MenuItem>();
 	
 	@Override
-	public void onResume() {
-	    super.onResume();
-	    BusHolder.get().register(this);
-	}
-
-	@Override
 	public void onPause() {
 	    BusHolder.get().unregister(this);
 	    super.onPause();
 	}
 	
+	public void onResume(){
+		super.onResume();
+	    BusHolder.get().register(this);
+	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		
+
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
 		Locale.setDefault(Locale.JAPAN);		
 		//ソフトKBDを表示させない
@@ -107,6 +115,10 @@ public abstract class BaseActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-
+	
+	@Subscribe
+	public void onNetworkError(NetworkErrorEvent event){
+		Log.d(this.getClass().getSimpleName(),"onNetworkError");
+		Toast.makeText(this, "ネットワークに接続できません", Toast.LENGTH_SHORT).show();
+	}
 }

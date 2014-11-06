@@ -8,6 +8,8 @@ import android.util.Log;
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
 import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask.ReloadableAdapter;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.BusHolder;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseFragment.Scrollable;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.ItemAPI;
@@ -32,15 +34,14 @@ implements ReloadableAdapter
     }
 	
 	@Override
-	public List<Item> onReload() {
+	public List<Item> onReload() throws Exception {
 		try {
 			mCount = 1;
 			maxCount = 34;
 			return ItemAPI.getRankingList(1);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw e;
 		}
-		return null;
 	}
 
 	@Override
@@ -70,7 +71,8 @@ implements ReloadableAdapter
    			return list.size();
    		}
    		catch(Exception e){
-   			Log.e(this.getClass().getSimpleName(),"エラーが発生しました",e);	
+   			BusHolder.get().post(new NetworkErrorEvent(e));
+   			//Log.e(this.getClass().getSimpleName(),"エラーが発生しました",e);	
    			return -1;
    		}
    		finally{

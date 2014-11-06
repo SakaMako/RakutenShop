@@ -30,7 +30,7 @@ public class ItemActivity extends BaseActivity
 	
 	@Override
 	public void onResume() {
-	    super.onResume();
+		super.onResume();
 	    BusHolder.get().register(mHorizontalAdapter);
 	}
 
@@ -61,8 +61,8 @@ public class ItemActivity extends BaseActivity
 	    mHorizontalPager.setAdapter(mHorizontalAdapter);
 	    mHorizontalPager.setCurrentItem(1);
 		mHorizontalPager.setOnPageChangeListener(mHorizontalAdapter);
-		mHorizontalPager.setOffscreenPageLimit(10);
-		mHorizontalPager.setScrollDurationFactor(8);
+		mHorizontalPager.setOffscreenPageLimit(4);
+		mHorizontalPager.setScrollDurationFactor(5);
 		
 		mHorizontalAdapter.setPager(mHorizontalPager);
 		

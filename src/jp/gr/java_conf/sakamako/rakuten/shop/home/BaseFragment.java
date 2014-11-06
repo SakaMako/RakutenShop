@@ -242,7 +242,7 @@ public abstract class BaseFragment extends Fragment
 		Log.d(this.getClass().getSimpleName(),"reload end ----------------------------");
 	}
 	
-	public final List<Item> onReload() {
+	public final List<Item> onReload() throws Exception{
 		if(getAdapter() instanceof ReloadableAdapter){
 			return ((ReloadableAdapter)getAdapter()).onReload();
 		}
@@ -251,7 +251,9 @@ public abstract class BaseFragment extends Fragment
 	
 	public final void onPostReload(List<Item>result){
 		this.getAdapter().clear();
-		this.getAdapter().addAll(result);
+		if(result != null){
+			this.getAdapter().addAll(result);
+		}
 		this.getAdapter().notifyDataSetChanged();
 		this.setInitPosition(0);
 		mSwipeRefreshLayout .setRefreshing(false);	

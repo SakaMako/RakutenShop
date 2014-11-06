@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.BusHolder;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -25,11 +27,12 @@ public class ItemAPI {
 	 * 商品管理番号から一意の商品を１件取得する
 	 * @param mngNumber
 	 * @return
+	 * @throws Exception 
 	 * @throws IOException
 	 * @throws SAXException
 	 * @throws DocumentException
 	 */
-	public static Item getItem(Item item) throws IOException, SAXException, DocumentException{
+	public static Item getItem(Item item) throws Exception {
 		SearchParams searchParams = new SearchParams("");
 		searchParams.setItemCode(item.getCode());
 		List<Item> itemList = getItemList(1,searchParams);
@@ -45,7 +48,7 @@ public class ItemAPI {
 
 	//https://app.rakuten.co.jp/services/api/IchibaItem/Search/20140222?applicationId=7fd3747dfec7c786998b372d690c98df&affiliateId=03e6fa11.d2147685.03e6fa12.54f60980&format=xml&hits=20&page=1&imageFlag=1&carrier=2&shopCode=amiami&sort=-updateTimestamp&availability=0&genreId=400962&keyword=%E4%B8%AD%E5%8F%A4
 
-	public static List<Item> getItemList(int page,SearchParams searchParams) throws IOException, SAXException,DocumentException{
+	public static List<Item> getItemList(int page,SearchParams searchParams) throws Exception {
 		List<Item> list = new ArrayList<Item>();
 		try{
 			String requestPath = "https://app.rakuten.co.jp/services/api/IchibaItem/Search/20140222"
@@ -110,11 +113,7 @@ public class ItemAPI {
 				list.add(item);
 			}
 			
-		} catch(UnsupportedEncodingException e){
-			throw e;
-		} catch (MalformedURLException e) {
-			throw e;
-		} catch (DocumentException e) {
+		} catch(Exception e){
 			throw e;
 		} 
 		
@@ -122,7 +121,7 @@ public class ItemAPI {
 	}
 
 	// page は１オリジン
-	public static List<Item> getRankingList(int page) throws Exception{
+	public static List<Item> getRankingList(int page) throws Exception {
 	
 	List<Item> list = new ArrayList<Item>();
 	try{
@@ -172,11 +171,7 @@ public class ItemAPI {
 			list.add(item);
 		}
 		
-	} catch (MalformedURLException e) {
-		e.printStackTrace();
-		throw e;
-	} catch (DocumentException e) {
-		e.printStackTrace();
+	} catch (Exception e) {
 		throw e;
 	} 
 	

@@ -3,11 +3,15 @@ package jp.gr.java_conf.sakamako.rakuten.shop.home;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.squareup.otto.Subscribe;
+
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
 import jp.gr.java_conf.sakamako.rakuten.shop.BaseActivity;
 import jp.gr.java_conf.sakamako.rakuten.shop.dialog.DeleteCategoryDialog;
 import jp.gr.java_conf.sakamako.rakuten.shop.dialog.NewCategoryDialog;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.BusHolder;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.SearchParams;
 import android.annotation.SuppressLint;
@@ -32,6 +36,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -98,8 +103,19 @@ public class HomeActivity<mViewPager> extends BaseActivity
 	}
 	
 	@Override
+	public void onResume(){
+		super.onResume();
+		if(mHomeAdapter == null){
+			 mHomeAdapter = new HomeAdapter(
+					 this,(ViewPager) findViewById(R.id.viewpager)
+					 );
+		}
+	}
+	
+	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
+
 		
 		Log.d("TopActivity","onCreate Start");    
 		setContentView(R.layout.home);    
@@ -116,7 +132,7 @@ public class HomeActivity<mViewPager> extends BaseActivity
         mSearchView.setOnFocusChangeListener(this);
         
         for (TextView textView : findChildrenByClass(mSearchView, TextView.class)) {
-            textView.setTextColor(getResources().getColor(R.color.search_text));
+            textView.setTextColor(getResources().getColor(R.color.action_bar_text));
         }
         
 	    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -124,11 +140,11 @@ public class HomeActivity<mViewPager> extends BaseActivity
 		actionBar.setDisplayHomeAsUpEnabled(true);
         
         actionBar.show();
-		
+		/**
 		 mHomeAdapter = new HomeAdapter(
 				 this,(ViewPager) findViewById(R.id.viewpager)
 				 );
-
+		*/
 	     // DrawerLayout
 	     mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 	     mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -150,19 +166,10 @@ public class HomeActivity<mViewPager> extends BaseActivity
 	     
 	}
 	
-	/**
-	@Override
-	public void onResume(){
-		super.onResume();
-	    onPageSelected(0);
-	}*/
-	
 	public void showItemDetail(Item item){
 		App.setCurrentAdapter(mHomeAdapter.getCurrentFragment().getAdapter());
 		super.showItemDetail(item);
 	}
-	
-	
 
 	
 	@Override
@@ -349,6 +356,11 @@ public class HomeActivity<mViewPager> extends BaseActivity
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
+	}
+	
+	@Subscribe
+	public void onNetworkError(NetworkErrorEvent event){
+		super.onNetworkError(event);
 	}
 	
 
