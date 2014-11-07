@@ -14,6 +14,7 @@ import jp.gr.java_conf.sakamako.rakuten.shop.event.BusHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.SearchParams;
+import jp.gr.java_conf.sakamako.view.CustomSearchView;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
@@ -62,44 +63,18 @@ public class HomeActivity<mViewPager> extends BaseActivity
 	
 	protected static final int MENU_ID_ADD = 1;
 	protected static final int MENU_ID_DELETE = 2;
-	//protected static final int MENU_ID_BACK = 3;
-	//protected static final int MENU_ID_FAVORITES = 4;
-	//protected static final int MENU_ID_WEB = 5;
 	protected static final int MENU_ID_DISPLAY = 6;
-	//protected static final int MENU_ID_REFRESH = 7;
 	protected static final int MENU_ID_INVENTORY = 8;
 	
 	private DrawerLayout mDrawerLayout = null;
 	private ListView mDrawerList = null;
 	private ActionBarDrawerToggle mDrawerToggle = null;
 	private HomeAdapter mHomeAdapter;
-	private SearchView mSearchView = null;
-	//private ToggleButton mZaikoSwitch = null;
+	private CustomSearchView mSearchView = null;
 	
 	@Override
 	protected final boolean isActionBar(){
 		return true;
-	}
-	
-	public static <V extends View> Collection<V> findChildrenByClass(ViewGroup viewGroup, Class<V> clazz) {
-
-	    return gatherChildrenByClass(viewGroup, clazz, new ArrayList<V>());
-	}
-
-	private static <V extends View> Collection<V> gatherChildrenByClass(ViewGroup viewGroup, Class<V> clazz, Collection<V> childrenFound) {
-
-	    for (int i = 0; i < viewGroup.getChildCount(); i++)
-	    {
-	        final View child = viewGroup.getChildAt(i);
-	        if (clazz.isAssignableFrom(child.getClass())) {
-	            childrenFound.add((V)child);
-	        }
-	        if (child instanceof ViewGroup) {
-	            gatherChildrenByClass((ViewGroup) child, clazz, childrenFound);
-	        }
-	    }
-
-	    return childrenFound;
 	}
 	
 	@Override
@@ -115,7 +90,6 @@ public class HomeActivity<mViewPager> extends BaseActivity
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-
 		
 		Log.d("TopActivity","onCreate Start");    
 		setContentView(R.layout.home);    
@@ -126,14 +100,10 @@ public class HomeActivity<mViewPager> extends BaseActivity
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM, ActionBar.DISPLAY_SHOW_CUSTOM);
         View actionBarView = getLayoutInflater().inflate(R.layout.custom_action_bar_top, null);
         actionBar.setCustomView(actionBarView);
-        mSearchView = (SearchView) actionBarView.findViewById(R.id.action_bar_search);
+        mSearchView = (CustomSearchView) actionBarView.findViewById(R.id.action_bar_search);
         mSearchView.setOnQueryTextListener(this);
         mSearchView.setIconifiedByDefault(false);
         mSearchView.setOnFocusChangeListener(this);
-        
-        for (TextView textView : findChildrenByClass(mSearchView, TextView.class)) {
-            textView.setTextColor(getResources().getColor(R.color.action_bar_text));
-        }
         
 	    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setHomeButtonEnabled(true);
