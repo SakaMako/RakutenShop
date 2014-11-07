@@ -3,7 +3,7 @@ package jp.gr.java_conf.sakamako.rakuten.shop.home;
 import com.squareup.otto.Subscribe;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask.ReloadbleListener;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.FinisheReloadEvent;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.FinishReloadEvent;
 
 public class RankingFragment extends BaseFragment{
 	
@@ -43,7 +43,7 @@ public class RankingFragment extends BaseFragment{
 	}
 	
 	@Subscribe
-	public void onFinishReload(FinisheReloadEvent event){
+	public void onFinishReload(FinishReloadEvent event){
 		super.onFinishReload(event);
 	}
 

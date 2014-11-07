@@ -3,7 +3,7 @@ package jp.gr.java_conf.sakamako.rakuten.shop.async;
 import java.util.List;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.FinisheReloadEvent;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.FinishReloadEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import android.os.AsyncTask;

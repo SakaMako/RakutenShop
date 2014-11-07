@@ -3,7 +3,7 @@ package jp.gr.java_conf.sakamako.rakuten.shop.home;
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask.ReloadbleListener;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.FinisheReloadEvent;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.FinishReloadEvent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,8 +17,6 @@ public abstract class BaseFragment extends Fragment
 	{
 	
 	//--------------------------------------------------------------------
-	
-
 	//public abstract BaseFragment replace() ;
 	public abstract boolean isDeletable();
 	public abstract String getTabTitle(); 
@@ -98,10 +96,12 @@ public abstract class BaseFragment extends Fragment
 	public void onResume(){
 		super.onResume();
 	    EventHolder.register(this);
+	    //EventHolder.register(mView);
 	}
 	
 	@Override
 	public void onPause(){
+	    //EventHolder.unregister(mView);
 	    EventHolder.unregister(this);
 		super.onPause();
 	}
@@ -167,7 +167,7 @@ public abstract class BaseFragment extends Fragment
 		mView.requestFocus();
 	}
 	
-	protected void onFinishReload(FinisheReloadEvent event){
+	protected void onFinishReload(FinishReloadEvent event){
 		this.setInitPosition(0);
 		mSwipeRefreshLayout.setRefreshing(false);
 	}

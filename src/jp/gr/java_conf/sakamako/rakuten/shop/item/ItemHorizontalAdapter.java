@@ -78,7 +78,7 @@ implements OnPageChangeListener
 		}
 		verticalPager.setOnPageChangeListener(itemVerticalAdapter);
         verticalPager.setCurrentItem(pos);
-        EventHolder.selectVerticalItem(pos,mItem);
+        EventHolder.selectVerticalItem(mItem);
 
         
 	}

@@ -45,11 +45,9 @@ implements OnScrollListener,OnItemClickListener{
 	}
 	*/
 	
-	/**
 	public final void setVisiblePosition(int pos){
 		mFragment.setSelection(pos);
 	}
-	*/
 
 	@Override  
 	public View getView(int position, View convertView, ViewGroup parent) {

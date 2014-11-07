@@ -83,7 +83,7 @@ public class ItemVerticalAdapter  extends FragmentStatePagerAdapter implements O
 				((Scrollable)mAdapter).readNext(pos);
 			}
 		}
-		EventHolder.selectVerticalItem(pos,mAdapter.getItem(pos));		
-		//mAdapter.setVisiblePosition(arg0);
+		EventHolder.selectVerticalItem(mAdapter.getItem(pos));		
+		mAdapter.setVisiblePosition(pos);
 	}
 }
