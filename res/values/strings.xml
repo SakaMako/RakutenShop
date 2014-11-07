@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RakutenShop</string>
+    <string name="search_hint">検索するKWを入れてください</string>
+    <string name="open">開始</string>
+    <string name="close">終了</string>
+    <string name="activity_animation_duration">300</string>
+    <string name="wait_msg">Loading...</string>
+</resources>

@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
     <LinearLayout
          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:custom="http://schemas.android.com/apk/res-auto"
         android:id="@+id/search_layout"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         >
-        <!-- 
-        	<ToggleButton
-			android:textOn="在庫あり"
-			android:textOff="　全て　"
-        	android:id="@+id/zaiko_switch"
-        	android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-	</ToggleButton>    
-	-->
-	<android.support.v7.widget.SearchView 
+
+	<jp.gr.java_conf.sakamako.view.CustomSearchView 
+	   
             android:id="@+id/action_bar_search"
             android:layout_width="match_parent"
             android:layout_height="50dip"
@@ -26,8 +20,8 @@
             android:imeOptions="actionSearch|flagNoExtractUi"
          	android:focusable="true" 
          	android:hint="検索文字を入れてください"
-			android:focusableInTouchMode="true" > 
-   </android.support.v7.widget.SearchView>
+         	custom:textColor="@color/action_bar_text"
+			android:focusableInTouchMode="true" />
  
 </LinearLayout>
 
