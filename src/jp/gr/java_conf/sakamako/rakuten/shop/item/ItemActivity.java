@@ -8,6 +8,7 @@ import jp.gr.java_conf.sakamako.rakuten.shop.App;
 import jp.gr.java_conf.sakamako.rakuten.shop.BaseActivity;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.BusHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.FinishItemActivity;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseItemAdapter;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.view.CustomViewPager;
@@ -114,5 +115,10 @@ public class ItemActivity extends BaseActivity
 	@Subscribe
 	public void finishItemActivity(FinishItemActivity event){
 		finish();
+	}
+	
+	@Subscribe
+	public void onNetworkError(NetworkErrorEvent event){
+		super.onNetworkError(event);
 	}
 }

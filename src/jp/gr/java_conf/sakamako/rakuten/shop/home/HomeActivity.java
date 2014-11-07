@@ -91,7 +91,7 @@ public class HomeActivity<mViewPager> extends BaseActivity
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		
-		Log.d("TopActivity","onCreate Start");    
+		Log.d(this.getClass().getSimpleName(),"onCreate Start");    
 		setContentView(R.layout.home);    
 		
 	    ActionBar actionBar = getSupportActionBar();

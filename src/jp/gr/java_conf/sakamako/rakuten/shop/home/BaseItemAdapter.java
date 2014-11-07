@@ -72,6 +72,7 @@ public abstract class BaseItemAdapter extends ArrayAdapter<Item> {
     		urlImageView.setImageUrl(item.getImage(), App.getImageLoader());
     		urlImageView.setLayoutParams(new LinearLayout.LayoutParams(Item.ITEM_SIZE_LIST,Item.ITEM_SIZE_LIST));
     		urlImageView.setPadding(0, 0, 0, 0);
+            urlImageView.setErrorImageResId(R.drawable.ic_action_remove);
 
 		}
 		return view;
@@ -94,7 +95,7 @@ public abstract class BaseItemAdapter extends ArrayAdapter<Item> {
        	}
        	
        	imageView.setImageUrl(item.getItemListImage(), App.getImageLoader());
-       	//imageView.setDefaultImageResId(R.drawable.spinner_black_20);
+        imageView.setErrorImageResId(R.drawable.ic_action_remove);
       	 
        	return imageView;
     }

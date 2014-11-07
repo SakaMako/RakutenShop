@@ -2,6 +2,7 @@ package jp.gr.java_conf.sakamako.rakuten.shop.utils;
 
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
+import android.util.Log;
 
 import com.android.volley.toolbox.ImageLoader.ImageCache;
 
@@ -28,6 +29,10 @@ public class CustomImageCache implements ImageCache{
 
     @Override
     public void putBitmap(String url, Bitmap bitmap) {
+    	if(bitmap == null){
+    		Log.d(this.getClass().getSimpleName(),"putBitmap is null");
+    		return;
+    	}
         mMemoryCache.put(url, bitmap);
     }
 

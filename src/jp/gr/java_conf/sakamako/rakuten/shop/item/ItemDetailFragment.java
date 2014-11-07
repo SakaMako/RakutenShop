@@ -86,6 +86,8 @@ OnItemSelectedListener
 		imageView = (NetworkImageView)v.findViewById(R.id.item_image);
         imageView.setImageUrl(mItem.getLargeImage(), App.getImageLoader());
         imageView.setOnClickListener(this);
+        imageView.setDefaultImageResId(R.drawable.ic_action_refresh);
+        imageView.setErrorImageResId(R.drawable.ic_action_remove);
         
         ((TextView)v.findViewById(R.id.item_name2)).setText(mItem.getName());
         ((TextView)v.findViewById(R.id.item_price)).setText(mItem.getPriceString());
