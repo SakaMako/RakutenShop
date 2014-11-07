@@ -11,7 +11,7 @@ import org.xml.sax.SAXException;
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
 import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask.ReloadableAdapter;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.BusHolder;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseFragment.Scrollable;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
@@ -102,8 +102,7 @@ implements ReloadableAdapter
 	       		return list.size();
 	    	}
 	    	catch(Exception e){
-	    		BusHolder.get().post(new NetworkErrorEvent(e));
-	    		//Log.e(this.getClass().getSimpleName(),"エラーが発生しました",e);
+	    		EventHolder.networkError(e);
 	    		return -1;
 	    	}
 	    	finally{

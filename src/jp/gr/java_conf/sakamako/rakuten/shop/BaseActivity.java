@@ -2,38 +2,17 @@ package jp.gr.java_conf.sakamako.rakuten.shop;
 
 import java.util.HashMap;
 import java.util.Locale;
-
-
-
-
-//import jp.gr.java_conf.noappnolife.rakuami2.R;
-
-
-
-
-
-
-
-
-
-
-
 import com.squareup.otto.Subscribe;
-
-import jp.gr.java_conf.sakamako.rakuten.shop.dialog.NewCategoryDialog;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.BusHolder;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
-import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseFragment;
 import jp.gr.java_conf.sakamako.rakuten.shop.item.ItemActivity;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
-import jp.gr.java_conf.sakamako.rakuten.shop.model.SearchParams;
 //import jp.gr.java_conf.noappnolife.rakuami2.nouse.ItemDetailActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -49,13 +28,13 @@ public abstract class BaseActivity extends ActionBarActivity {
 	
 	@Override
 	public void onPause() {
-	    BusHolder.get().unregister(this);
+		EventHolder.unregister(this);
 	    super.onPause();
 	}
 	
 	public void onResume(){
 		super.onResume();
-	    BusHolder.get().register(this);
+		EventHolder.register(this);
 	}
 	
 	@Override

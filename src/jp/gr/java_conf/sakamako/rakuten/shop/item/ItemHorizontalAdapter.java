@@ -9,8 +9,7 @@ import com.squareup.otto.Subscribe;
 //import jp.gr.java_conf.noappnolife.rakuten.shop.item.ItemWebFragment.OnNewListener;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.BusHolder;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.FinishItemActivity;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.NewWebFragmentEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.VerticalFragmentCreated;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.VerticalItemSelectedEvent;
@@ -23,8 +22,6 @@ import android.support.v4.view.DirectionalViewPager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
-
-
 
 public class ItemHorizontalAdapter extends FragmentStatePagerAdapter
 implements OnPageChangeListener 
@@ -81,8 +78,7 @@ implements OnPageChangeListener
 		}
 		verticalPager.setOnPageChangeListener(itemVerticalAdapter);
         verticalPager.setCurrentItem(pos);
-        //BusHolder.get().post(new VerticalItemSelectedEvent(pos,mItem));
-        BusHolder.get().post(new VerticalItemSelectedEvent(mItem));
+        EventHolder.selectVerticalItem(mItem);
 
         
 	}
@@ -168,7 +164,7 @@ implements OnPageChangeListener
 		// 一番左にきたら終わり
 		if(arg0 == 0 && arg1 < 0.6){
 			Log.d(this.getClass().getSimpleName(),"finish");
-			BusHolder.get().post(new FinishItemActivity());
+			EventHolder.finishItemActivity();
 		}
 		// ItemDetail をちょっとでも右に動かしたらWebView を読み込み開始
 		else if(arg0 == 1 && arg1 > 0.1){

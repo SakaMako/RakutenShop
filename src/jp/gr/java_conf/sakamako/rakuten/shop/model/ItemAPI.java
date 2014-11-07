@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.BusHolder;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
 
 import org.dom4j.Document;

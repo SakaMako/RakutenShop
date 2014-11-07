@@ -2,7 +2,7 @@ package jp.gr.java_conf.sakamako.rakuten.shop.item;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import jp.gr.java_conf.sakamako.rakuten.shop.event.BusHolder;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.VerticalItemSelectedEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseItemAdapter;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseFragment.Scrollable;
@@ -85,12 +85,7 @@ public class ItemVerticalAdapter  extends FragmentStatePagerAdapter implements O
 				((Scrollable)mAdapter).readNext(arg0);
 			}
 		}
-		
-		//VerticalItemSelectedEvent event = new VerticalItemSelectedEvent(arg0
-		//		,mAdapter.getItem(arg0));
-		VerticalItemSelectedEvent event = new VerticalItemSelectedEvent(mAdapter.getItem(arg0));
-		BusHolder.get().post(event);
-		
+		EventHolder.selectVerticalItem(mAdapter.getItem(arg0));		
 		mAdapter.setVisiblePosition(arg0);
 	}
 }

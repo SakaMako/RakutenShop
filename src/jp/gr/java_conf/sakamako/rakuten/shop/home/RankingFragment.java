@@ -34,4 +34,9 @@ implements ReloadbleListener{
 		return false;
 	}
 
+	@Override
+	public String getTabTitle() {
+		return "ランキング";
+	}
+
 }

@@ -19,95 +19,85 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
 public class HomeAdapter extends FragmentStatePagerAdapter
-implements TabListener
-,DeleteCategoryListener, OnNewCategoryListener
+implements 
+DeleteCategoryListener, OnNewCategoryListener
 
 
 {
 	
 	private ArrayList<BaseFragment> mList = null;
-	private ViewPager mViewPager = null;
+	private HomeViewPager mViewPager = null;
 	private ActionBar actionBar;
-	//private SearchFragment mSearch = null;
-	private HomeActivity mActivity = null;
+	private ActionBarActivity mActivity = null;
 	private static int SEARCH_POSITION = 1;
 	
-    public HomeAdapter(HomeActivity activity,ViewPager pager) {
+    public HomeAdapter(ActionBarActivity activity,HomeViewPager pager) {
         super(activity.getSupportFragmentManager());
         mActivity = activity;
-        mList = new ArrayList<BaseFragment>();
         actionBar = mActivity.getSupportActionBar();
         mViewPager = pager;
-        int sp=0;
         
-        if(App.isRanking()){
-            RankingFragment ranking = new RankingFragment();
-            mList.add(ranking);
+        initFragment();
+        for(Iterator<BaseFragment> it = mList.iterator();it.hasNext();){
+        	BaseFragment fragment = it.next();
             Tab rtab = actionBar.newTab();
-            rtab.setText("ランキング");
-            rtab.setTabListener(this);
+            rtab.setText(fragment.getTabTitle());
+            rtab.setTabListener(mViewPager);
             actionBar.addTab(rtab);
-            sp++;
         }
+    }
+    
+    private void initFragment(){
+    	int sp = 0;
 
-        SearchFragment search = new SearchFragment();
-        mList.add(search);
-        Tab stab = actionBar.newTab();
-        stab.setText("探す");
-        stab.setTabListener(this);
-        actionBar.addTab(stab);
-        SEARCH_POSITION = sp;
-        
-        List<Category> list = MyCategory.getInstance().getList();
-        for(Iterator<Category> i=list.iterator();i.hasNext();){
-        	Category cat = i.next();
-        	BaseFragment fragment = new MyItemFragment(cat);
-        	mList.add(fragment);
-			Tab tab = actionBar.newTab();
-			tab.setText(cat.getLabel());
-			tab.setTabListener(this);
-			actionBar.addTab(tab);
-		}
-        
+    	mList = new ArrayList<BaseFragment>();
+    	if(App.isRanking()){
+    		RankingFragment ranking = new RankingFragment();
+    		mList.add(ranking);
+    		sp++;
+    	}
 
-		 mViewPager.setAdapter(this);
-		 mViewPager.setOnPageChangeListener(mActivity);
-		 mViewPager.setBackgroundColor(Color.WHITE);
-		 //mViewPager.setPageTransformer(true , new PageTransformer());
-		 mViewPager.setOffscreenPageLimit(10);
-        
-		 mViewPager.setCurrentItem(0);
-
+    	SearchFragment search = new SearchFragment();
+    	mList.add(search);
+    	SEARCH_POSITION = sp;
+    
+    	List<Category> list = MyCategory.getInstance().getList();
+    	for(Iterator<Category> i=list.iterator();i.hasNext();){
+    		Category cat = i.next();
+    		BaseFragment fragment = new MyItemFragment(cat);
+    		mList.add(fragment);
+    	}
     }
     
     public void search(SearchParams searchParams){
         ((SearchFragment)mList.get(SEARCH_POSITION)).search(searchParams);
         mViewPager.setCurrentItem(SEARCH_POSITION);
     }
-    
+	
 	@Override
-	public void onTabSelected(Tab tab, FragmentTransaction arg1) {
-		Log.d("TopActivity","onTabSelected"+tab.getPosition());
-		// 選択したタブのpositionに合わせてpageを切り替え
-		if(mViewPager != null){
-			this.notifyDataSetChanged();
-			mViewPager.setCurrentItem(tab.getPosition());
-		}        
+	public BaseFragment getItem(int arg0) {
+		return mList.get(arg0);
 	}
 
 	@Override
-	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
+	public int getCount() {
+		return mList.size();
 	}
 	
 	@Override
-	public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
-		getCurrentFragment().setSelection(0);
+	public int getItemPosition(Object object) {		
+		int i = mList.indexOf(object);
+		if(i < 0){
+			return POSITION_NONE;
+		}
+		return POSITION_UNCHANGED;
 	}
-
-	//カテゴリの追加
+	
+ 	//カテゴリの追加
 	public boolean onNewCategory(String text) {	
 		Category cat = MyCategory.getInstance().add(text);
 		if(cat == null){
@@ -118,33 +108,11 @@ implements TabListener
 		mList.add(new MyItemFragment(cat));
 		Tab tab = actionBar.newTab();
 		tab.setText(cat.getLabel());
-		tab.setTabListener(this);
+		tab.setTabListener(mViewPager);
 		actionBar.addTab(tab);
 		this.notifyDataSetChanged();
 		mViewPager.setCurrentItem(mList.size());
 		return true;
-	}
-	
-	public BaseFragment getCurrentFragment(){
-		return this.getItem(this.getCurrentPosition());
-	}
-	
-	@Override
-	public BaseFragment getItem(int arg0) {
-		return mList.get(arg0);
-	}
-	
-	public int getCurrentPosition(){
-		return mViewPager.getCurrentItem();
-	}
-	
-	public void setCurrentPosition(int i) {
-		mViewPager.setCurrentItem(i);
-	}
-
-	@Override
-	public int getCount() {
-		return mList.size();
 	}
 
 	@Override
@@ -152,7 +120,7 @@ implements TabListener
 	public void onDeleteCategory() {
 		int currentItem = mViewPager.getCurrentItem();
 		MyItemFragment fragment = (MyItemFragment) mList.get(currentItem);
-		Log.d("TagFragmentAdapter","カテゴリの削除 = " +currentItem
+		Log.d(this.getClass().getSimpleName(),"カテゴリの削除 = " +currentItem
 				+ ","+fragment.getCategory().getLabel()
 				+ ","+fragment.getCategory().getId());
 		
@@ -168,9 +136,9 @@ implements TabListener
 	}
 	
 	public int replace(){
-		Log.d("TagFragmentAdapter","replace start ----------------------------");
+		Log.d(this.getClass().getSimpleName(),"replace start ----------------------------");
 		int pos = mViewPager.getCurrentItem();
-		Log.d("TagFragmentAdapter","replace pos=" + pos);
+		Log.d(this.getClass().getSimpleName(),"replace pos=" + pos);
 		BaseFragment oldFragment = (BaseFragment) this.getItem(pos);
 		BaseFragment newFragment = (BaseFragment) oldFragment.replace();
 		
@@ -184,18 +152,7 @@ implements TabListener
         mList.set(pos, newFragment);
 		notifyDataSetChanged();
 		
-		Log.d("TagFragmentAdapter","replace end ----------------------------");
+		Log.d(this.getClass().getSimpleName(),"replace end ----------------------------");
 		return newFragment.getType();
 	}
-	
-	@Override
-	public int getItemPosition(Object object) {		
-		int i = mList.indexOf(object);
-		if(i < 0){
-			return POSITION_NONE;
-		}
-		return POSITION_UNCHANGED;
-	}
-
-
 }

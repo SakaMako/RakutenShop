@@ -8,6 +8,7 @@ import jp.gr.java_conf.sakamako.rakuten.shop.BaseActivity;
 import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask;
 import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask.ReloadableAdapter;
 import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask.ReloadbleListener;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory;
 import jp.gr.java_conf.sakamako.view.SortableListView;
@@ -41,6 +42,8 @@ public abstract class BaseFragment extends Fragment
 	}
 	public abstract BaseFragment replace() ;
 	public abstract boolean isDeletable();
+	public abstract String getTabTitle(); 
+
 	//--------------------------------------------------------------------
 	public static final int TYPE_GRID = 1;
 	public static final int TYPE_LIST = 2;
@@ -195,6 +198,8 @@ public abstract class BaseFragment extends Fragment
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
     	Item item = (Item)((BaseItemAdapter)parent.getAdapter()).getItem(position);
+    	EventHolder.showItemDetail(item);
+    	
     	((BaseActivity)getActivity()).showItemDetail(item);
 	}
 	//---------------------------------------------------------------------

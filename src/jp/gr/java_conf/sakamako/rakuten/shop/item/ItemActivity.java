@@ -6,14 +6,13 @@ import jp.gr.java_conf.sakamako.rakuten.shop.R;
 //import jp.gr.java_conf.noappnolife.rakuten.shop.item.ItemHorizontalAdapter.OnFinishListener;
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
 import jp.gr.java_conf.sakamako.rakuten.shop.BaseActivity;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.BusHolder;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.FinishItemActivity;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseItemAdapter;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.view.CustomViewPager;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -32,12 +31,12 @@ public class ItemActivity extends BaseActivity
 	@Override
 	public void onResume() {
 		super.onResume();
-	    BusHolder.get().register(mHorizontalAdapter);
+	    EventHolder.register(mHorizontalAdapter);
 	}
 
 	@Override
 	public void onPause() {
-	    BusHolder.get().unregister(mHorizontalAdapter);
+	    EventHolder.unregister(mHorizontalAdapter);
 	    super.onPause();
 	}
 	

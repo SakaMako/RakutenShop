@@ -7,7 +7,7 @@ import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
 import jp.gr.java_conf.sakamako.rakuten.shop.BaseActivity;
 import jp.gr.java_conf.sakamako.rakuten.shop.dialog.ItemImageDialog;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.BusHolder;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.NewWebFragmentEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.SearchParams;
@@ -182,7 +182,7 @@ implements OnRefreshListener
         	try {
 				if(new URL(url).getHost().contains(".rakuten.co.jp")){
 					mWebView.stopLoading();
-					BusHolder.get().post(new NewWebFragmentEvent(url));
+					EventHolder.newWebFragment(url);
 					return false;
 				}
 			} catch (MalformedURLException e) {

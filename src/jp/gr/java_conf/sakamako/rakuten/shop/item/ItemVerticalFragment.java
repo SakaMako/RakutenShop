@@ -1,6 +1,6 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.item;
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.BusHolder;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.VerticalFragmentCreated;
 import android.os.Bundle;
 import android.support.v4.view.DirectionalViewPager;
@@ -32,7 +32,7 @@ public class ItemVerticalFragment extends ItemBaseFragment
     @Override
 	public void onActivityCreated(Bundle saveInstanceState){
 		super.onActivityCreated(saveInstanceState);
-		BusHolder.get().post(new VerticalFragmentCreated(mVerticalPager,mVerticalAdapter));
+		EventHolder.createVirticalFragment(mVerticalPager,mVerticalAdapter);
     }
     
     

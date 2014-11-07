@@ -2,7 +2,7 @@ package jp.gr.java_conf.sakamako.rakuten.shop.async;
 
 import java.util.List;
 
-import jp.gr.java_conf.sakamako.rakuten.shop.event.BusHolder;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import android.os.AsyncTask;
@@ -35,7 +35,7 @@ public class ReloadAsyncTask extends AsyncTask<Void, Void, List<Item>>  {
 	    Log.d(this.getClass().getSimpleName(), "onPostExecute");
 	    if(ex != null){
 	    	Log.d(this.getClass().getSimpleName(), "onPostExecute-Error");
-	    	BusHolder.get().post(new NetworkErrorEvent(ex));
+    		EventHolder.networkError(ex);
 	    }
 	    mFragment.onPostReload(result);
 	}

@@ -93,4 +93,9 @@ implements Dragable
 	public boolean isDeletable() {
 		return true;
 	}
+
+	@Override
+	public String getTabTitle() {
+		return mCat.getLabel();
+	}
 }
