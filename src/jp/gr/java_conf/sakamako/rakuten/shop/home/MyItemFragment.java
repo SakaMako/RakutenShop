@@ -1,10 +1,10 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.home;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
-import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseFragment.Dragable;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory.Category;
+import jp.gr.java_conf.sakamako.view.SortableListView.DragListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,11 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class MyItemFragment extends BaseFragment 
-implements Dragable
+implements DragListener
 	{
 	private Category mCat = null;
 	
 	public MyItemFragment() {
+		super(TYPE_GRID);
 	}
 	
 	public MyItemFragment(Category cat) {
@@ -26,7 +27,7 @@ implements Dragable
 	private MyItemFragment(int type,Category cat,BaseItemAdapter adapter) {
 		super(type);
 		mCat = cat;
-		mAdapter = adapter;
+		super.setAdapter(adapter);
 		Log.d("MyItemFragment",mCat.getLabel()+"の作成");
 		Log.d("MyItemFragment","type="+type+","+this.getType());
 	}
@@ -41,7 +42,7 @@ implements Dragable
 				mCat = MyCategory.getInstance().getCategory(categoryName);
 			}
 		}
-		mAdapter = new MyItemAdapter(this,R.layout.home_list_item,mCat);
+		super.setAdapter(new MyItemAdapter(this,R.layout.home_list_item,mCat));
 	}
 	
 	@Override
@@ -56,35 +57,27 @@ implements Dragable
 		return mCat;
 	}
 	
+	/**
 	@Override
 	public MyItemFragment replace() {
 		int type = super.getReverseType();
-		MyItemFragment fragment = new MyItemFragment(type,mCat,mAdapter);
+		MyItemFragment fragment = new MyItemFragment(type,mCat,getAdapter());
 		//fragment.setInitPosition(this.getVisiblePosition());
 		return fragment;
 	}
-	
-
+	*/
 	
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
 		// リスナーから削除しないと積み重なって呼ばれ続ける
-		mCat.getItemList().removeOnChangedListener((MyItemAdapter)mAdapter);
+		mCat.getItemList().removeOnChangedListener((MyItemAdapter)getAdapter());
 	}
 	
 	@Override
 	public void onActivityCreated(Bundle saveInstanceState){
 		super.onActivityCreated(saveInstanceState);
-		mCat.getItemList().addOnChangedListener((MyItemAdapter)mAdapter);
-	}
-
-	@Override
-	public final boolean onStopDrag(int positionFrom, int positionTo) {
-		Log.d("MyItemFragment","onStopDrag = " + positionFrom + " -> " + positionTo);
-		if(positionFrom < 0)return false;
-		mCat.getItemList().move(positionFrom,positionTo);
-		return true;
+		mCat.getItemList().addOnChangedListener((MyItemAdapter)getAdapter());
 	}
 
 	//---------------------------------------------------------------
@@ -97,5 +90,23 @@ implements Dragable
 	@Override
 	public String getTabTitle() {
 		return mCat.getLabel();
+	}
+	
+	//---------------------------------------------------------------
+	@Override
+	public final boolean onStopDrag(int positionFrom, int positionTo) {
+		Log.d("MyItemFragment","onStopDrag = " + positionFrom + " -> " + positionTo);
+		if(positionFrom < 0)return false;
+		mCat.getItemList().move(positionFrom,positionTo);
+		return true;
+	}
+	@Override
+	public final int onStartDrag(int position) {
+		return position;
+	}
+
+	@Override
+	public final int onDuringDrag(int positionFrom, int positionTo) {
+		return positionFrom;
 	}
 }

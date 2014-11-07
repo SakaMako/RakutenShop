@@ -67,8 +67,8 @@ public class EventHolder {
 	  }
 
 	  // 縦方向の商品の選択
-	  public static void selectVerticalItem(Item item) {
-	        get().post(new VerticalItemSelectedEvent(item));
+	  public static void selectVerticalItem(int pos,Item item) {
+	        get().post(new VerticalItemSelectedEvent(pos,item));
 	  }
 
 	  // WebView の表示
@@ -85,7 +85,11 @@ public class EventHolder {
 
 	  // ItemActivity の終了
 	  public static void finishItemActivity() {
-		EventHolder.get().post(new FinishItemActivity());
+		get().post(new FinishItemActivity());
 	  }
+
+	public static void finishReload() {
+		get().post(new FinisheReloadEvent());
+	}
 
 }

@@ -3,14 +3,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.VerticalItemSelectedEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseItemAdapter;
-import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseFragment.Scrollable;
+import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseItemAdapter.Scrollable;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.DirectionalViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 
@@ -76,16 +74,16 @@ public class ItemVerticalAdapter  extends FragmentStatePagerAdapter implements O
 	}
 
 	@Override
-	public void onPageSelected(int arg0) {
-		Log.d(this.getClass().getSimpleName(),"onPageSelected="+arg0+","+mAdapter.getCount());
+	public void onPageSelected(int pos) {
+		Log.d(this.getClass().getSimpleName(),"onPageSelected="+pos+","+mAdapter.getCount());
 		// インデックスとサイズの差を埋めるために＋１
-		if(arg0 + 1 == mAdapter.getCount()){
-			Log.d(this.getClass().getSimpleName(),"最大数到達="+arg0+","+mAdapter.getCount());
+		if(pos + 1 == mAdapter.getCount()){
+			Log.d(this.getClass().getSimpleName(),"最大数到達="+pos+","+mAdapter.getCount());
 			if(mAdapter instanceof Scrollable){
-				((Scrollable)mAdapter).readNext(arg0);
+				((Scrollable)mAdapter).readNext(pos);
 			}
 		}
-		EventHolder.selectVerticalItem(mAdapter.getItem(arg0));		
-		mAdapter.setVisiblePosition(arg0);
+		EventHolder.selectVerticalItem(pos,mAdapter.getItem(pos));		
+		//mAdapter.setVisiblePosition(arg0);
 	}
 }

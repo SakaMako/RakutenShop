@@ -1,11 +1,11 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.home;
-import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask.ReloadbleListener;
+import com.squareup.otto.Subscribe;
+
+import jp.gr.java_conf.sakamako.rakuten.shop.event.FinisheReloadEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.SearchParams;
 import android.util.Log;
-import android.widget.AbsListView;
 
 public class SearchFragment extends BaseFragment 
-implements ReloadbleListener
 {	
 	public SearchFragment(){
 		this(TYPE_GRID);
@@ -13,26 +13,28 @@ implements ReloadbleListener
 
 	private SearchFragment(int type){
 		super(type);
-		mAdapter = new SearchAdapter(this,new SearchParams(""));
+		super.setAdapter(new SearchAdapter(this,new SearchParams("")));
 	}
 	
 	private SearchFragment(int type,BaseItemAdapter adapter){
 		super(type);
-		mAdapter = adapter;
+		super.setAdapter(adapter);
 	}
 	
+	/**
 	@Override
 	public SearchFragment replace() {
 		int type = this.getReverseType();
-		SearchFragment fragment = new SearchFragment(type,this.mAdapter);
-		//fragment.setInitPosition(this.getVisiblePosition());
+		SearchFragment fragment = new SearchFragment(type,getAdapter());
 		return fragment;
 	}
+	*/
 	
  	public void search(SearchParams searchParams){
  		Log.d("SearchFragment","search = " + searchParams.getSearchString());
-		mAdapter = new SearchAdapter(this,searchParams);
-		((AbsListView)mView).setAdapter(mAdapter);
+ 		
+		BaseItemAdapter adapter = new SearchAdapter(this,searchParams);
+		super.setAdapter(adapter);
 	}
  	
 	//---------------------------------------------------------------
@@ -45,6 +47,9 @@ implements ReloadbleListener
 	public String getTabTitle() {
 		return "探す";
 	}
-
-
+	
+	@Subscribe
+	public void onFinishReload(FinisheReloadEvent event){
+		super.onFinishReload(event);
+	}
 }

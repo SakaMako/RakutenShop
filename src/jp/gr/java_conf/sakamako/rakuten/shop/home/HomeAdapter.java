@@ -140,16 +140,25 @@ DeleteCategoryListener, OnNewCategoryListener
 		int pos = mViewPager.getCurrentItem();
 		Log.d(this.getClass().getSimpleName(),"replace pos=" + pos);
 		BaseFragment oldFragment = (BaseFragment) this.getItem(pos);
+		
+		Log.d(this.getClass().getSimpleName(),"replace type=" + oldFragment.getType());
+		oldFragment.setType(oldFragment.getReverseType());
+		Log.d(this.getClass().getSimpleName(),"replace type=" + oldFragment.getType());
+        mActivity.getSupportFragmentManager().beginTransaction()
+        .detach(oldFragment)
+        .attach(oldFragment)
+        .commit();
+        BaseFragment newFragment = oldFragment;
+        
+/**
 		BaseFragment newFragment = (BaseFragment) oldFragment.replace();
-		
 		newFragment.setInitPosition(oldFragment.getVisiblePosition());
-		
 		FragmentManager manager = mActivity.getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.remove(oldFragment);
         transaction.commit();
-   
         mList.set(pos, newFragment);
+        */
 		notifyDataSetChanged();
 		
 		Log.d(this.getClass().getSimpleName(),"replace end ----------------------------");

@@ -8,12 +8,15 @@ import java.util.List;
 import org.dom4j.DocumentException;
 import org.xml.sax.SAXException;
 
+import com.squareup.otto.Subscribe;
+
+import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask;
+import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask.ReloadbleListener;
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
-import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask.ReloadableAdapter;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.FinisheReloadEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
-import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseFragment.Scrollable;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.ItemAPI;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.SearchParams;
@@ -25,8 +28,7 @@ import android.util.Log;
  * @author makoto.sakamoto
  */
 public class SearchAdapter extends BaseItemAdapter 
-implements ReloadableAdapter
-,Scrollable
+implements BaseItemAdapter.Scrollable,ReloadbleListener
 {
 
 	    private int mCount = 0;

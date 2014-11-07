@@ -1,106 +1,106 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.home;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.android.volley.toolbox.NetworkImageView;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
+import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask;
+import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask.ReloadbleListener;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public abstract class BaseItemAdapter extends ArrayAdapter<Item> {
+public abstract class BaseItemAdapter extends ArrayAdapter<Item>
+implements OnScrollListener,OnItemClickListener{
 	
-	protected BaseFragment mFragment = null;
+	private BaseFragment mFragment = null;
 	
 	protected BaseItemAdapter(Context context, int resource,
 			BaseFragment fragment, ArrayList<Item> myItem) {
 		super(context, resource,myItem);
 		mFragment = fragment;
 	}
+
+	public abstract String getTitle() ;
 	
+	/**
 	public final void resetFragment(BaseFragment fragment){
 		mFragment = fragment;
 	}
+	*/
 	
+	/**
 	public final void setVisiblePosition(int pos){
 		mFragment.setSelection(pos);
 	}
+	*/
 
 	@Override  
 	public View getView(int position, View convertView, ViewGroup parent) {
+		Log.d(this.getClass().getSimpleName(),"getView="+position);
 		Item item = this.getItem(position);
-		//Log.d("BaseItemAdapter","type="+mFragment.getType());
-		switch(mFragment.getType()){
-		case BaseFragment.TYPE_GRID:
-			return getViewGrid(item,convertView,parent);
-		case BaseFragment.TYPE_LIST:
-			return getViewList(item,convertView,parent);
-		}
-		return null;
+		return mFragment.getListView().getView(item,convertView,parent);
+	}
+
+    //-----------------------------------------------------------------------------
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
+    	Item item = (Item)this.getItem(position);
+    	EventHolder.showItemDetail(item);
 	}
 	
-	public View getViewList(Item item, View convertView, ViewGroup parent) {
-		// ビューを受け取る   
-		LinearLayout view = (LinearLayout) convertView;   
-		if (view == null) {
-			// 受け取ったビューがnullなら新しくビューを生成   
-			view = (LinearLayout)((LayoutInflater)App.getAppContext()
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-					.inflate(R.layout.home_list_item, null);
+	@Override
+	public final void onScroll(AbsListView view, int firstVisibleItem,
+			int visibleItemCount, int totalItemCount) {
+		
+		// 見える範囲で最後に到達したら
+		if (totalItemCount == 0 || totalItemCount  <= firstVisibleItem + visibleItemCount) {
+			((Scrollable)this).readNext(totalItemCount);
 		}
+	}
 
-		// 表示すべきデータの取得   
-		if (item != null) {   
-			//LineListener listener = new LineListener(position,item);
-			TextView screenName1 = (TextView)view.findViewById(R.id.recent_item_text);   
-			screenName1.setTypeface(Typeface.DEFAULT_BOLD);   
-			screenName1.setText(item.getName());
-			
-			TextView priceText = (TextView)view.findViewById(R.id.recent_item_price);
-			priceText.setText(item.getPriceString());
-			
-			NetworkImageView urlImageView = (NetworkImageView)view.findViewById(R.id.recent_item_icon);
-    		urlImageView.setImageUrl(item.getImage(), App.getImageLoader());
-    		urlImageView.setLayoutParams(new LinearLayout.LayoutParams(Item.ITEM_SIZE_LIST,Item.ITEM_SIZE_LIST));
-    		urlImageView.setPadding(0, 0, 0, 0);
-            urlImageView.setErrorImageResId(R.drawable.ic_action_remove);
-
-		}
-		return view;
+	@Override
+	public final void onScrollStateChanged(AbsListView view, int scrollState) {
 	}
 	
-    public View getViewGrid(Item item,View convertView,ViewGroup parent){
-    	//Log.d("BaseItemAdapter", "getViewGrid");
-       	NetworkImageView imageView = null;
-       	if(convertView == null ){
-       		imageView = (NetworkImageView) ((LayoutInflater)App.getAppContext()
-       				.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-       				.inflate(R.layout.home_grid_item, null);
-       		imageView.setLayoutParams(
-       			new GridView.LayoutParams(Item.ITEM_SIZE_LIST,Item.ITEM_SIZE_LIST)
-       		);		
-       		imageView.setPadding(0, 0, 0, 0);
-       	}
-       	else{
-    		imageView = (NetworkImageView) convertView;
-       	}
-       	
-       	imageView.setImageUrl(item.getItemListImage(), App.getImageLoader());
-        imageView.setErrorImageResId(R.drawable.ic_action_remove);
-      	 
-       	return imageView;
-    }
+	public interface Scrollable extends OnScrollListener{
+		public void readNext(int arg0);
+	}
+	//---------------------------------------------------------------------
+	//PullToSwipe用の実装
+	//ReloadableListener を implements している Adapter はこれが呼ばれる
+	public final void onRefresh() {
+		Log.d(this.getClass().getSimpleName(),"reload start ----------------------------");
+		ReloadAsyncTask asyncTask = new ReloadAsyncTask((ReloadbleListener)this);
+		asyncTask.execute();
+		Log.d(this.getClass().getSimpleName(),"reload end ----------------------------");
+	}
+	
+	public final void onPostReload(List<Item>result){
+		this.clear();
+		if(result != null){
+			this.addAll(result);
+		}
+		this.notifyDataSetChanged();
+		
+		EventHolder.finishReload();
+	}
 
-
-	public abstract String getTitle() ;
 	
 }

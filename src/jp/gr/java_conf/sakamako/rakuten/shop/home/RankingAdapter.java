@@ -5,18 +5,17 @@ import java.util.Iterator;
 import java.util.List;
 
 import android.util.Log;
+import android.widget.AbsListView;
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
-import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask.ReloadableAdapter;
+import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask.ReloadbleListener;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
-import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseFragment.Scrollable;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.ItemAPI;
 
 public class RankingAdapter extends BaseItemAdapter
-implements ReloadableAdapter
-,Scrollable
+implements BaseItemAdapter.Scrollable,ReloadbleListener
 {
 	
 	private int mCount = 0;
@@ -84,4 +83,5 @@ implements ReloadableAdapter
 	public String getTitle() {
 		return "ランキング";
 	}
+
 }

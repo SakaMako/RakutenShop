@@ -13,12 +13,12 @@
 
  <android.support.v4.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/refresh_grid"
+    android:id="@+id/refresh_swipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent">   
 
-              <GridView
-        android:id="@+id/gallery1"
+              <jp.gr.java_conf.sakamako.rakuten.shop.home.ItemGridView
+        android:id="@+id/list"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -28,8 +28,7 @@
         android:numColumns="3"
         android:padding="0dp"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="0dp" >
-    </GridView>
+        android:verticalSpacing="0dp" />
         </android.support.v4.widget.SwipeRefreshLayout>
 
 
