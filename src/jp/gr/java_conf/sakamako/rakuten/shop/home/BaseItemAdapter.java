@@ -3,18 +3,13 @@ package jp.gr.java_conf.sakamako.rakuten.shop.home;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.android.volley.toolbox.NetworkImageView;
-
-import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
-import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask;
-import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask.ReloadbleListener;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import android.content.Context;
-import android.graphics.Typeface;
+import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -22,9 +17,6 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 public abstract class BaseItemAdapter extends ArrayAdapter<Item>
 implements OnScrollListener,OnItemClickListener{
@@ -37,14 +29,16 @@ implements OnScrollListener,OnItemClickListener{
 		mFragment = fragment;
 	}
 
+	// タブに表示するラベル
 	public abstract String getTitle() ;
 	
 	public final void setVisiblePosition(int pos){
 		mFragment.setSelection(pos);
 	}
 
-	@Override  
-	public View getView(int position, View convertView, ViewGroup parent) {
+	@Override
+	// 子ビューの生成は各リストビューに任せる
+	public final View getView(int position, View convertView, ViewGroup parent) {
 		//Log.d(this.getClass().getSimpleName(),"getView="+position);
 		Item item = this.getItem(position);
 		return mFragment.getListView().getView(item,convertView,parent);
@@ -52,46 +46,135 @@ implements OnScrollListener,OnItemClickListener{
 
     //-----------------------------------------------------------------------------
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
+	public final void onItemClick(AdapterView<?> parent, View view, int position,long id) {
     	Item item = (Item)this.getItem(position);
     	EventHolder.showItemDetail(item);
 	}
 	
+    //-----------------------------------------------------------------------------
+	// 一番下に来たら追加読み込みする実装
+	
+	public interface Scrollable extends OnScrollListener{
+		// まだ読み込み可能かの判定、これを見て AsyncTask を動かすか決める
+		public boolean isMoreScrollable();
+		// 次のページ読み込む実装（実際には各サブクラスでは無く、ここでやってしまっている
+		// 他クラスから呼び出すためにインターフェース実装をしている
+		public void onNextPage();
+	}
+	
+	// Async を使ったローでリング中かのフラグ
+	private boolean isLoading = false;
+	
 	@Override
+	// 一番最後に来たかの判定
 	public final void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
+		if (totalItemCount == firstVisibleItem + visibleItemCount) {
+			onNextPage();
+		}
+	}
+	
+	// 追加読み込みにおける AsyncTask の実行
+	// ItemActivity の vertical pager の方からも呼ばれる
+	public final void  onNextPage(){
 		
-		// 見える範囲で最後に到達したら
-		if (totalItemCount == 0 || totalItemCount  <= firstVisibleItem + visibleItemCount) {
-			((Scrollable)this).readNext(totalItemCount);
+		if(App.isNetworkError()) return;
+		// 他タスクで読み込み中なら一旦あきらめる
+		if(isLoading) return;
+		// 念のため syncronized で isLoading チェックをすり抜けるものを止める
+		synchronized(this){
+			// 既に最終ページ到達済みであれば止める
+			if(((Scrollable)this).isMoreScrollable()){
+				isLoading = true;
+				ReloadAsyncTask asyncTask = new ReloadAsyncTask(false,(ReloadbleListener)this);
+				asyncTask.execute();
+			}
 		}
 	}
 
 	@Override
 	public final void onScrollStateChanged(AbsListView view, int scrollState) {
+		// 何もしない
 	}
 	
-	public interface Scrollable extends OnScrollListener{
-		public void readNext(int arg0);
-	}
 	//---------------------------------------------------------------------
-	//PullToSwipe用の実装
+	//リロード用のPullToSwipe用の制御
+	
+	public interface ReloadbleListener extends OnRefreshListener{
+		public List<Item> onReload() throws Exception;
+		public List<Item> onSearch() throws Exception;
+		public void onPostReload(boolean isReload,List<Item> result);
+	}
+	
+	// OnRefreshListener のインターフェース
 	//ReloadableListener を implements している Adapter はこれが呼ばれる
 	public final void onRefresh() {
 		Log.d(this.getClass().getSimpleName(),"reload start ----------------------------");
-		ReloadAsyncTask asyncTask = new ReloadAsyncTask((ReloadbleListener)this);
+		isLoading = true;
+		ReloadAsyncTask asyncTask = new ReloadAsyncTask(true,(ReloadbleListener)this);
 		asyncTask.execute();
 		Log.d(this.getClass().getSimpleName(),"reload end ----------------------------");
 	}
 	
-	public final void onPostReload(List<Item>result){
-		this.clear();
+	// 読み込み完了後の実装
+	// 各サブクラスでは無く、ここでやってしまう
+	public final void onPostReload(boolean isReload,List<Item>result){
+		if(isReload){
+			this.clear();
+		}
 		if(result != null){
 			this.addAll(result);
 		}
 		this.notifyDataSetChanged();
 		
-		EventHolder.finishReload();
+		if(isReload){
+			EventHolder.finishReload();
+		}
+		isLoading = false;
+	}
+	//---------------------------------------------------------------------
+	// AsyncTask
+	
+	public class ReloadAsyncTask extends AsyncTask<Void, Void, List<Item>>  {
+		
+		private ReloadbleListener mListener = null;
+		private Exception ex = null;
+		private boolean mIsReload = true;;
+		
+		public ReloadAsyncTask(boolean isReload,ReloadbleListener listener){
+			mListener = listener;
+			mIsReload = isReload;
+		}
+		
+
+		@Override
+		protected List<Item> doInBackground(Void... params) {
+			try{
+				if(mIsReload){
+					return mListener.onReload();
+				}
+				else{
+					return mListener.onSearch();
+				}
+			}
+				
+			catch(Exception e){
+				ex = e;
+				return null;
+			}
+		}
+		
+		@Override
+		protected void onPostExecute(List<Item> result) {
+		    Log.d(this.getClass().getSimpleName(), "onPostExecute");
+		    if(ex != null){
+		    	Log.d(this.getClass().getSimpleName(), "onPostExecute-Error");
+	    		EventHolder.networkError(ex);
+		    }
+		    mListener.onPostReload(mIsReload ,result);
+		}
+		
+
 	}
 
 	

@@ -80,7 +80,7 @@ public class ItemVerticalAdapter  extends FragmentStatePagerAdapter implements O
 		if(pos + 1 == mAdapter.getCount()){
 			Log.d(this.getClass().getSimpleName(),"最大数到達="+pos+","+mAdapter.getCount());
 			if(mAdapter instanceof Scrollable){
-				((Scrollable)mAdapter).readNext(pos);
+				((Scrollable)mAdapter).onNextPage();
 			}
 		}
 		EventHolder.selectVerticalItem(mAdapter.getItem(pos));		

@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.AbsListView.OnScrollListener;
@@ -30,7 +32,7 @@ implements BaseListView{
 	public void onAttachedFragment(BaseFragment fragment){
 		// フラグメントの種類によって、順番きりかえ可能か設定する
 		setOnItemClickListener(fragment.getAdapter());
-		if(this instanceof DragListener){
+		if(fragment instanceof DragListener){
 			setSortable(true);
 			setDragListener((DragListener)fragment);
 		}		
@@ -68,10 +70,17 @@ implements BaseListView{
 			
 			NetworkImageView urlImageView = (NetworkImageView)view.findViewById(R.id.recent_item_icon);
     		urlImageView.setImageUrl(item.getImage(), App.getImageLoader());
-    		urlImageView.setLayoutParams(new LinearLayout.LayoutParams(Item.ITEM_SIZE_LIST,Item.ITEM_SIZE_LIST));
+    		urlImageView.setLayoutParams(new FrameLayout.LayoutParams(Item.ITEM_SIZE_LIST,Item.ITEM_SIZE_LIST));
     		urlImageView.setPadding(0, 0, 0, 0);
             urlImageView.setErrorImageResId(R.drawable.ic_action_remove);
-
+            
+            ImageView avaliabilyIcon = (ImageView)view.findViewById(R.id.icon_avaliability);
+            if(item.getIsAvailability() != Item.AVALIABILITY_OK){
+            	avaliabilyIcon.setVisibility(View.VISIBLE);
+            }
+            else{
+            	avaliabilyIcon.setVisibility(View.GONE);
+            }
 		}
 		return view;
 	}

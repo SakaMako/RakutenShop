@@ -43,11 +43,6 @@ public class ItemAPI {
 		return itemList.get(0);
 	}
 	
-	
-	//https://app.rakuten.co.jp/services/api/IchibaItem/Search/20140222?applicationId=7fd3747dfec7c786998b372d690c98df&affiliateId=03e6fa11.d2147685.03e6fa12.54f60980&format=xml&hits=20&page=1&imageFlag=1&shopCode=amiami&sort=-updateTimestamp&genreId=400962&keyword=%E4%B8%AD%E5%8F%A4
-
-	//https://app.rakuten.co.jp/services/api/IchibaItem/Search/20140222?applicationId=7fd3747dfec7c786998b372d690c98df&affiliateId=03e6fa11.d2147685.03e6fa12.54f60980&format=xml&hits=20&page=1&imageFlag=1&carrier=2&shopCode=amiami&sort=-updateTimestamp&availability=0&genreId=400962&keyword=%E4%B8%AD%E5%8F%A4
-
 	public static List<Item> getItemList(int page,SearchParams searchParams) throws Exception {
 		List<Item> list = new ArrayList<Item>();
 		try{
@@ -55,9 +50,8 @@ public class ItemAPI {
 					+ "?applicationId="+ App.getDeveloperId()
 					+ "&affiliateId=" + App.getAffiliateId()
 					+ "&format=xml"
-					+ "&hits=20&page=" + page
+					+ "&hits=30&page=" + page
 					+ "&imageFlag=1"
-					//+ "&carrier=2"
 					+ "&shopCode=" + URLEncoder.encode(searchParams.getShopUrl(),"utf-8")
 					+ "&sort=" + URLEncoder.encode("-updateTimestamp","utf-8")
 					;
@@ -129,7 +123,7 @@ public class ItemAPI {
 				+ "?applicationId="+ App.getDeveloperId()
 				+ "&affiliateId=" + App.getAffiliateId()
 				+ "&format=xml"
-				+ "&hits=20&page=" + page
+				+ "&page=" + page
 				+ "&imageFlag=1"
 				+ "&genreId=" + SearchParams.getGenreId()
 				;
@@ -170,6 +164,7 @@ public class ItemAPI {
 
 			list.add(item);
 		}
+		Log.d(ItemAPI.class.getSimpleName(), "実際の商品数=" + list.size()+"です");
 		
 	} catch (Exception e) {
 		throw e;

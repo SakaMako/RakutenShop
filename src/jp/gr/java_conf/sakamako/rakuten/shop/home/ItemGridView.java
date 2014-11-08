@@ -16,7 +16,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.FrameLayout;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 public class ItemGridView extends GridView
 implements BaseListView
@@ -40,23 +43,34 @@ implements BaseListView
 	@Override
 	   public View getView(Item item,View convertView,ViewGroup parent){
 	    	//Log.d(this.getClass().getSimpleName(), "getView="+item.getName());
-	       	NetworkImageView imageView = null;
-	       	if(convertView == null ){
-	       		imageView = (NetworkImageView) ((LayoutInflater)App.getAppContext()
-	       				.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-	       				.inflate(R.layout.home_grid_item, null);
-	       		imageView.setLayoutParams(
-	       			new GridView.LayoutParams(Item.ITEM_SIZE_LIST,Item.ITEM_SIZE_LIST)
+		
+		// ビューを受け取る   
+		FrameLayout view = (FrameLayout) convertView;
+		if(view == null){
+			// 受け取ったビューがnullなら新しくビューを生成   
+			view = (FrameLayout)((LayoutInflater)App.getAppContext()
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+					.inflate(R.layout.home_grid_item, null);
+		}
+		
+		if(item != null){
+			NetworkImageView imageView = (NetworkImageView)view.findViewById(R.id.item_image);
+       		imageView.setLayoutParams(
+	       			new FrameLayout.LayoutParams(Item.ITEM_SIZE_LIST,Item.ITEM_SIZE_LIST)
 	       		);		
-	       		imageView.setPadding(0, 0, 0, 0);
-	       	}
-	       	else{
-	    		imageView = (NetworkImageView) convertView;
-	       	}
+       		imageView.setPadding(0, 0, 0, 0);
 	       	
 	       	imageView.setImageUrl(item.getItemListImage(), App.getImageLoader());
 	        imageView.setErrorImageResId(R.drawable.ic_action_remove);
-	      	 
-	       	return imageView;
+	        
+            ImageView avaliabilyIcon = (ImageView)view.findViewById(R.id.icon_avaliability);
+            if(item.getIsAvailability() != Item.AVALIABILITY_OK){
+            	avaliabilyIcon.setVisibility(View.VISIBLE);
+            }
+            else{
+            	avaliabilyIcon.setVisibility(View.GONE);
+            }
 	    }
+	    return view;
+	}
 }

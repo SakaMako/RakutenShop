@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>  
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent" android:layout_height="60dip"
     android:padding="6dip">
-    
+             <FrameLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+	>
    <com.android.volley.toolbox.NetworkImageView android:id="@+id/recent_item_icon"
 		android:layout_width="wrap_content"  
         android:layout_height="fill_parent"
         android:layout_marginRight="2dip"/>   
+        
+
+               <ImageView
+                android:id="@+id/icon_avaliability"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:src="@android:drawable/ic_delete" />
+       </FrameLayout>
    <LinearLayout
        android:id="@+id/recent_item_frame"
        android:clickable="true"

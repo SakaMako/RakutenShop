@@ -132,6 +132,14 @@ public class App extends Application{
 		return App.getInstance().getProperties().getProperty("jp.gr.java_conf.noappnolife.rakuten.api.affiliate_id");
 	}
 
+	private static boolean isNetworkError = false;
+	public static void setNetworkError(boolean b) {
+		isNetworkError = b;
+	}
+	public static boolean isNetworkError(){
+		return isNetworkError;
+	}
+
 
 
 

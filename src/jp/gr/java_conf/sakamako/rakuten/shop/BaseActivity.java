@@ -2,13 +2,12 @@ package jp.gr.java_conf.sakamako.rakuten.shop;
 
 import java.util.HashMap;
 import java.util.Locale;
+
 import com.squareup.otto.Subscribe;
+
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
-import jp.gr.java_conf.sakamako.rakuten.shop.item.ItemActivity;
-import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
-//import jp.gr.java_conf.noappnolife.rakuami2.nouse.ItemDetailActivity;
-import android.content.Intent;
+import jp.gr.java_conf.sakamako.rakuten.shop.utils.ToastMaster;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.DialogFragment;
@@ -25,16 +24,21 @@ public abstract class BaseActivity extends ActionBarActivity {
 	
 
 	private HashMap<Integer,MenuItem> menuHash = new HashMap<Integer,MenuItem>();
+	private boolean isNetworkError = false;
 	
 	@Override
 	public void onPause() {
 		EventHolder.unregister(this);
 	    super.onPause();
+	    
+	    ToastMaster.cancelToast();
 	}
 	
 	public void onResume(){
 		super.onResume();
 		EventHolder.register(this);
+		
+		App.setNetworkError(false);
 	}
 	
 	@Override
@@ -91,6 +95,10 @@ public abstract class BaseActivity extends ActionBarActivity {
 	@Subscribe
 	public void onNetworkError(NetworkErrorEvent event){
 		Log.d(this.getClass().getSimpleName(),"onNetworkError");
-		Toast.makeText(this, "ネットワークに接続できません", Toast.LENGTH_SHORT).show();
+		if(!isNetworkError){
+			ToastMaster.makeText(this, "ネットワークに接続できません", Toast.LENGTH_SHORT).show();
+		}
+		
+		App.setNetworkError(true);
 	}
 }

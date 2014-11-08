@@ -8,14 +8,13 @@ import android.util.Log;
 import android.widget.AbsListView;
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
-import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask.ReloadbleListener;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.ItemAPI;
 
 public class RankingAdapter extends BaseItemAdapter
-implements BaseItemAdapter.Scrollable,ReloadbleListener
+implements BaseItemAdapter.Scrollable,BaseItemAdapter.ReloadbleListener
 {
 	
 	private int mCount = 0;
@@ -27,61 +26,52 @@ implements BaseItemAdapter.Scrollable,ReloadbleListener
        			,fragment
        			,new ArrayList<Item>());
 		   	
-		   	for(int i=0;i<4&&this.getCount()<20;i++){
-		   		readNext(i);
-		   	}
-    }
+		   	onNextPage();
+		   	/**
+	   	for(int i=0;i<4&&this.getCount()<20&&mCount<maxCount;i++){
+	   		try {
+	   			addAll(onSearch());
+	   		}
+	   		catch (Exception e) {
+	   			EventHolder.networkError(e);
+			}
+	   	}
+	   	*/
+	}
 	
 	@Override
 	public List<Item> onReload() throws Exception {
-		try {
-			mCount = 1;
-			maxCount = 34;
-			return ItemAPI.getRankingList(1);
-		} catch (Exception e) {
-			throw e;
-		}
+	    mCount = 0;
+	    maxCount = 34; //楽天WEBサービスの上限値
+	    return onSearch();
 	}
-
+	
 	@Override
-	public void readNext(int total_cnt) {
-		// もう既に読み込み済みの場合はおしまい
-    	if(total_cnt < mCount) return;
+	public List<Item> onSearch() throws Exception {
+		Log.d(this.getClass().getSimpleName(),"onSearch="+mCount);
+		List<Item> list = null;
        	if(mCount < maxCount){
-       		int i = this.readPage(mCount+1);
+       		list = ItemAPI.getRankingList(mCount+1);
+       		int i = list.size();
        		// もう無い場合最終ページをアップデートする
        		if(i<=0){
+	    		Log.d(this.getClass().getSimpleName(),"最後のページに到達="+ mCount);
        			maxCount = mCount;
-       			return;
        		}
        		else{
        			mCount++;
        		}
        	}
+       	return list;
 	}
 	
-	private int readPage(int page){
-   		try{
-   			List<Item> list = ItemAPI.getRankingList(page);
-   			for(Iterator<Item>it=list.iterator();it.hasNext();){
-   				Item item = it.next();
-   				this.add(item);
-   			}
-   			return list.size();
-   		}
-   		catch(Exception e){
-    		EventHolder.networkError(e);
-   			return -1;
-   		}
-   		finally{
-   			notifyDataSetChanged();
-   		}
-		
+	@Override
+	public boolean isMoreScrollable() {
+		return (mCount < maxCount);
 	}
 
 	@Override
 	public String getTitle() {
 		return "ランキング";
 	}
-
 }

@@ -79,7 +79,11 @@ DeleteCategoryListener, OnNewCategoryListener
     @Subscribe
     public void goToSearch(SearchPostEvent event){
     	Log.d(this.getClass().getSimpleName(),"goToSearch");
-	    mViewPager.setCurrentItem(SEARCH_POSITION);
+    	// ちらつき防止
+    	if(mViewPager.getCurrentItem() != SEARCH_POSITION){
+    		mViewPager.setCurrentItem(SEARCH_POSITION);
+    	}
+	    mViewPager.getCurrentFragment().setSelection(0);
     }
 	
 	@Override

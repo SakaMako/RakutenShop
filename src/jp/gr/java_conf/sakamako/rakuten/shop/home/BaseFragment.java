@@ -1,7 +1,7 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.home;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
-import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask.ReloadbleListener;
+import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseItemAdapter.ReloadbleListener;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.FinishReloadEvent;
 import android.os.Bundle;

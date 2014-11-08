@@ -114,6 +114,9 @@ public class EventHolder {
 	 */
 	public static void doSearchItem(SearchParams searchParams) {
 		get().post(new SearchDoEvent(searchParams));
+		
+		// HomeAdapte.goToSearch
+		// 
 		get().post(new SearchPostEvent());
 	}
 
