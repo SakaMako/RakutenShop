@@ -26,7 +26,7 @@ implements BaseItemAdapter.Scrollable,BaseItemAdapter.ReloadbleListener
        			,fragment
        			,new ArrayList<Item>());
 		   	
-		   	onNextPage();
+		   	onNextPage(true);
 		   	/**
 	   	for(int i=0;i<4&&this.getCount()<20&&mCount<maxCount;i++){
 	   		try {

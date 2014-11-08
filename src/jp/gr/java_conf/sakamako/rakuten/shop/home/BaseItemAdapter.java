@@ -59,7 +59,7 @@ implements OnScrollListener,OnItemClickListener{
 		public boolean isMoreScrollable();
 		// 次のページ読み込む実装（実際には各サブクラスでは無く、ここでやってしまっている
 		// 他クラスから呼び出すためにインターフェース実装をしている
-		public void onNextPage();
+		public void onNextPage(boolean isReload);
 	}
 	
 	// Async を使ったローでリング中かのフラグ
@@ -70,13 +70,13 @@ implements OnScrollListener,OnItemClickListener{
 	public final void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
 		if (totalItemCount == firstVisibleItem + visibleItemCount) {
-			onNextPage();
+			onNextPage(false);
 		}
 	}
 	
 	// 追加読み込みにおける AsyncTask の実行
 	// ItemActivity の vertical pager の方からも呼ばれる
-	public final void  onNextPage(){
+	public final void  onNextPage(boolean isReload){
 		
 		if(App.isNetworkError()) return;
 		// 他タスクで読み込み中なら一旦あきらめる
@@ -86,7 +86,7 @@ implements OnScrollListener,OnItemClickListener{
 			// 既に最終ページ到達済みであれば止める
 			if(((Scrollable)this).isMoreScrollable()){
 				isLoading = true;
-				ReloadAsyncTask asyncTask = new ReloadAsyncTask(false,(ReloadbleListener)this);
+				ReloadAsyncTask asyncTask = new ReloadAsyncTask(isReload,(ReloadbleListener)this);
 				asyncTask.execute();
 			}
 		}
@@ -119,12 +119,17 @@ implements OnScrollListener,OnItemClickListener{
 	// 読み込み完了後の実装
 	// 各サブクラスでは無く、ここでやってしまう
 	public final void onPostReload(boolean isReload,List<Item>result){
+		Log.d(this.getClass().getSimpleName(),"onPostReload="+isReload);
 		if(isReload){
+			Log.d(this.getClass().getSimpleName(),"onPostReload-clear");
+
 			this.clear();
 		}
 		if(result != null){
 			this.addAll(result);
 		}
+		Log.d(this.getClass().getSimpleName(),"onPostReload-notiftyDataSetChanged");
+
 		this.notifyDataSetChanged();
 		
 		if(isReload){

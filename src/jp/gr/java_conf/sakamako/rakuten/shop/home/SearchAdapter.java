@@ -58,7 +58,7 @@ implements BaseItemAdapter.Scrollable,BaseItemAdapter.ReloadbleListener
 		private void initSearch() {
 		    mCount = 0;
 		    maxCount = 100; //楽天WEBサービスの上限値
-		    onNextPage();
+		    onNextPage(true);
 			//ReloadAsyncTask asyncTask = new ReloadAsyncTask(true,(ReloadbleListener)this);
 			//asyncTask.execute();
 		}
