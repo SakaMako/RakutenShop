@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.squareup.otto.Subscribe;
+
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
 import jp.gr.java_conf.sakamako.rakuten.shop.BaseActivity;
 import jp.gr.java_conf.sakamako.rakuten.shop.dialog.DeleteCategoryDialog.DeleteCategoryListener;
 import jp.gr.java_conf.sakamako.rakuten.shop.dialog.NewCategoryDialog.OnNewCategoryListener;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.SearchPostEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.SearchParams;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory.Category;
@@ -73,9 +76,10 @@ DeleteCategoryListener, OnNewCategoryListener
     	}
     }
     
-    public void search(SearchParams searchParams){
-        ((SearchFragment)mList.get(SEARCH_POSITION)).search(searchParams);
-        mViewPager.setCurrentItem(SEARCH_POSITION);
+    @Subscribe
+    public void goToSearch(SearchPostEvent event){
+    	Log.d(this.getClass().getSimpleName(),"goToSearch");
+	    mViewPager.setCurrentItem(SEARCH_POSITION);
     }
 	
 	@Override
@@ -135,33 +139,18 @@ DeleteCategoryListener, OnNewCategoryListener
 		mViewPager.setCurrentItem(currentItem-1);
 	}
 	
-	public int replace(){
+	public final int replace(){
 		Log.d(this.getClass().getSimpleName(),"replace start ----------------------------");
 		int pos = mViewPager.getCurrentItem();
-		Log.d(this.getClass().getSimpleName(),"replace pos=" + pos);
-		BaseFragment oldFragment = (BaseFragment) this.getItem(pos);
-		
-		Log.d(this.getClass().getSimpleName(),"replace type=" + oldFragment.getType());
-		oldFragment.setType(oldFragment.getReverseType());
-		Log.d(this.getClass().getSimpleName(),"replace type=" + oldFragment.getType());
+		BaseFragment fragment = (BaseFragment) this.getItem(pos);
+		fragment.setType(fragment.getReverseType());
         mActivity.getSupportFragmentManager().beginTransaction()
-        .detach(oldFragment)
-        .attach(oldFragment)
+        .detach(fragment)
+        .attach(fragment)
         .commit();
-        BaseFragment newFragment = oldFragment;
-        
-/**
-		BaseFragment newFragment = (BaseFragment) oldFragment.replace();
-		newFragment.setInitPosition(oldFragment.getVisiblePosition());
-		FragmentManager manager = mActivity.getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.remove(oldFragment);
-        transaction.commit();
-        mList.set(pos, newFragment);
-        */
 		notifyDataSetChanged();
 		
 		Log.d(this.getClass().getSimpleName(),"replace end ----------------------------");
-		return newFragment.getType();
+		return fragment.getType();
 	}
 }

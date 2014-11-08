@@ -1,22 +1,16 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.home;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.dom4j.DocumentException;
-import org.xml.sax.SAXException;
-
 import com.squareup.otto.Subscribe;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask;
 import jp.gr.java_conf.sakamako.rakuten.shop.async.ReloadAsyncTask.ReloadbleListener;
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.SearchDoEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.FinishReloadEvent;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.ItemAPI;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.SearchParams;
@@ -42,7 +36,7 @@ implements BaseItemAdapter.Scrollable,ReloadbleListener
 	       			,new ArrayList<Item>());
 	       	Log.d("SearchAdpter","インスタンスの生成");
 	       	this.mSearchParams = searchParams;
-	       	readNext(0);
+	       	doSearch();
 	    }		
 		
 		public SearchParams getSearchParams() {
@@ -51,6 +45,18 @@ implements BaseItemAdapter.Scrollable,ReloadbleListener
 
 		public void setSearchParams(SearchParams searchParams) {
 			this.mSearchParams = searchParams;
+		}
+		
+		@Subscribe
+		public void doSearch(SearchDoEvent event){
+			Log.d(this.getClass().getSimpleName(),"doSearch="+event.getSearchParams().getSearchString());
+	 		setSearchParams(event.getSearchParams());
+	 		doSearch();
+		}
+		
+		private void doSearch(){
+			ReloadAsyncTask asyncTask = new ReloadAsyncTask((ReloadbleListener)this);
+			asyncTask.execute();
 		}
 		
 		@Override

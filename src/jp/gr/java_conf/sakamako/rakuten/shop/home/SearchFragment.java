@@ -3,7 +3,6 @@ import com.squareup.otto.Subscribe;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.event.FinishReloadEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.SearchParams;
-import android.util.Log;
 
 public class SearchFragment extends BaseFragment 
 {	
@@ -14,27 +13,6 @@ public class SearchFragment extends BaseFragment
 	private SearchFragment(int type){
 		super(type);
 		super.setAdapter(new SearchAdapter(this,new SearchParams("")));
-	}
-	
-	private SearchFragment(int type,BaseItemAdapter adapter){
-		super(type);
-		super.setAdapter(adapter);
-	}
-	
-	/**
-	@Override
-	public SearchFragment replace() {
-		int type = this.getReverseType();
-		SearchFragment fragment = new SearchFragment(type,getAdapter());
-		return fragment;
-	}
-	*/
-	
- 	public void search(SearchParams searchParams){
- 		Log.d("SearchFragment","search = " + searchParams.getSearchString());
- 		
-		BaseItemAdapter adapter = new SearchAdapter(this,searchParams);
-		super.setAdapter(adapter);
 	}
  	
 	//---------------------------------------------------------------

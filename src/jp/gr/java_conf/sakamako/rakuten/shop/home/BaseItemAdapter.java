@@ -30,7 +30,7 @@ public abstract class BaseItemAdapter extends ArrayAdapter<Item>
 implements OnScrollListener,OnItemClickListener{
 	
 	private BaseFragment mFragment = null;
-	
+
 	protected BaseItemAdapter(Context context, int resource,
 			BaseFragment fragment, ArrayList<Item> myItem) {
 		super(context, resource,myItem);
@@ -39,19 +39,13 @@ implements OnScrollListener,OnItemClickListener{
 
 	public abstract String getTitle() ;
 	
-	/**
-	public final void resetFragment(BaseFragment fragment){
-		mFragment = fragment;
-	}
-	*/
-	
 	public final void setVisiblePosition(int pos){
 		mFragment.setSelection(pos);
 	}
 
 	@Override  
 	public View getView(int position, View convertView, ViewGroup parent) {
-		Log.d(this.getClass().getSimpleName(),"getView="+position);
+		//Log.d(this.getClass().getSimpleName(),"getView="+position);
 		Item item = this.getItem(position);
 		return mFragment.getListView().getView(item,convertView,parent);
 	}

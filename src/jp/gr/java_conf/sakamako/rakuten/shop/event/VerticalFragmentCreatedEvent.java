@@ -3,12 +3,12 @@ package jp.gr.java_conf.sakamako.rakuten.shop.event;
 import android.support.v4.view.DirectionalViewPager;
 import jp.gr.java_conf.sakamako.rakuten.shop.item.ItemVerticalAdapter;
 
-public class VerticalFragmentCreated {
+public class VerticalFragmentCreatedEvent {
 
 	private DirectionalViewPager mVerticalPager = null;
 	private ItemVerticalAdapter mVerticalAdapter = null;
 
-	public VerticalFragmentCreated(DirectionalViewPager verticalPager,
+	public VerticalFragmentCreatedEvent(DirectionalViewPager verticalPager,
 			ItemVerticalAdapter verticalAdapter) {
 		mVerticalPager = verticalPager;
 		mVerticalAdapter = verticalAdapter;

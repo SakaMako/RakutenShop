@@ -28,32 +28,34 @@ public class EventHolder {
 		  EventHolder.get().unregister(o);
 	  }
 	  
-	  public static class BusEx extends Bus{
+		//-----------------------------------------------------
+	  private static class BusEx extends Bus{
 
-		public BusEx(ThreadEnforcer main) {
+		private BusEx(ThreadEnforcer main) {
 			super(main);
 		}
 		
-		public BusEx() {
+		private BusEx() {
 			super();
 		}
-
+		
+		// デバッグ用にオーバーライドしておく
 		@Override
 		public void register(Object o){
 			super.register(o);
-			Log.d(this.getClass().getSimpleName(),"register="+ o.getClass().getSimpleName());
-			
+			Log.d(this.getClass().getSimpleName(),"register="+ o.getClass().getSimpleName());	
+		}
+		@Override
+		public void unregister(Object o){
+			Log.d(this.getClass().getSimpleName(),"unregister="+ o.getClass().getSimpleName());	
+			super.unregister(o);
 		}
 	  }
+		//-----------------------------------------------------
 
 	  // HomeActiivity から ItemActivity を呼び出し
 	  public static void showItemDetail(Item item) {
 		  get().post(new ShowItemDetailEvent(item));
-	  }
-
-	  // 検索窓からのサーチ
-	  public static void searchItem(SearchParams searchParams) {
-		  get().post(searchParams);
 	  }
 
 	  // タブの選択
@@ -76,21 +78,43 @@ public class EventHolder {
 		  get().post(new NewWebFragmentEvent(url));
 	  }
 
-	  // 縦方向のフラグメントの作成
+	  /**
+	   * 縦方向のフラグメントの作成
+	   * ItemVerticalFragment.onActivityCreated
+	   * |
+	   * ItemHorizontalAdapter.onPostCreateView
+	   */
 	  public static void createVirticalFragment(
 			DirectionalViewPager verticalPager,
 			ItemVerticalAdapter verticalAdapter) {
-		  get().post(new VerticalFragmentCreated(verticalPager,verticalAdapter));
+		  get().post(new VerticalFragmentCreatedEvent(verticalPager,verticalAdapter));
 	  }
 
 	  // ItemActivity の終了
 	  public static void finishItemActivity() {
-		get().post(new FinishItemActivity());
+		get().post(new ItemActivityFinishEvent());
 	  }
 
 	  // 追加読み込みが完了したら
 	  public static void finishReload() {
 		  get().post(new FinishReloadEvent());
 	  }
+
+	/**
+	 * 検索窓からのサーチ
+	 * @link HomeActivity.onSeachItem
+	 */
+	public static void searchItem(SearchParams searchParams) {
+		get().post(new SearchPreEvent(searchParams));
+	}
+	
+	/**
+	 * 検索
+	 * @link SearchAdapter.doSearch
+	 */
+	public static void doSearchItem(SearchParams searchParams) {
+		get().post(new SearchDoEvent(searchParams));
+		get().post(new SearchPostEvent());
+	}
 
 }

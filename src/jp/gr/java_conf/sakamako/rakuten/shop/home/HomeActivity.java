@@ -9,11 +9,14 @@ import jp.gr.java_conf.sakamako.rakuten.shop.dialog.DeleteCategoryDialog;
 import jp.gr.java_conf.sakamako.rakuten.shop.dialog.NewCategoryDialog;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.SearchPreEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.ShowItemDetailEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.TabChangedEvent;
+import jp.gr.java_conf.sakamako.rakuten.shop.item.ItemActivity;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.SearchParams;
 import jp.gr.java_conf.sakamako.view.CustomSearchView;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -75,7 +78,7 @@ public class HomeActivity<mViewPager> extends BaseActivity
         
         // onCreateOptionsMenu の前に呼ばないと setQuery がうまくいかない
         mSearchView = (CustomSearchView) actionBarView.findViewById(R.id.action_bar_search);
-	}
+    }
 	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -126,10 +129,18 @@ public class HomeActivity<mViewPager> extends BaseActivity
         	mDrawerList.setAdapter(adapter);
         	mDrawerList.setOnItemClickListener(adapter);
         }
+        
+        EventHolder.register(mViewPager.getAdapter());
 	}
-
-
 	
+	@Override
+	public void onPause() {
+	    EventHolder.unregister(mViewPager.getAdapter());
+	    super.onPause();
+	}
+	
+	//----------------------------------------------------------------------
+
 	@Override
 	// もしバックボタンを押されても左端で無ければ一旦左端に戻る
 	public boolean dispatchKeyEvent(KeyEvent event) {
@@ -188,35 +199,6 @@ public class HomeActivity<mViewPager> extends BaseActivity
 		}
 		return true;
 	}
-    
-    @Subscribe
-	// 検索フラグメントへの遷移
-	public void onSearchItem(SearchParams searchParams){
-		searchParams.setZaiko(isZaikoCheck);
-		
-		HomeAdapter homeAdapter = (HomeAdapter) mViewPager.getAdapter();
-		homeAdapter.search(searchParams);
-    	if(!searchParams.getSearchString().isEmpty()){
-    		Log.d(this.getClass().getSimpleName(),"onSearchItem="+searchParams.getSearchString());
-    		// 検索ワードを検索窓にセット
-    		Log.d(this.getClass().getSimpleName(),"onSearchItem="+mSearchView.getQuery());
-
-    		mSearchView.setQuery(searchParams.getSearchString(), false);
-    		
-    		Log.d(this.getClass().getSimpleName(),"onSearchItem="+mSearchView.getQuery());
-
-    	}
-    	
-		if(isZaikoCheck){
-			getMenuItem(MENU_ID_INVENTORY).setIcon(R.drawable.ic_action_location_found);
-		}
-		else{
-			getMenuItem(MENU_ID_INVENTORY).setIcon(R.drawable.ic_action_location_searching);
-		}
-    	mSearchView.clearFocus();
-    	mViewPager.getCurrentFragment().requestListViewFocus();
-		mDrawerLayout.closeDrawer(mDrawerList);
-	}
 	
     // Glid or List アイコンの切り替え
 	private void setListTypeIcon(int type){
@@ -229,6 +211,29 @@ public class HomeActivity<mViewPager> extends BaseActivity
 			break;
 		}
 	}
+	
+	//----------------------------------------------------------------------
+    
+    @Subscribe
+	// 検索フラグメントへの遷移
+	public void onSearchItem(SearchPreEvent event){
+    	SearchParams searchParams = event.getSearchParams();
+		searchParams.setZaiko(isZaikoCheck);
+		EventHolder.doSearchItem(searchParams);
+    	if(!searchParams.getSearchString().isEmpty()){
+    		mSearchView.setQuery(searchParams.getSearchString(), false);
+    	}
+		if(isZaikoCheck){
+			getMenuItem(MENU_ID_INVENTORY).setIcon(R.drawable.ic_action_location_found);
+		}
+		else{
+			getMenuItem(MENU_ID_INVENTORY).setIcon(R.drawable.ic_action_location_searching);
+		}
+    	mSearchView.clearFocus();
+    	mViewPager.getCurrentFragment().requestListViewFocus();
+		mDrawerLayout.closeDrawer(mDrawerList);
+	}
+
 	
 	@Subscribe
 	public void onNetworkError(NetworkErrorEvent event){
@@ -256,8 +261,10 @@ public class HomeActivity<mViewPager> extends BaseActivity
 	@Subscribe
 	public final void onShowItemDetail(ShowItemDetailEvent event){
 		App.setCurrentAdapter(mViewPager.getCurrentFragment().getAdapter());
-		super.showItemDetail(event.getmItem());
-	}
-	
 
+		Intent intent = new Intent(getApplicationContext(),ItemActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.putExtra("item",event.getmItem());
+		startActivity(intent);
+	}
 }

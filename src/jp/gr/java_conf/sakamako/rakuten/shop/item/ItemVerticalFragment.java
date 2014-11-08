@@ -1,7 +1,7 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.item;
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.VerticalFragmentCreated;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.VerticalFragmentCreatedEvent;
 import android.os.Bundle;
 import android.support.v4.view.DirectionalViewPager;
 import android.util.Log;

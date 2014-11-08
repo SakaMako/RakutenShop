@@ -11,7 +11,7 @@ import com.squareup.otto.Subscribe;
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.NewWebFragmentEvent;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.VerticalFragmentCreated;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.VerticalFragmentCreatedEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.VerticalItemSelectedEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseItemAdapter;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
@@ -60,7 +60,7 @@ implements OnPageChangeListener
 	}
 
 	@Subscribe
-	public void onPostCreateView(VerticalFragmentCreated event) {
+	public void onPostCreateView(VerticalFragmentCreatedEvent event) {
 		
 		ItemVerticalAdapter itemVerticalAdapter = event.getVerticalAdapter();
 		DirectionalViewPager verticalPager = event.getVerticalPager();
@@ -79,8 +79,6 @@ implements OnPageChangeListener
 		verticalPager.setOnPageChangeListener(itemVerticalAdapter);
         verticalPager.setCurrentItem(pos);
         EventHolder.selectVerticalItem(mItem);
-
-        
 	}
 	//----------------------------------------------------------
 	
@@ -115,14 +113,8 @@ implements OnPageChangeListener
 	//----------------------------------------------------------
 	  @Subscribe
 	  public void onVerticalPageSelected(VerticalItemSelectedEvent event) {
-		  //int pos = event.getPosition();
 		Log.d(this.getClass().getSimpleName(),"onVertincalPageSelected="+event.getItem().getName());
-			//Log.d(this.getClass().getSimpleName(),"ItemWebFragmentの作り直し");
-		//webFragment = null;
-		//webFragment = new ItemWebFragment();
-		
-		//mItem  = App.getCurrentAdapter().getItem(pos);
-		  mItem = event.getItem();
+		mItem = event.getItem();
 		if(mItem.getIsAvailability() == Item.AVALIABILITY_OK){
 			if(mList.size() == 2){
 				Log.d(this.getClass().getSimpleName(),"ItemWebFragmentの生成");

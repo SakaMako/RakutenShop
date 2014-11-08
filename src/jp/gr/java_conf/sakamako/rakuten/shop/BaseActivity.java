@@ -69,19 +69,6 @@ public abstract class BaseActivity extends ActionBarActivity {
 	protected final MenuItem getMenuItem(int id){
 		return menuHash.get(new Integer(id));
 	}
-		
-	public void showItemDetail(Item item){
-		Intent intent = new Intent(getApplicationContext(),ItemActivity.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		intent.putExtra("item",item);
-		startActivity(intent);
-	}
-	
-	// ダイアログの表示
-	public final void showDialog(String title,DialogFragment dialog){
-        FragmentManager manager = getSupportFragmentManager();
-        dialog.show(manager, title);
-	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item){
@@ -93,6 +80,12 @@ public abstract class BaseActivity extends ActionBarActivity {
 			break;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	// ダイアログの表示
+	public final void showDialog(String title,DialogFragment dialog){
+        FragmentManager manager = getSupportFragmentManager();
+        dialog.show(manager, title);
 	}
 	
 	@Subscribe

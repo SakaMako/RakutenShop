@@ -74,9 +74,6 @@ public abstract class BaseFragment extends Fragment
 		((AbsListView)mView).setAdapter(mAdapter);        
 	    ((BaseListView)mView).onAttachedFragment(this);
         
-	    // Type が変わった場合に備えて入れ替え
-        //mAdapter.resetFragment(this);
-        
     	Log.d(this.getClass().getSimpleName(),"initPosition="+mInitPosition);
 		if(mInitPosition >= 0){
 			this.setSelection(mInitPosition);
@@ -96,12 +93,12 @@ public abstract class BaseFragment extends Fragment
 	public void onResume(){
 		super.onResume();
 	    EventHolder.register(this);
-	    //EventHolder.register(mView);
+	    EventHolder.register(this.getAdapter());
 	}
 	
 	@Override
 	public void onPause(){
-	    //EventHolder.unregister(mView);
+	    EventHolder.unregister(this.getAdapter());
 	    EventHolder.unregister(this);
 		super.onPause();
 	}
