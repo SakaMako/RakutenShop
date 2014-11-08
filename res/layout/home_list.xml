@@ -5,22 +5,42 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    
-<android.support.v4.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/refresh_swipe"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+	<FrameLayout
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content">
 
-    <jp.gr.java_conf.sakamako.rakuten.shop.home.ItemListView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="fill"
-        android:layout_margin="0dp"
-        android:layout_weight="1"
-        android:padding="0dp" />
+		<android.support.v4.widget.SwipeRefreshLayout
+    		xmlns:android="http://schemas.android.com/apk/res/android"
+    		android:id="@+id/refresh_swipe"
+    		android:layout_width="match_parent"
+    		android:layout_height="match_parent">
 
-    </android.support.v4.widget.SwipeRefreshLayout>
- 
+   		 	<jp.gr.java_conf.sakamako.rakuten.shop.home.ItemListView
+        		android:id="@+id/list"
+        		android:layout_width="match_parent"
+        		android:layout_height="0dp"
+        		android:layout_gravity="fill"
+        		android:layout_margin="0dp"
+        		android:layout_weight="1"
+        		android:padding="0dp" />
+
+	    </android.support.v4.widget.SwipeRefreshLayout>
+	    
+		<TextView
+		    android:id="@+id/cnt"
+		    android:layout_width="80dp"
+	    	android:layout_height="wrap_content"
+	    	android:background="@color/cnt_background"
+	    	android:textColor="@color/cnt_textcolor"
+	    	android:layout_gravity="bottom|right"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="3dp"
+            android:textSize="15sp"
+            android:gravity="right"
+            android:singleLine="true"
+            android:text="00000/00000"
+		    />
+	    
+
+	</FrameLayout>
 </LinearLayout>

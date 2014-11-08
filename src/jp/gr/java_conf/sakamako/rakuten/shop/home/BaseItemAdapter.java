@@ -72,6 +72,13 @@ implements OnScrollListener,OnItemClickListener{
 		if (totalItemCount == firstVisibleItem + visibleItemCount) {
 			onNextPage(false);
 		}
+    	if(this instanceof Countable){
+    		Log.d(this.getClass().getSimpleName(),"onScroll="+((Countable)this).getAllCount());
+    		mFragment.updateCount(
+    				mFragment.getListView().getLastVisiblePosition()+1
+    				,((Countable)this).getAllCount()
+    				);
+    	}
 	}
 	
 	// 追加読み込みにおける AsyncTask の実行
@@ -94,7 +101,11 @@ implements OnScrollListener,OnItemClickListener{
 
 	@Override
 	public final void onScrollStateChanged(AbsListView view, int scrollState) {
-		// 何もしない
+
+	}
+	    
+	public interface Countable{
+		public int getAllCount();
 	}
 	
 	//---------------------------------------------------------------------
@@ -174,6 +185,7 @@ implements OnScrollListener,OnItemClickListener{
 		    Log.d(this.getClass().getSimpleName(), "onPostExecute");
 		    if(ex != null){
 		    	Log.d(this.getClass().getSimpleName(), "onPostExecute-Error");
+		    	ex.printStackTrace();
 	    		EventHolder.networkError(ex);
 		    }
 		    mListener.onPostReload(mIsReload ,result);

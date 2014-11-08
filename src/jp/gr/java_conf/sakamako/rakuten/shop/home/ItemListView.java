@@ -84,5 +84,4 @@ implements BaseListView{
 		}
 		return view;
 	}
-
 }

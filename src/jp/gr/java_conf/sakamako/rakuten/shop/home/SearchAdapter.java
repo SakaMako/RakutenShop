@@ -12,6 +12,7 @@ import jp.gr.java_conf.sakamako.rakuten.shop.event.SearchDoEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.ItemAPI;
+import jp.gr.java_conf.sakamako.rakuten.shop.model.ItemAPI.ResultHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.SearchParams;
 import android.annotation.SuppressLint;
 import android.util.Log;
@@ -21,12 +22,13 @@ import android.util.Log;
  * @author makoto.sakamoto
  */
 public class SearchAdapter extends BaseItemAdapter 
-implements BaseItemAdapter.Scrollable,BaseItemAdapter.ReloadbleListener
+implements BaseItemAdapter.Scrollable,BaseItemAdapter.ReloadbleListener,BaseItemAdapter.Countable
 {
 
 	    private int mCount = 0;
 	    private int maxCount = 100; //楽天WEBサービスの上限値
 	    private SearchParams mSearchParams = null;
+	    private int allCount = 0;
 
 		public SearchAdapter(BaseFragment fragment,SearchParams searchParams){
 	       	super(App.getAppContext()
@@ -46,6 +48,11 @@ implements BaseItemAdapter.Scrollable,BaseItemAdapter.ReloadbleListener
 			this.mSearchParams = searchParams;
 		}
 		
+		@Override
+		public int getAllCount(){
+			return allCount;
+		}
+		
 		@Subscribe
 		//　他から呼ばれた用
 		public void doSearch(SearchDoEvent event){
@@ -59,8 +66,6 @@ implements BaseItemAdapter.Scrollable,BaseItemAdapter.ReloadbleListener
 		    mCount = 0;
 		    maxCount = 100; //楽天WEBサービスの上限値
 		    onNextPage(true);
-			//ReloadAsyncTask asyncTask = new ReloadAsyncTask(true,(ReloadbleListener)this);
-			//asyncTask.execute();
 		}
 		
 		@Override
@@ -73,10 +78,11 @@ implements BaseItemAdapter.Scrollable,BaseItemAdapter.ReloadbleListener
 		@Override
 		public List<Item> onSearch() throws Exception{
 			List<Item> list = null;
-			//if(total_cnt < mCount) return list;
 		    	
 		    if(mCount < maxCount){
-		    	list = ItemAPI.getItemList(mCount+1, mSearchParams);
+		    	ResultHolder ret = ItemAPI.getItemList(mCount+1, mSearchParams);
+		    	allCount = ret.getCnt();
+		    	list = ret.getList();
 		    	int i = list.size();
 		    	// もう無い場合最終ページをアップデートする
 		    	if(i<=0){

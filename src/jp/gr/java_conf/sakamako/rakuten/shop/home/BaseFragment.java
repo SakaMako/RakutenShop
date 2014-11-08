@@ -1,6 +1,9 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.home;
 
+import java.text.NumberFormat;
+
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
+import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseItemAdapter.Countable;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseItemAdapter.ReloadbleListener;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.FinishReloadEvent;
@@ -12,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.TextView;
 
 public abstract class BaseFragment extends Fragment
 	{
@@ -29,6 +33,7 @@ public abstract class BaseFragment extends Fragment
 	private BaseItemAdapter mAdapter = null;
 	private int mInitPosition = -1;
 	private SwipeRefreshLayout mSwipeRefreshLayout =null;
+	private TextView mCntView = null;
 	//--------------------------------------------------------------------
 	
 	public BaseFragment(int type) {
@@ -63,7 +68,7 @@ public abstract class BaseFragment extends Fragment
 	    mView = (AbsListView)v.findViewById(R.id.list);
 
 		mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refresh_swipe);
-
+		mCntView = (TextView)v.findViewById(R.id.cnt);
 		
 		return v;
 	}
@@ -86,6 +91,17 @@ public abstract class BaseFragment extends Fragment
 		else{
 			mSwipeRefreshLayout.setEnabled(false);
 		}
+		
+		if(mCntView != null){
+			if(mAdapter instanceof Countable){
+				mCntView.setVisibility(View.VISIBLE);
+			}
+			else{
+				mCntView.setVisibility(View.INVISIBLE);
+			}
+		}
+		
+		
 		Log.d(this.getClass().getSimpleName(),"end-onActivityCreated");
 	}
 	
@@ -94,6 +110,10 @@ public abstract class BaseFragment extends Fragment
 		super.onResume();
 	    EventHolder.register(this);
 	    EventHolder.register(this.getAdapter());
+	    
+	    if(mAdapter instanceof Countable){
+	    	//updateCount(1,((Countable)mAdapter).getAllCount());
+	    }
 	}
 	
 	@Override
@@ -167,6 +187,18 @@ public abstract class BaseFragment extends Fragment
 	protected void onFinishReload(FinishReloadEvent event){
 		this.setInitPosition(0);
 		mSwipeRefreshLayout.setRefreshing(false);
+	}
+	
+	public void updateCount(int lastVisiblePosition, int allCount) {
+		
+		Log.d(this.getClass().getSimpleName(),"updateCount="+lastVisiblePosition+"/"+allCount);
+		
+		String last = String.format("%1$,5d", lastVisiblePosition);
+		String all = String.format("%1$,5d", allCount);
+
+		if(mCntView != null ){
+			mCntView.setText(last + "/" + all);
+		}
 	}
 
 

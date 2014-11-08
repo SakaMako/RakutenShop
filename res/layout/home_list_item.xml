@@ -2,26 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent" android:layout_height="60dip"
     android:padding="6dip">
-             <FrameLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-	>
-   <com.android.volley.toolbox.NetworkImageView android:id="@+id/recent_item_icon"
-		android:layout_width="wrap_content"  
-        android:layout_height="fill_parent"
-        android:layout_marginRight="2dip"/>   
-        
-
-               <ImageView
-                android:id="@+id/icon_avaliability"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="bottom|right"
-                android:layout_marginRight="3dp"
-                android:layout_marginBottom="3dp"
-                android:src="@android:drawable/ic_delete" />
-       </FrameLayout>
-   <LinearLayout
+    
+    <FrameLayout
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content">
+		
+		<com.android.volley.toolbox.NetworkImageView android:id="@+id/recent_item_icon"
+			android:layout_width="wrap_content"  
+        	android:layout_height="fill_parent"
+        	android:layout_marginRight="2dip"/>
+		   
+		<ImageView
+            android:id="@+id/icon_avaliability"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="3dp"
+            android:src="@android:drawable/ic_delete" />
+		
+	</FrameLayout>
+	
+	<LinearLayout
        android:id="@+id/recent_item_frame"
        android:clickable="true"
        android:layout_width="fill_parent"
@@ -40,6 +42,6 @@
        		android:textColor="#000000"
        		android:layout_weight="1"/>
        
-          </LinearLayout>
+	</LinearLayout>
 </LinearLayout>  
 

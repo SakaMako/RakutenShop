@@ -35,7 +35,7 @@ public class ItemAPI {
 	public static Item getItem(Item item) throws Exception {
 		SearchParams searchParams = new SearchParams("");
 		searchParams.setItemCode(item.getCode());
-		List<Item> itemList = getItemList(1,searchParams);
+		List<Item> itemList = getItemList(1,searchParams).getList();
 		if(itemList.isEmpty()){
 			return null;
 		}
@@ -43,8 +43,24 @@ public class ItemAPI {
 		return itemList.get(0);
 	}
 	
-	public static List<Item> getItemList(int page,SearchParams searchParams) throws Exception {
+	public static class ResultHolder{
+		int pCnt = 0;
+		List<Item> pList = null;
+		public ResultHolder(int cnt,List<Item>list){
+			pCnt = cnt;
+			pList = list;
+		}
+		public int getCnt(){
+			return pCnt;
+		}
+		public List<Item> getList(){
+			return pList;
+		}
+	}
+	
+	public static ResultHolder getItemList(int page,SearchParams searchParams) throws Exception {
 		List<Item> list = new ArrayList<Item>();
+		int cnt = 0;
 		try{
 			String requestPath = "https://app.rakuten.co.jp/services/api/IchibaItem/Search/20140222"
 					+ "?applicationId="+ App.getDeveloperId()
@@ -77,6 +93,11 @@ public class ItemAPI {
 			URL requestUrl = new URL(requestPath);			
 			SAXReader reader = new SAXReader();
 			Document document = reader.read(requestUrl);
+			
+			// 件数の取得
+			Node cnode = document.selectSingleNode("/root/count");
+			cnt = Integer.parseInt(cnode.getText());
+			Log.d(ItemAPI.class.getSimpleName(),"all_cnt"+cnt);
 			
 			List<? extends Node> node = document.selectNodes("/root/Items/Item");
 			Log.d(ItemAPI.class.getSimpleName(), "取得した商品数=" + node.size()+"です");
@@ -111,7 +132,7 @@ public class ItemAPI {
 			throw e;
 		} 
 		
-		return list;
+		return new ResultHolder(cnt,list);
 	}
 
 	// page は１オリジン

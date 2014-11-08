@@ -9,4 +9,5 @@ public interface BaseListView {
 	public void onAttachedFragment(BaseFragment fragment);
 	public View getView(Item item, View convertView, ViewGroup parent);
 	public void invalidateViews ();
+	public int getLastVisiblePosition();
 }
