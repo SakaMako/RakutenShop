@@ -14,11 +14,11 @@
 
                <ImageView
                 android:id="@+id/icon_avaliability"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_gravity="bottom|right"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="3dp"
                 android:src="@android:drawable/ic_delete" />
        </FrameLayout>
    <LinearLayout

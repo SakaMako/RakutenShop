@@ -88,7 +88,8 @@ public class HomeActivity<mViewPager> extends BaseActivity
     	addMenu(menu,MENU_ID_ADD,"追加",R.drawable.ic_action_new_label);
     	
     	// 最初の１回だけでは強制的に０にしてメニューを初期化する
-    	EventHolder.changeTab(0);
+    	// Otto への register はこの後の onResume なので強制的にイベントを作成して呼び出す
+    	onTabChanged(new TabChangedEvent(0));
     	return true;
     }
 	
@@ -233,7 +234,6 @@ public class HomeActivity<mViewPager> extends BaseActivity
     	mViewPager.getCurrentFragment().requestListViewFocus();
 		mDrawerLayout.closeDrawer(mDrawerList);
 	}
-
 	
 	@Subscribe
 	public void onNetworkError(NetworkErrorEvent event){
