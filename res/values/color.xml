@@ -14,11 +14,14 @@
     <item name="darkorange" type="color">#FFFF8800</item>
     <item name="darkred" type="color">#FFCC0000</item>
     <item name="white" type="color">#FFFFFFFF</item>
-    <item name="action_bar_text" type="color">#FF000000</item>
     
+    <item name="action_bar_text" type="color">#FF000000</item>
     <item name="side_arrow_background" type="color">@color/orange</item>
     <item name="cnt_background" type="color">@color/red</item>
-    <item name="cnt_textcolor" type="color">@color/white</item>  
+    <item name="cnt_textcolor" type="color">@color/white</item>
+    <item name="item_detail_background" type="color">#FFDDDDDD</item>
+    <item name="item_detail_shadow" type="color">#FFBBBBBB</item>
+    
  
     <integer-array name="androidcolors">
         <item>@color/blue</item>

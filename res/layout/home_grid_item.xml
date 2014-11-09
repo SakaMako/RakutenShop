@@ -4,17 +4,19 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
 	>
-<com.android.volley.toolbox.NetworkImageView android:id="@+id/item_image"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"/>
+	
+	<com.android.volley.toolbox.NetworkImageView android:id="@+id/item_image"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"/>
 
-               <ImageView
-                android:id="@+id/icon_avaliability"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="bottom|right"
-                android:layout_marginRight="3dp"
-                android:layout_marginBottom="3dp"
-                android:background="#FFFFFFFF"
-                android:src="@android:drawable/ic_delete" />
-       </FrameLayout>
+	<ImageView
+        android:id="@+id/icon_avaliability"
+        android:layout_width="@dimen/available_icon_size"
+        android:layout_height="@dimen/available_icon_size"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="@dimen/available_icon_margin"
+        android:layout_marginBottom="@dimen/available_icon_margin"
+        android:background="#FFFFFFFF"
+        android:src="@android:drawable/ic_delete" />
+
+</FrameLayout>

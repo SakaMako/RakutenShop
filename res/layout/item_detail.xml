@@ -3,14 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-            android:background="#ffffff"
-    
+    android:background="@color/item_detail_background"
+    android:paddingTop="@dimen/item_detail_margin"
+    android:paddingBottom="@dimen/item_detail_margin"
     android:orientation="horizontal" >
 
+
     <RelativeLayout
-        android:layout_width="0dp"
+		android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/item_detail_margin"
+        android:layout_marginRight="0dp"
         android:layout_weight="1"
         android:background="#ffffff"
         android:orientation="vertical" >
@@ -43,8 +46,8 @@
             android:layout_height="300dip"
             android:scaleType="centerCrop"
             android:cropToPadding="true"
-                            android:layout_below="@+id/item_detail_category"
-                                android:layout_marginTop="10dip"
+            android:layout_below="@+id/item_detail_category"
+            android:layout_marginTop="10dip"
             android:layout_centerHorizontal="true" />
 
         <TextView
@@ -52,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/item_image"
-                          android:layout_marginTop="10dip"
+                android:layout_marginTop="10dip"
                 android:layout_marginLeft="10dip"
                 android:text="-------------" />
 
@@ -61,11 +64,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/item_name2"
-                                android:layout_marginTop="10dip"
-                                android:layout_marginLeft="10dip"
-                
+                android:layout_marginTop="10dip"
+                android:layout_marginLeft="10dip"
                 android:text="------" />
+            
+     <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/item_detail_shadow"/>
+            
+            
     </RelativeLayout>
+    
+   <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="@color/item_detail_shadow"/>
+    
 
     <ImageView
         android:id="@+id/right_slide_allow"

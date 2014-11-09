@@ -4,5 +4,8 @@
     <dimen name="activity_horizontal_margin">0dp</dimen>
     <dimen name="activity_vertical_margin">0dp</dimen>
     <dimen name="progressbar_vertical_margin">-7dp</dimen>
-
+    <dimen name="item_detail_margin">15dp</dimen>
+    <dimen name="available_icon_size">20dp</dimen>
+    <dimen name="available_icon_margin">3dp</dimen>
+    
 </resources>
