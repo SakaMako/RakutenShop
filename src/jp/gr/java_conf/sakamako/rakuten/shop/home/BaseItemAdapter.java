@@ -124,6 +124,8 @@ implements OnScrollListener,OnItemClickListener{
 		public List<Item> onReload() throws Exception;
 		public List<Item> onSearch() throws Exception;
 		public void onPostReload(boolean isReload,List<Item> result);
+		public void completeReload(boolean isReload);
+
 	}
 	
 	// OnRefreshListener のインターフェース
@@ -138,28 +140,26 @@ implements OnScrollListener,OnItemClickListener{
 	
 	// 読み込み完了後の実装
 	// 各サブクラスでは無く、ここでやってしまう
-	public final void onPostReload(boolean isReload,List<Item>result){
-		Log.d(this.getClass().getSimpleName(),"onPostReload="+isReload);
-		Log.d(this.getClass().getSimpleName(),"onPostReload-add="+result.size());
-
-		if(!(this instanceof MyItemAdapter)){
-			if(isReload){
-				Log.d(this.getClass().getSimpleName(),"onPostReload-clear");
-				this.clear();
-			}
-			if(result != null){
-				Log.d(this.getClass().getSimpleName(),"onPostReload-add="+result.size());
-				this.addAll(result);
-			}
+	public void onPostReload(boolean isReload,List<Item>result){
+		if(isReload){
+			Log.d(this.getClass().getSimpleName(),"onPostReload-clear");
+			this.clear();
 		}
-		Log.d(this.getClass().getSimpleName(),"onPostReload-notiftyDataSetChanged");
+		if(result != null){
+			Log.d(this.getClass().getSimpleName(),"onPostReload-add="+result.size());
+			this.addAll(result);
+		}
 		this.notifyDataSetChanged();
-		
+	}
+	
+	public final void completeReload(boolean isReload){
+
 		if(isReload){
 			Log.d(this.getClass().getSimpleName(),"onPostReload-finishReload");
 			EventHolder.finishReload();
 		}
 		isLoading = false;
+		
 	}
 	//---------------------------------------------------------------------
 	// AsyncTask
@@ -202,6 +202,8 @@ implements OnScrollListener,OnItemClickListener{
 	    		EventHolder.networkError(ex);
 		    }
 		    mListener.onPostReload(mIsReload ,result);
+		    mListener.completeReload(mIsReload);
+
 		}
 		
 

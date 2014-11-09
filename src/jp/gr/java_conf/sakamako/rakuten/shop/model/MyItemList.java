@@ -58,15 +58,6 @@ public class MyItemList extends ArrayList<Item>{
 		return -1;
 	}
 	
-	public Item updateItemWithoutNotify(Item item){
-		int pos = isExists(item);
-		if(pos < 0) return item;
-				
-		super.set(pos, item);
-		
-		return item;
-	}
-	
 	/** 指定された商品があれば更新 */
 	public Item updateItem(Item item){
 		int pos = isExists(item);
