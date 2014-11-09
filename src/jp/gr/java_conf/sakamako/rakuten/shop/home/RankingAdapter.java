@@ -27,16 +27,6 @@ implements BaseItemAdapter.Scrollable,BaseItemAdapter.ReloadbleListener
        			,new ArrayList<Item>());
 		   	
 		   	onNextPage(true);
-		   	/**
-	   	for(int i=0;i<4&&this.getCount()<20&&mCount<maxCount;i++){
-	   		try {
-	   			addAll(onSearch());
-	   		}
-	   		catch (Exception e) {
-	   			EventHolder.networkError(e);
-			}
-	   	}
-	   	*/
 	}
 	
 	@Override

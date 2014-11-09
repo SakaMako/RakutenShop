@@ -140,19 +140,23 @@ implements OnScrollListener,OnItemClickListener{
 	// 各サブクラスでは無く、ここでやってしまう
 	public final void onPostReload(boolean isReload,List<Item>result){
 		Log.d(this.getClass().getSimpleName(),"onPostReload="+isReload);
-		if(isReload){
-			Log.d(this.getClass().getSimpleName(),"onPostReload-clear");
+		Log.d(this.getClass().getSimpleName(),"onPostReload-add="+result.size());
 
-			this.clear();
-		}
-		if(result != null){
-			this.addAll(result);
+		if(!(this instanceof MyItemAdapter)){
+			if(isReload){
+				Log.d(this.getClass().getSimpleName(),"onPostReload-clear");
+				this.clear();
+			}
+			if(result != null){
+				Log.d(this.getClass().getSimpleName(),"onPostReload-add="+result.size());
+				this.addAll(result);
+			}
 		}
 		Log.d(this.getClass().getSimpleName(),"onPostReload-notiftyDataSetChanged");
-
 		this.notifyDataSetChanged();
 		
 		if(isReload){
+			Log.d(this.getClass().getSimpleName(),"onPostReload-finishReload");
 			EventHolder.finishReload();
 		}
 		isLoading = false;

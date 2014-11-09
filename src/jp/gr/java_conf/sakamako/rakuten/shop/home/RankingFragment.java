@@ -31,6 +31,8 @@ public class RankingFragment extends BaseFragment{
 		return "ランキング";
 	}
 	
+	//---------------------------------------------------------------
+	
 	@Subscribe
 	public void onFinishReload(FinishReloadEvent event){
 		super.onFinishReload(event);

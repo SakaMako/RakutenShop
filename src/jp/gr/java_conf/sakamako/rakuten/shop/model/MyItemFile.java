@@ -31,6 +31,7 @@ public class MyItemFile extends XmlFileHandler implements MyItemList.OnChangedMy
 	private static final String ITEM_NAME = "itemName";
 	private static final String ITEM_PRICE = "itemPrice";
 	private static final String ITEM_CODE = "itemCode";
+	private static final String AVAILABILITY = "availability";
 	private static final String RECENT_ITEM = "RecentItem";
 	private static final String ITEMS = "items";
 	private static final String ITEM = "item";
@@ -64,7 +65,7 @@ public class MyItemFile extends XmlFileHandler implements MyItemList.OnChangedMy
 				item.setName(convertString(node.selectSingleNode(ITEM_NAME)));
 				item.setPrice(Integer.parseInt(convertString(node.selectSingleNode(ITEM_PRICE))));
 				item.setCode(convertString(node.selectSingleNode(ITEM_CODE)));
-				
+				item.setIsAvailability(convertString(node.selectSingleNode(AVAILABILITY)));
 				list.add(item);
 			}
 		} catch (DocumentException e) {
@@ -87,6 +88,7 @@ public class MyItemFile extends XmlFileHandler implements MyItemList.OnChangedMy
 				item.addElement(ITEM_IMAGE).addText(list.get(i).getImage());
 				item.addElement(ITEM_PRICE).addText(Integer.toString(list.get(i).getPrice()));
 				item.addElement(ITEM_CODE).addText(list.get(i).getCode());
+				item.addElement(AVAILABILITY).addText(""+list.get(i).getIsAvailability());
 			}
 	    	FileOutputStream outStream = App.getAppContext().openFileOutput(mFileName, Context.MODE_PRIVATE);
 		    	

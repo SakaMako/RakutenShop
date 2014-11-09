@@ -1,6 +1,9 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.home;
 
+import com.squareup.otto.Subscribe;
+
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.FinishReloadEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory.Category;
@@ -31,6 +34,7 @@ implements DragListener
 		Log.d("MyItemFragment",mCat.getLabel()+"の作成");
 		Log.d("MyItemFragment","type="+type+","+this.getType());
 	}
+	
 	@Override
 	public void onCreate(Bundle state){
 		super.onCreate(state);
@@ -56,16 +60,6 @@ implements DragListener
 	public Category getCategory(){
 		return mCat;
 	}
-	
-	/**
-	@Override
-	public MyItemFragment replace() {
-		int type = super.getReverseType();
-		MyItemFragment fragment = new MyItemFragment(type,mCat,getAdapter());
-		//fragment.setInitPosition(this.getVisiblePosition());
-		return fragment;
-	}
-	*/
 	
 	@Override
 	public void onDestroy(){
@@ -108,5 +102,11 @@ implements DragListener
 	@Override
 	public final int onDuringDrag(int positionFrom, int positionTo) {
 		return positionFrom;
+	}
+	
+	//---------------------------------------------------------------
+	@Subscribe
+	public void onFinishReload(FinishReloadEvent event){
+		super.onFinishReload(event);
 	}
 }
