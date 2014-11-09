@@ -65,11 +65,18 @@ implements OnScrollListener,OnItemClickListener{
 	// Async を使ったローでリング中かのフラグ
 	private boolean isLoading = false;
 	
+	
+	
 	@Override
 	// 一番最後に来たかの判定
 	public final void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
-		if (totalItemCount == firstVisibleItem + visibleItemCount) {
+		if (totalItemCount - 30<= firstVisibleItem + visibleItemCount) {
+    		Log.d(this.getClass().getSimpleName(),"onScroll.onNextPage.total="+totalItemCount);
+    		Log.d(this.getClass().getSimpleName(),"onScroll.onNextPage.first="+firstVisibleItem);
+    		Log.d(this.getClass().getSimpleName(),"onScroll.onNextPage.visible="+visibleItemCount);
+
+
 			onNextPage(false);
 		}
     	if(this instanceof Countable){
@@ -86,6 +93,8 @@ implements OnScrollListener,OnItemClickListener{
 	public final void  onNextPage(boolean isReload){
 		
 		if(App.isNetworkError()) return;
+		
+		Log.d(this.getClass().getSimpleName(),"onNextPage");
 		// 他タスクで読み込み中なら一旦あきらめる
 		if(isLoading) return;
 		// 念のため syncronized で isLoading チェックをすり抜けるものを止める
