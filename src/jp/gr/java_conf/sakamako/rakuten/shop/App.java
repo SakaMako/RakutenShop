@@ -2,6 +2,8 @@ package jp.gr.java_conf.sakamako.rakuten.shop;
 
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.io.IOException;
 
 import com.android.volley.RequestQueue;
@@ -19,6 +21,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
+import android.util.Log;
 
 
 public class App extends Application{
@@ -133,15 +136,25 @@ public class App extends Application{
 	}
 
 	private static boolean isNetworkError = false;
-	public static void setNetworkError(boolean b) {
-		isNetworkError = b;
-	}
-	public static boolean isNetworkError(){
+	public static boolean isNetworkError() {
 		return isNetworkError;
 	}
-
-
-
-
+	public static void setIsNetworkError(boolean b) {
+		isNetworkError = b;
+		if(b){
+			new Timer().schedule(
+					new TimerTask(){
+						@Override
+						public void run() {
+							Log.d(this.getClass().getSimpleName(),"isNetworkErrorを戻す");
+							isNetworkError = false;
+						}
+					}
+					,(long)1000 * 30
+					);
+			
+		}
+		
+	}
 
 }

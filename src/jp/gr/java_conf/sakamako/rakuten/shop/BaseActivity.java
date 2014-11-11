@@ -6,7 +6,7 @@ import java.util.Locale;
 import com.squareup.otto.Subscribe;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.MakeToastEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.utils.ToastMaster;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -22,9 +22,7 @@ import android.widget.Toast;
 
 public abstract class BaseActivity extends ActionBarActivity {
 	
-
 	private HashMap<Integer,MenuItem> menuHash = new HashMap<Integer,MenuItem>();
-	private boolean isNetworkError = false;
 	
 	@Override
 	public void onPause() {
@@ -38,7 +36,7 @@ public abstract class BaseActivity extends ActionBarActivity {
 		super.onResume();
 		EventHolder.register(this);
 		
-		App.setNetworkError(false);
+	    ToastMaster.cancelToast();
 	}
 	
 	@Override
@@ -93,12 +91,9 @@ public abstract class BaseActivity extends ActionBarActivity {
 	}
 	
 	@Subscribe
-	public void onNetworkError(NetworkErrorEvent event){
-		Log.d(this.getClass().getSimpleName(),"onNetworkError");
-		if(!isNetworkError){
-			ToastMaster.makeText(this, "ネットワークに接続できません", Toast.LENGTH_SHORT).show();
-		}
-		
-		App.setNetworkError(true);
+	public void makeToast(MakeToastEvent event){
+		Log.d(this.getClass().getSimpleName(),"makeToast");
+		ToastMaster.makeText(this, event.getMessage(), Toast.LENGTH_SHORT).show();
 	}
+
 }

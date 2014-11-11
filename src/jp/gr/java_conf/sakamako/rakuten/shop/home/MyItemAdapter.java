@@ -39,7 +39,7 @@ public class MyItemAdapter extends BaseItemAdapter
 					tmpList.add(it);
 					it.setIsAvailability(""+Item.AVALIABILITY_NG);
 				}
-				Thread.sleep(100);
+				Thread.sleep(300);
 			}
 			return tmpList;
 		}
@@ -50,6 +50,8 @@ public class MyItemAdapter extends BaseItemAdapter
 			for(int i=0;i<result.size();i++){
 				itemList.updateItem(result.get(i));
 			}
+			
+			EventHolder.makeToast("更新が完了しました。");
 		}
 
 		@Override
@@ -68,6 +70,5 @@ public class MyItemAdapter extends BaseItemAdapter
 		public String getTitle() {
 			return mCat.getLabel();
 		}
-
 
 }

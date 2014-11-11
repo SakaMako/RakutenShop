@@ -10,7 +10,7 @@ import java.util.List;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.MakeToastEvent;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;

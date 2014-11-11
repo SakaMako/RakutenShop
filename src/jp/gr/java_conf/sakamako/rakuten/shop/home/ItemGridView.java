@@ -58,7 +58,8 @@ implements BaseListView
        		imageView.setLayoutParams(
 	       			new FrameLayout.LayoutParams(Item.ITEM_SIZE_LIST,Item.ITEM_SIZE_LIST)
 	       		);		
-       		imageView.setPadding(0, 0, 0, 0);
+			imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+       		//imageView.setPadding(0, 0, 0, 0);
 	       	
 	       	imageView.setImageUrl(item.getItemListImage(), App.getImageLoader());
 	        imageView.setErrorImageResId(R.drawable.ic_action_remove);

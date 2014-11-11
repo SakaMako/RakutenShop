@@ -38,7 +38,7 @@ implements OnItemClickListener{
 	@Override
 	// ドロワーメニューのアイテムがクリックされたら
 	public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
-		String search = (String) parent.getAdapter().getItem(position);
+		String search = this.getItem(position);
 		Log.d(this.getClass().getSimpleName(),"onItemClick="+search);
 		EventHolder.searchItem(new SearchParams(search));
 	}

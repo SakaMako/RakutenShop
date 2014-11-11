@@ -8,7 +8,7 @@ import jp.gr.java_conf.sakamako.rakuten.shop.BaseActivity;
 import jp.gr.java_conf.sakamako.rakuten.shop.dialog.DeleteCategoryDialog;
 import jp.gr.java_conf.sakamako.rakuten.shop.dialog.NewCategoryDialog;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.NetworkErrorEvent;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.MakeToastEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.SearchPreEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.ShowItemDetailEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.TabChangedEvent;
@@ -82,7 +82,7 @@ public class HomeActivity<mViewPager> extends BaseActivity
 	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-    	addMenu(menu,MENU_ID_DISPLAY,"切り替え",R.drawable.ic_action_view_as_grid);
+		addMenu(menu,MENU_ID_DISPLAY,"切り替え",R.drawable.ic_action_view_as_grid);
     	addMenu(menu,MENU_ID_INVENTORY,"在庫なし含む",R.drawable.ic_action_location_searching);
     	addMenu(menu,MENU_ID_DELETE,"カテゴリ削除",R.drawable.ic_action_discard);
     	addMenu(menu,MENU_ID_ADD,"追加",R.drawable.ic_action_new_label);
@@ -92,7 +92,7 @@ public class HomeActivity<mViewPager> extends BaseActivity
     	onTabChanged(new TabChangedEvent(0));
     	return true;
     }
-	
+    
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
@@ -118,7 +118,7 @@ public class HomeActivity<mViewPager> extends BaseActivity
 	@Override
 	public void onResume(){
 		super.onResume();
-		
+
 		// メンバ変数のものが null になっていたら再生成
 		mViewPager  = (HomeViewPager) findViewById(R.id.viewpager);
 		mViewPager.onAttachedActivity(this);
@@ -218,6 +218,7 @@ public class HomeActivity<mViewPager> extends BaseActivity
     @Subscribe
 	// 検索フラグメントへの遷移
 	public void onSearchItem(SearchPreEvent event){
+		mDrawerLayout.closeDrawer(mDrawerList);
     	SearchParams searchParams = event.getSearchParams();
 		searchParams.setZaiko(isZaikoCheck);
 		EventHolder.doSearchItem(searchParams);
@@ -232,12 +233,12 @@ public class HomeActivity<mViewPager> extends BaseActivity
 		}
     	mSearchView.clearFocus();
     	mViewPager.getCurrentFragment().requestListViewFocus();
-		mDrawerLayout.closeDrawer(mDrawerList);
+		//mDrawerLayout.closeDrawer(mDrawerList);
 	}
 	
 	@Subscribe
-	public void onNetworkError(NetworkErrorEvent event){
-		super.onNetworkError(event);
+	public void makeToast(MakeToastEvent event){
+		super.makeToast(event);
 	}
 	
 	@Subscribe

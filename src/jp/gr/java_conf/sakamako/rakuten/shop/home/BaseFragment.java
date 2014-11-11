@@ -66,7 +66,6 @@ public abstract class BaseFragment extends Fragment
 				break;
 		}
 	    mView = (AbsListView)v.findViewById(R.id.list);
-
 		mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refresh_swipe);
 		mCntView = (TextView)v.findViewById(R.id.cnt);
 		
@@ -148,8 +147,12 @@ public abstract class BaseFragment extends Fragment
 	}
 	protected final void setAdapter(BaseItemAdapter adapter) {
 		mAdapter = adapter;
-		
 	}
+	
+	protected final void setSwipeEnabled(boolean b){
+		mSwipeRefreshLayout.setEnabled(b);
+	}
+	
 	//---------------------------------------------------------------------
 	protected final int getReverseType(){
 		int type = mType;
@@ -181,7 +184,10 @@ public abstract class BaseFragment extends Fragment
 	}
 	
 	public final void requestListViewFocus() {
-		mView.requestFocus();
+		// 戻ってきた時に null になっている可能性があり
+		if(mView != null){
+			mView.requestFocus();
+		}
 	}
 	
 	protected void onFinishReload(FinishReloadEvent event){

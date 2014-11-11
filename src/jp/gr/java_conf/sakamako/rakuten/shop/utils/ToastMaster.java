@@ -11,8 +11,6 @@ public class ToastMaster extends Toast{
 		super(context);
 	}
 	
-	
-	
 	@Override
 	public void show() {
 		Log.d("ToastMaster","show");
@@ -20,7 +18,7 @@ public class ToastMaster extends Toast{
 		ToastMaster.setToast(this);
 		super.show();
 	}
-	public static void setToast(Toast toast) {
+	private static void setToast(Toast toast) {
 		Log.d("ToastMaster","setToast");
 		if (sToast != null)		sToast.cancel();
 		sToast = toast;

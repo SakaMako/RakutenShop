@@ -97,6 +97,8 @@ implements OnScrollListener,OnItemClickListener{
 		Log.d(this.getClass().getSimpleName(),"onNextPage");
 		// 他タスクで読み込み中なら一旦あきらめる
 		if(isLoading) return;
+		
+		isLoading = true;
 		// 念のため syncronized で isLoading チェックをすり抜けるものを止める
 		synchronized(this){
 			// 既に最終ページ到達済みであれば止める
@@ -199,7 +201,8 @@ implements OnScrollListener,OnItemClickListener{
 		    if(ex != null){
 		    	Log.d(this.getClass().getSimpleName(), "onPostExecute-Error");
 		    	ex.printStackTrace();
-	    		EventHolder.networkError(ex);
+	    		EventHolder.makeToast("ネットワークに接続できません。");
+	    		App.setIsNetworkError(true);
 		    }
 		    mListener.onPostReload(mIsReload ,result);
 		    mListener.completeReload(mIsReload);

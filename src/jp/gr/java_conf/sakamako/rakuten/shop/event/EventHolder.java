@@ -64,8 +64,8 @@ public class EventHolder {
 	  }
 
 	  // ネットワークエラー
-	  public static void networkError(Exception e) {
-		  get().post(new NetworkErrorEvent(e));
+	  public static void makeToast(String message) {
+		  get().post(new MakeToastEvent(message));
 	  }
 
 	  // 縦方向の商品の選択

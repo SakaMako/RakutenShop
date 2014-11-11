@@ -92,10 +92,13 @@ implements DragListener
 		Log.d("MyItemFragment","onStopDrag = " + positionFrom + " -> " + positionTo);
 		if(positionFrom < 0)return false;
 		mCat.getItemList().move(positionFrom,positionTo);
+		super.setSwipeEnabled(true);
+
 		return true;
 	}
 	@Override
 	public final int onStartDrag(int position) {
+		super.setSwipeEnabled(false);
 		return position;
 	}
 
