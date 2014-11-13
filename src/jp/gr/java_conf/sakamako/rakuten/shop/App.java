@@ -140,8 +140,7 @@ public class App extends Application{
 		return isNetworkError;
 	}
 	public static void setIsNetworkError(boolean b) {
-		isNetworkError = b;
-		if(b){
+		if(b && !isNetworkError){
 			new Timer().schedule(
 					new TimerTask(){
 						@Override
