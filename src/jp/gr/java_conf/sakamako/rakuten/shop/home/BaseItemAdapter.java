@@ -92,13 +92,16 @@ implements OnScrollListener,OnItemClickListener{
 	// ItemActivity の vertical pager の方からも呼ばれる
 	public final void  onNextPage(boolean isReload){
 		
-		if(App.isNetworkError()) return;
+		if(App.isNetworkError()){
+			Log.d(this.getClass().getSimpleName(),"onNextPage - isNetworkError");
+			return;
+		}
 		
 		Log.d(this.getClass().getSimpleName(),"onNextPage");
 		// 他タスクで読み込み中なら一旦あきらめる
 		if(isLoading) return;
 		
-		isLoading = true;
+		//isLoading = true;
 		// 念のため syncronized で isLoading チェックをすり抜けるものを止める
 		synchronized(this){
 			// 既に最終ページ到達済みであれば止める
