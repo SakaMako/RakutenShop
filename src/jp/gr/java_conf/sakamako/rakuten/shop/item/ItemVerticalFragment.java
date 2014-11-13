@@ -25,6 +25,7 @@ public class ItemVerticalFragment extends ItemBaseFragment
     	mVerticalAdapter = new ItemVerticalAdapter(getChildFragmentManager());
         View view = inflater.inflate(R.layout.item_detail_vertical, null);
         mVerticalPager = (DirectionalViewPager) view.findViewById(R.id.item_vertical_pager);
+        mVerticalPager.setSaveEnabled(false); 
 
         Log.d(this.getClass().getSimpleName(),"onCreateView-end");
         return view;
