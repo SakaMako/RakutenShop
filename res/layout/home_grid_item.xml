@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
 	>
 	
-	<com.android.volley.toolbox.NetworkImageView android:id="@+id/item_image"
+	<jp.gr.java_conf.sakamako.view.CustomImageView android:id="@+id/item_image"
         android:layout_gravity="center|center"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"/>
+		android:layout_height="match_parent"/>
 
 	<ImageView
         android:id="@+id/icon_avaliability"

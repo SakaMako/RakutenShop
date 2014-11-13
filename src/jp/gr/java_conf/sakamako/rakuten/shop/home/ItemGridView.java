@@ -55,9 +55,12 @@ implements BaseListView
 		
 		if(item != null){
 			NetworkImageView imageView = (NetworkImageView)view.findViewById(R.id.item_image);
-       		imageView.setLayoutParams(
-	       			new FrameLayout.LayoutParams(Item.ITEM_SIZE_LIST,Item.ITEM_SIZE_LIST)
-	       		);		
+       		//imageView.setLayoutParams(
+	       	//		new FrameLayout.LayoutParams(Item.ITEM_SIZE_LIST,Item.ITEM_SIZE_LIST)
+	       	//	);		
+       		//imageView.setLayoutParams(
+	       	//		new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+	       	//	);		
 			imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
        		//imageView.setPadding(0, 0, 0, 0);
 	       	
