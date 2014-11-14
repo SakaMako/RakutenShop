@@ -9,6 +9,7 @@ import jp.gr.java_conf.sakamako.rakuten.shop.event.ItemActivityFinishEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.MakeToastEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseItemAdapter;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.HomeActivity;
+import jp.gr.java_conf.sakamako.rakuten.shop.item.ItemVerticalAdapter.OnVerticalPageSelected;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.view.CustomViewPager;
 import android.os.Bundle;
@@ -54,6 +55,8 @@ public class ItemActivity extends BaseActivity {
 	    mHorizontalPager.setCurrentItem(1);
 	}
 
+	// ItemVerticalFragment.onActivityCreated からこれを読んで
+	// ItemVerticalFragment配下の VerticalPager,VerticalAdapter を初期化する
 	public void onFragmentCreated(DirectionalViewPager verticalPager, ItemVerticalAdapter verticalAdapter) {
         Item pItem = (Item)getIntent().getSerializableExtra("item");
         BaseItemAdapter baseItemAdapter = HomeActivity.itemAdapter;
@@ -63,8 +66,8 @@ public class ItemActivity extends BaseActivity {
 					+ "," + pItem.getName());
 		}
 		verticalAdapter.setVerticalAdapter(baseItemAdapter);
+        verticalAdapter.setVerticalPageSelectedListener((OnVerticalPageSelected) mHorizontalPager.getAdapter());
         verticalPager.setCurrentItem(pos);
-        EventHolder.selectVerticalItem(pItem);
 	}
 	
 	@Override

@@ -1,6 +1,5 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.home;
 
-import jp.gr.java_conf.sakamako.rakuten.shop.event.VerticalItemSelectedEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import android.view.View;
 import android.view.ViewGroup;

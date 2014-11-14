@@ -4,20 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.squareup.otto.Subscribe;
-
-//import jp.gr.java_conf.noappnolife.rakuten.shop.item.ItemVerticalAdapter.OnVerticalPageChangeListener;
-//import jp.gr.java_conf.noappnolife.rakuten.shop.item.ItemWebFragment.OnNewListener;
-
-import jp.gr.java_conf.sakamako.rakuten.shop.App;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.NewWebFragmentEvent;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.VerticalItemSelectedEvent;
-import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseItemAdapter;
+import jp.gr.java_conf.sakamako.rakuten.shop.item.ItemVerticalAdapter.OnVerticalPageSelected;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.DirectionalViewPager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
@@ -30,7 +23,7 @@ import android.util.Log;
  */
 
 public class ItemHorizontalAdapter extends FragmentStatePagerAdapter
-implements OnPageChangeListener 
+implements OnPageChangeListener ,OnVerticalPageSelected
 {
 	
 	//----------------------------------------------------------
@@ -85,10 +78,10 @@ implements OnPageChangeListener
 		return POSITION_UNCHANGED;
 	}
 	//----------------------------------------------------------
-	  @Subscribe
-	  public void onVerticalPageSelected(VerticalItemSelectedEvent event) {
-		Log.d(this.getClass().getSimpleName(),"onVertincalPageSelected="+event.getItem().getName());
-		Item pItem = event.getItem();
+	
+	@Override
+	public void onVerticalPageSelected(Item pItem) {
+		Log.d(this.getClass().getSimpleName(),"onVertincalPageSelected="+pItem.getName());
 		
 		// 購入可能なら
 		if(pItem.getIsAvailability() == Item.AVALIABILITY_OK){
@@ -119,15 +112,17 @@ implements OnPageChangeListener
 		this.notifyDataSetChanged();
 	}
 	  
-		@Subscribe
-		public void onNewWebFragment(NewWebFragmentEvent event) {
-			Log.d(this.getClass().getSimpleName(),(mFragmentList.size()+1) + "のwebを追加="+event.getUrl());
-			ItemWebFragment fragment = new ItemWebFragment();
-			mFragmentList.add(fragment);
-			this.notifyDataSetChanged();
-			mPager.setCurrentItem(mFragmentList.size(),true);
-			fragment.loadWeb(event.getUrl());
-		}
+	//ブラウザ代わりに WebView を追加していく。ItemWebFragment.WebClinet から呼ばれる
+	@Subscribe
+	public void onNewWebFragment(NewWebFragmentEvent event) {
+		Log.d(this.getClass().getSimpleName(),(mFragmentList.size()+1) + "のwebを追加="+event.getUrl());
+		ItemWebFragment fragment = new ItemWebFragment();
+		mFragmentList.add(fragment);
+		this.notifyDataSetChanged();
+		mPager.setCurrentItem(mFragmentList.size(),true);
+		fragment.loadWeb(event.getUrl());
+	}
+	
 	//------------------------------------------------------
 	//Pager の制御
 	@Override
@@ -179,6 +174,7 @@ implements OnPageChangeListener
 			this.notifyDataSetChanged();	
 		}
 	}
+
 
 
 

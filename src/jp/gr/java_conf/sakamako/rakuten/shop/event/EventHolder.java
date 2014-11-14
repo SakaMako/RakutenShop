@@ -68,11 +68,6 @@ public class EventHolder {
 		  get().post(new MakeToastEvent(message));
 	  }
 
-	  // 縦方向の商品の選択
-	  public static void selectVerticalItem(Item item) {
-	        get().post(new VerticalItemSelectedEvent(item));
-	  }
-
 	  // WebView の表示
 	  public static void newWebFragment(String url) {
 		  get().post(new NewWebFragmentEvent(url));

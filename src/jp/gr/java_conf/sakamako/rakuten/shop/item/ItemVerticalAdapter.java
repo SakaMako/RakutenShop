@@ -19,15 +19,30 @@ public class ItemVerticalAdapter  extends FragmentStatePagerAdapter implements O
 	private BaseItemAdapter mItemAdapter = null;	// 縦方向用のアダプター
 	private Map<Item,ItemDetailFragment> mFragmentList = null;
 	private int mPos = 0;
-			
+	
+	//------------------------------------------------------------------
+
+	public interface OnVerticalPageSelected{
+		public void onVerticalPageSelected(Item item);
+	}
+	
+	private OnVerticalPageSelected verticalPageSelectedListener = null;
+	
+	public OnVerticalPageSelected getVerticalPageSelectedListener() {
+		return verticalPageSelectedListener;
+	}
+
+	public void setVerticalPageSelectedListener(
+			OnVerticalPageSelected verticalPageSelectedListener) {
+		this.verticalPageSelectedListener = verticalPageSelectedListener;
+	}
 	//------------------------------------------------------------------
 
 	public ItemVerticalAdapter(FragmentManager fm) {
 		super(fm);
 		Log.d(this.getClass().getSimpleName(),"コンストラクタ生成");
 		mFragmentList = new LinkedHashMap<Item,ItemDetailFragment>(10){
-			private static final long serialVersionUID = 1L;
-
+			
 			@Override
 			protected boolean removeEldestEntry(Map.Entry<Item,ItemDetailFragment> eldest){
 				if(size() > 10){
@@ -80,17 +95,19 @@ public class ItemVerticalAdapter  extends FragmentStatePagerAdapter implements O
 	@Override
 	public void onPageSelected(int pos) {
 		Log.d(this.getClass().getSimpleName(),"onPageSelected="+pos+","+mItemAdapter.getCount());
-		// インデックスとサイズの差を埋めるために＋１
+		// インデックスとサイズの差を埋めるために＋１して最後n到達したか判定する
 		if(pos + 1 == mItemAdapter.getCount()){
 			Log.d(this.getClass().getSimpleName(),"最大数到達="+pos+","+mItemAdapter.getCount());
 			if(mItemAdapter instanceof Scrollable){
 				((Scrollable)mItemAdapter).onNextPage(false);
 			}
 		}
-		EventHolder.selectVerticalItem(mItemAdapter.getItem(pos));		
+		verticalPageSelectedListener.onVerticalPageSelected(mItemAdapter.getItem(pos));
 		mItemAdapter.setVisiblePosition(pos);
 		
 		mPos = pos;
 	}
+
+
 
 }

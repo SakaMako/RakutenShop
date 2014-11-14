@@ -1,25 +1,18 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.home;
 
 import com.android.volley.toolbox.NetworkImageView;
-import com.squareup.otto.Subscribe;
-
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.VerticalItemSelectedEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseItemAdapter.Scrollable;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 public class ItemGridView extends GridView
 implements BaseListView
