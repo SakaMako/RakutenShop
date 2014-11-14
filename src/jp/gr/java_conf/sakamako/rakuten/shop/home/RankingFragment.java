@@ -13,11 +13,6 @@ public class RankingFragment extends BaseFragment{
 		super(type);
 		super.setAdapter(new RankingAdapter(this));
 	}
-
-	private RankingFragment(int type, BaseItemAdapter adapter) {
-		super(type);
-		super.setAdapter(adapter);
-	}
 	
 	//---------------------------------------------------------------
 	//メニューの切り替え
