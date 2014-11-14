@@ -2,3 +2,9 @@
 /libs/
 /production/
 /gen/
+.DS_Store
+/res/
+/.settings/
+.project
+proguard-project.txt
+ic_launcher-web.png

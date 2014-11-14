@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="lib" path="libs/dom4j-2.0.0-ALPHA-2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/jaxen-1.1.6.jar"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry exported="true" kind="lib" path="libs/android-directionalviewpager-1.2.1fixed.jar"/>
+	<classpathentry exported="true" kind="lib" path="/appcompat_v7/bin/appcompat_v7.jar"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>
