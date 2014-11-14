@@ -200,11 +200,15 @@ public class HomeActivity<mViewPager> extends BaseActivity
 	private void setListTypeIcon(int type){
 		switch(type){
 		case BaseFragment.TYPE_GRID:
+			getMenuItem(MENU_ID_DISPLAY).setIcon(android.R.drawable.ic_dialog_dialer);
+			break;
+		case BaseFragment.TYPE_GRID2:
 			getMenuItem(MENU_ID_DISPLAY).setIcon(R.drawable.ic_action_view_as_grid);
 			break;
 		case BaseFragment.TYPE_LIST:
 			getMenuItem(MENU_ID_DISPLAY).setIcon(R.drawable.ic_action_view_as_list);
 			break;
+			
 		}
 	}
 	

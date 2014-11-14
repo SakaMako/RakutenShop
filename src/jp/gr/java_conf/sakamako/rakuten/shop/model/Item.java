@@ -9,8 +9,8 @@ public class Item implements Serializable{
 
 	private final static long serialVersionUID = 1L;
 	
-	public final static int ITEM_SIZE_LIST = 355; 
-	public final static int ITEM_SIZE_DETAIL = 355;
+	public final static int ITEM_SIZE_LIST = 400; 
+	public final static int ITEM_SIZE_DETAIL = 400;
 	
 	public final static int AVALIABILITY_OK = 1;
 	public final static int AVALIABILITY_NG = 0;

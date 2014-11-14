@@ -1,9 +1,6 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.home;
 
-import java.text.NumberFormat;
-
 import com.squareup.otto.Subscribe;
-
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseItemAdapter.Countable;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseItemAdapter.ReloadbleListener;
@@ -19,17 +16,17 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.TextView;
 
-public abstract class BaseFragment extends Fragment
-	{
+public abstract class BaseFragment extends Fragment	{
 	
 	//--------------------------------------------------------------------
-	//public abstract BaseFragment replace() ;
 	public abstract boolean isDeletable();
 	public abstract String getTabTitle(); 
 
 	//--------------------------------------------------------------------
 	public static final int TYPE_GRID = 1;
-	public static final int TYPE_LIST = 2;
+	public static final int TYPE_GRID2 = 2;
+	public static final int TYPE_LIST = 3;
+
 	private int mType = -1;
 	private AbsListView mView = null;
 	private BaseItemAdapter mAdapter = null;
@@ -57,13 +54,17 @@ public abstract class BaseFragment extends Fragment
 		View v = null;
 		switch(this.getType()){
 		case TYPE_GRID:
-				Log.d(this.getClass().getSimpleName(),"onCreateViewByGrid");
+				Log.d(this.getClass().getSimpleName(),"TYPE_GRID");
 				v = inflater.inflate(R.layout.home_grid, container, false);
 				break;
 		case TYPE_LIST:
-				Log.d(this.getClass().getSimpleName(),"onCreateViewByList");
+				Log.d(this.getClass().getSimpleName(),"TYPE_LIST");
 				v = inflater.inflate(R.layout.home_list, container, false);	
 				break;
+		case TYPE_GRID2:
+			Log.d(this.getClass().getSimpleName(),"TYPE_GRID2");
+			v = inflater.inflate(R.layout.home_grid2, container, false);	
+			break;
 		default:
 				break;
 		}
@@ -154,13 +155,9 @@ public abstract class BaseFragment extends Fragment
 	//---------------------------------------------------------------------
 	protected final int getReverseType(){
 		int type = mType;
-		switch(mType){
-		case TYPE_GRID:
-			type = TYPE_LIST;
-			break;
-		case TYPE_LIST:
-			type = TYPE_GRID;
-			break;
+		type++;
+		if(type > 3){
+			type=1;
 		}
 		Log.d(this.getClass().getSimpleName(),mType + "->" + type);
 		return type;

@@ -34,8 +34,8 @@ implements BaseListView
 	}
 	
 	@Override
-	   public View getView(Item item,View convertView,ViewGroup parent){
-	    	//Log.d(this.getClass().getSimpleName(), "getView="+item.getName());
+	public View getView(Item item,View convertView,ViewGroup parent){
+	    //Log.d(this.getClass().getSimpleName(), "getView="+item.getName());
 		
 		// ビューを受け取る   
 		FrameLayout view = (FrameLayout) convertView;
