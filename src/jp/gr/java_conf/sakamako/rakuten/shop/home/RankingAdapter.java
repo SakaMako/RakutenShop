@@ -1,5 +1,6 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.home;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -19,7 +20,7 @@ implements BaseItemAdapter.Scrollable,BaseItemAdapter.ReloadbleListener
 	
 	private int mCount = 0;
 	private int maxCount = 34;
-
+	
 	public RankingAdapter(BaseFragment fragment) {
 		   	super(App.getAppContext()
        			, R.layout.home_grid_item

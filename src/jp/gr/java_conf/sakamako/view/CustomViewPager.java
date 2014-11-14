@@ -30,6 +30,7 @@ public class CustomViewPager extends ViewPager {
 	     * duration
 	     */
 	    private void postInitViewPager() {
+
 	        try {
 	            Class<?> viewpager = ViewPager.class;
 	            Field scroller = viewpager.getDeclaredField("mScroller");
@@ -40,6 +41,8 @@ public class CustomViewPager extends ViewPager {
 	            mScroller = new ScrollerCustomDuration(getContext(),
 	                    (Interpolator) interpolator.get(null));
 	            scroller.set(this, mScroller);
+				this.setOffscreenPageLimit(4);
+				this.setScrollDurationFactor(5);
 	        } catch (Exception e) {
 	        }
 	    }

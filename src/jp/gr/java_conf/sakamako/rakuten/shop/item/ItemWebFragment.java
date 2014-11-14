@@ -27,15 +27,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 public class ItemWebFragment extends ItemBaseFragment 
-//implements ReloadbleWebListener 
 implements OnRefreshListener
 {
-	/**
-	public interface OnNewListener{
-		public void onNewListener(String url);
-	}
-	*/
-	
 	private Item mItem = null;
 	private String mUrl = null;
 	private WebView mWebView = null;

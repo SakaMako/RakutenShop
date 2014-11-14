@@ -52,13 +52,9 @@ public class HomeActivity<mViewPager> extends BaseActivity
 	private CustomSearchView mSearchView = null;
 	private HomeViewPager mViewPager = null;
 	private boolean isZaikoCheck = false;
-
 	
-	@Override
-	protected final boolean isActionBar(){
-		return true;
-	}
-		
+	public static BaseItemAdapter itemAdapter = null;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -121,7 +117,6 @@ public class HomeActivity<mViewPager> extends BaseActivity
 
 		// メンバ変数のものが null になっていたら再生成
 		mViewPager  = (HomeViewPager) findViewById(R.id.viewpager);
-		mViewPager.onAttachedActivity(this);
 
         if(mDrawerList == null){
         	// DrawerList
@@ -232,8 +227,6 @@ public class HomeActivity<mViewPager> extends BaseActivity
 			getMenuItem(MENU_ID_INVENTORY).setIcon(R.drawable.ic_action_location_searching);
 		}
     	mSearchView.clearFocus();
-    	mViewPager.getCurrentFragment().requestListViewFocus();
-		//mDrawerLayout.closeDrawer(mDrawerList);
 	}
 	
 	@Subscribe
@@ -261,11 +254,10 @@ public class HomeActivity<mViewPager> extends BaseActivity
 	
 	@Subscribe
 	public final void onShowItemDetail(ShowItemDetailEvent event){
-		App.setCurrentAdapter(mViewPager.getCurrentFragment().getAdapter());
-
 		Intent intent = new Intent(getApplicationContext(),ItemActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		intent.putExtra("item",event.getmItem());
+		intent.putExtra("item",event.getmItem());		
+		itemAdapter = mViewPager.getCurrentFragment().getAdapter();
 		startActivity(intent);
 	}
 }

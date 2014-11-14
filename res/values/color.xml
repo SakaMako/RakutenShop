@@ -19,7 +19,7 @@
     <item name="side_arrow_background" type="color">@color/orange</item>
     <item name="cnt_background" type="color">@color/red</item>
     <item name="cnt_textcolor" type="color">@color/white</item>
-    <item name="item_detail_background" type="color">#FFDDDDDD</item>
+    <item name="item_detail_background" type="color">#AADDDDDD</item>
     <item name="item_detail_shadow" type="color">#FFBBBBBB</item>
     
  

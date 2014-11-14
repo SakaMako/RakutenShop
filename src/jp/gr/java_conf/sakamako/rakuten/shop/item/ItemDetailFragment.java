@@ -56,6 +56,10 @@ OnItemSelectedListener
 		Log.d(this.getClass().getSimpleName(),"コンストラクタ生成"+mItem.getName());
 	}
 	
+	public Item getItem(){
+		return mItem;
+	}
+	
 	@Override
 	public void onCreate(Bundle state){
 		super.onCreate(state);

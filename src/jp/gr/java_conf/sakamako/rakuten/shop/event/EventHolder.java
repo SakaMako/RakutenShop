@@ -78,18 +78,6 @@ public class EventHolder {
 		  get().post(new NewWebFragmentEvent(url));
 	  }
 
-	  /**
-	   * 縦方向のフラグメントの作成
-	   * ItemVerticalFragment.onActivityCreated
-	   * |
-	   * ItemHorizontalAdapter.onPostCreateView
-	   */
-	  public static void createVirticalFragment(
-			DirectionalViewPager verticalPager,
-			ItemVerticalAdapter verticalAdapter) {
-		  get().post(new VerticalFragmentCreatedEvent(verticalPager,verticalAdapter));
-	  }
-
 	  // ItemActivity の終了
 	  public static void finishItemActivity() {
 		get().post(new ItemActivityFinishEvent());

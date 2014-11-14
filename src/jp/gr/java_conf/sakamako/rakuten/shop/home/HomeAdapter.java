@@ -26,35 +26,21 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
 public class HomeAdapter extends FragmentStatePagerAdapter
-implements 
-DeleteCategoryListener, OnNewCategoryListener
+implements DeleteCategoryListener, OnNewCategoryListener {
 
-
-{
-	
 	private ArrayList<BaseFragment> mList = null;
 	private HomeViewPager mViewPager = null;
-	private ActionBar actionBar;
-	private ActionBarActivity mActivity = null;
 	private static int SEARCH_POSITION = 1;
 	
-    public HomeAdapter(ActionBarActivity activity,HomeViewPager pager) {
-        super(activity.getSupportFragmentManager());
-        mActivity = activity;
-        actionBar = mActivity.getSupportActionBar();
+    public HomeAdapter(HomeViewPager pager) {
+        super(((ActionBarActivity)pager.getContext()).getSupportFragmentManager());
         mViewPager = pager;
         
-        initFragment();
-        for(Iterator<BaseFragment> it = mList.iterator();it.hasNext();){
-        	BaseFragment fragment = it.next();
-            Tab rtab = actionBar.newTab();
-            rtab.setText(fragment.getTabTitle());
-            rtab.setTabListener(mViewPager);
-            actionBar.addTab(rtab);
-        }
+        Log.d(this.getClass().getSimpleName(),"Constructor="+pager.getContext().getClass().getSimpleName());
+        this.init();
     }
     
-    private void initFragment(){
+    private void init(){
     	int sp = 0;
 
     	mList = new ArrayList<BaseFragment>();
@@ -74,18 +60,17 @@ DeleteCategoryListener, OnNewCategoryListener
     		BaseFragment fragment = new MyItemFragment(cat);
     		mList.add(fragment);
     	}
+    	
+        for(Iterator<BaseFragment> it = mList.iterator();it.hasNext();){
+        	BaseFragment fragment = it.next();
+            Tab rtab = this.getActionBar().newTab();
+            rtab.setText(fragment.getTabTitle());
+            rtab.setTabListener(mViewPager);
+            this.getActionBar().addTab(rtab);
+        }
     }
     
-    @Subscribe
-    public void goToSearch(SearchPostEvent event){
-    	Log.d(this.getClass().getSimpleName(),"goToSearch");
-    	// ちらつき防止
-    	if(mViewPager.getCurrentItem() != SEARCH_POSITION){
-    		mViewPager.setCurrentItem(SEARCH_POSITION);
-    	}
-	    mViewPager.getCurrentFragment().setSelection(0);
-    }
-	
+    //-------------------------------------------------------------------
 	@Override
 	public BaseFragment getItem(int arg0) {
 		return mList.get(arg0);
@@ -104,7 +89,18 @@ DeleteCategoryListener, OnNewCategoryListener
 		}
 		return POSITION_UNCHANGED;
 	}
+    //-------------------------------------------------------------------
 	
+    @Subscribe
+    public void goToSearch(SearchPostEvent event){
+    	Log.d(this.getClass().getSimpleName(),"goToSearch");
+    	// ちらつき防止
+    	if(mViewPager.getCurrentItem() != SEARCH_POSITION){
+    		mViewPager.setCurrentItem(SEARCH_POSITION);
+    	}
+	    mViewPager.getCurrentFragment().setSelection(0);
+    }
+
  	//カテゴリの追加
 	public boolean onNewCategory(String text) {	
 		Category cat = MyCategory.getInstance().add(text);
@@ -114,10 +110,10 @@ DeleteCategoryListener, OnNewCategoryListener
 		}
 		
 		mList.add(new MyItemFragment(cat));
-		Tab tab = actionBar.newTab();
+		Tab tab = this.getActionBar().newTab();
 		tab.setText(cat.getLabel());
 		tab.setTabListener(mViewPager);
-		actionBar.addTab(tab);
+		this.getActionBar().addTab(tab);
 		this.notifyDataSetChanged();
 		mViewPager.setCurrentItem(mList.size());
 		return true;
@@ -138,8 +134,7 @@ DeleteCategoryListener, OnNewCategoryListener
 		// フラグメントの削除
 		mList.remove(currentItem);
 		notifyDataSetChanged();
-		mActivity.getSupportActionBar().removeTabAt(currentItem);
-
+		this.getActionBar().removeTabAt(currentItem);
 		mViewPager.setCurrentItem(currentItem-1);
 	}
 	
@@ -148,7 +143,7 @@ DeleteCategoryListener, OnNewCategoryListener
 		int pos = mViewPager.getCurrentItem();
 		BaseFragment fragment = (BaseFragment) this.getItem(pos);
 		fragment.setType(fragment.getReverseType());
-        mActivity.getSupportFragmentManager().beginTransaction()
+		this.getFragmentManager().beginTransaction()
         .detach(fragment)
         .attach(fragment)
         .commit();
@@ -156,5 +151,13 @@ DeleteCategoryListener, OnNewCategoryListener
 		
 		Log.d(this.getClass().getSimpleName(),"replace end ----------------------------");
 		return fragment.getType();
+	}
+	
+	private FragmentManager getFragmentManager(){
+		return ((ActionBarActivity)mViewPager.getContext()).getSupportFragmentManager();
+	}
+	
+	private ActionBar getActionBar(){
+		return ((ActionBarActivity)mViewPager.getContext()).getSupportActionBar();
 	}
 }

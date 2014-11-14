@@ -2,6 +2,8 @@ package jp.gr.java_conf.sakamako.rakuten.shop.home;
 
 import java.text.NumberFormat;
 
+import com.squareup.otto.Subscribe;
+
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseItemAdapter.Countable;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseItemAdapter.ReloadbleListener;
@@ -109,10 +111,6 @@ public abstract class BaseFragment extends Fragment
 		super.onResume();
 	    EventHolder.register(this);
 	    EventHolder.register(this.getAdapter());
-	    
-	    if(mAdapter instanceof Countable){
-	    	//updateCount(1,((Countable)mAdapter).getAllCount());
-	    }
 	}
 	
 	@Override
@@ -183,13 +181,7 @@ public abstract class BaseFragment extends Fragment
 		}
 	}
 	
-	public final void requestListViewFocus() {
-		// 戻ってきた時に null になっている可能性があり
-		if(mView != null){
-			mView.requestFocus();
-		}
-	}
-	
+	@Subscribe
 	protected void onFinishReload(FinishReloadEvent event){
 		this.setInitPosition(0);
 		mSwipeRefreshLayout.setRefreshing(false);

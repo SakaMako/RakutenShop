@@ -65,18 +65,14 @@ implements OnScrollListener,OnItemClickListener{
 	// Async を使ったローでリング中かのフラグ
 	private boolean isLoading = false;
 	
-	
-	
 	@Override
 	// 一番最後に来たかの判定
 	public final void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
 		if (totalItemCount - 30<= firstVisibleItem + visibleItemCount) {
-    		Log.d(this.getClass().getSimpleName(),"onScroll.onNextPage.total="+totalItemCount);
-    		Log.d(this.getClass().getSimpleName(),"onScroll.onNextPage.first="+firstVisibleItem);
-    		Log.d(this.getClass().getSimpleName(),"onScroll.onNextPage.visible="+visibleItemCount);
-
-
+    		//Log.d(this.getClass().getSimpleName(),"onScroll.onNextPage.total="+totalItemCount);
+    		//Log.d(this.getClass().getSimpleName(),"onScroll.onNextPage.first="+firstVisibleItem);
+    		//Log.d(this.getClass().getSimpleName(),"onScroll.onNextPage.visible="+visibleItemCount);
 			onNextPage(false);
 		}
     	if(this instanceof Countable){
@@ -115,7 +111,7 @@ implements OnScrollListener,OnItemClickListener{
 
 	@Override
 	public final void onScrollStateChanged(AbsListView view, int scrollState) {
-
+		// 何もしない
 	}
 	    
 	public interface Countable{
@@ -169,13 +165,13 @@ implements OnScrollListener,OnItemClickListener{
 	//---------------------------------------------------------------------
 	// AsyncTask
 	
-	public class ReloadAsyncTask extends AsyncTask<Void, Void, List<Item>>  {
+	private class ReloadAsyncTask extends AsyncTask<Void, Void, List<Item>>  {
 		
 		private ReloadbleListener mListener = null;
 		private Exception ex = null;
 		private boolean mIsReload = true;;
 		
-		public ReloadAsyncTask(boolean isReload,ReloadbleListener listener){
+		private ReloadAsyncTask(boolean isReload,ReloadbleListener listener){
 			mListener = listener;
 			mIsReload = isReload;
 		}
@@ -214,6 +210,4 @@ implements OnScrollListener,OnItemClickListener{
 		
 
 	}
-
-	
 }

@@ -14,18 +14,18 @@ import android.util.Log;
 
 public class ItemVerticalAdapter  extends FragmentStatePagerAdapter implements OnPageChangeListener {
 	
-	
 	//------------------------------------------------------------------
 	
-	private BaseItemAdapter mAdapter = null;	// 縦方向用のアダプター
-	private Map<Item,ItemDetailFragment> mList = null;
+	private BaseItemAdapter mItemAdapter = null;	// 縦方向用のアダプター
+	private Map<Item,ItemDetailFragment> mFragmentList = null;
+	private int mPos = 0;
 			
 	//------------------------------------------------------------------
 
 	public ItemVerticalAdapter(FragmentManager fm) {
 		super(fm);
 		Log.d(this.getClass().getSimpleName(),"コンストラクタ生成");
-		mList = new LinkedHashMap<Item,ItemDetailFragment>(10){
+		mFragmentList = new LinkedHashMap<Item,ItemDetailFragment>(10){
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -43,26 +43,30 @@ public class ItemVerticalAdapter  extends FragmentStatePagerAdapter implements O
 	}
 
 	public void setVerticalAdapter(BaseItemAdapter adapter) {
-		mAdapter = adapter;
+		mItemAdapter = adapter;
 	}
 	
 	@Override
 	// 縦スクロールをスムーズにさせるために HashMap でキャッシュ化
 	public Fragment getItem(int position) {
-		Item item = mAdapter.getItem(position);
+		Item item = mItemAdapter.getItem(position);
 		
-	    ItemDetailFragment fragment = mList.get(item);
+	    ItemDetailFragment fragment = mFragmentList.get(item);
 	    if(fragment == null){
 	    	fragment = new ItemDetailFragment(item);
-	    	mList.put(item, fragment);
+	    	mFragmentList.put(item, fragment);
     	}
 	    return fragment;
 	}
     @Override
     public int getCount() {
-    	if(mAdapter == null) return 0;
-    	return mAdapter.getCount();
+    	if(mItemAdapter == null) return 0;
+    	return mItemAdapter.getCount();
     }
+    
+	public ItemDetailFragment getCurrentItem() {
+		return (ItemDetailFragment) this.getItem(mPos);
+	}
     
 	//------------------------------------------------------------------
     @Override
@@ -75,15 +79,18 @@ public class ItemVerticalAdapter  extends FragmentStatePagerAdapter implements O
 
 	@Override
 	public void onPageSelected(int pos) {
-		Log.d(this.getClass().getSimpleName(),"onPageSelected="+pos+","+mAdapter.getCount());
+		Log.d(this.getClass().getSimpleName(),"onPageSelected="+pos+","+mItemAdapter.getCount());
 		// インデックスとサイズの差を埋めるために＋１
-		if(pos + 1 == mAdapter.getCount()){
-			Log.d(this.getClass().getSimpleName(),"最大数到達="+pos+","+mAdapter.getCount());
-			if(mAdapter instanceof Scrollable){
-				((Scrollable)mAdapter).onNextPage(false);
+		if(pos + 1 == mItemAdapter.getCount()){
+			Log.d(this.getClass().getSimpleName(),"最大数到達="+pos+","+mItemAdapter.getCount());
+			if(mItemAdapter instanceof Scrollable){
+				((Scrollable)mItemAdapter).onNextPage(false);
 			}
 		}
-		EventHolder.selectVerticalItem(mAdapter.getItem(pos));		
-		mAdapter.setVisiblePosition(pos);
+		EventHolder.selectVerticalItem(mItemAdapter.getItem(pos));		
+		mItemAdapter.setVisiblePosition(pos);
+		
+		mPos = pos;
 	}
+
 }

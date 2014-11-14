@@ -1,7 +1,6 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.item;
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.VerticalFragmentCreatedEvent;
+import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import android.os.Bundle;
 import android.support.v4.view.DirectionalViewPager;
 import android.util.Log;
@@ -16,26 +15,39 @@ public class ItemVerticalFragment extends ItemBaseFragment
 
 	public ItemVerticalFragment(){
 		super();
+
 	}
 	
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
     	Log.d(this.getClass().getSimpleName(),"onCreateView-start");
     	
-    	mVerticalAdapter = new ItemVerticalAdapter(getChildFragmentManager());
         View view = inflater.inflate(R.layout.item_detail_vertical, null);
         mVerticalPager = (DirectionalViewPager) view.findViewById(R.id.item_vertical_pager);
         mVerticalPager.setSaveEnabled(false); 
+        
+    	mVerticalAdapter = new ItemVerticalAdapter(getChildFragmentManager());
+        
+		if(mVerticalPager.getAdapter()==null){
+			mVerticalPager.setAdapter(mVerticalAdapter);
+		}
+		mVerticalPager.setOnPageChangeListener(mVerticalAdapter);
 
         Log.d(this.getClass().getSimpleName(),"onCreateView-end");
         return view;
     }
-    @Override
-	public void onActivityCreated(Bundle saveInstanceState){
-		super.onActivityCreated(saveInstanceState);
-		EventHolder.createVirticalFragment(mVerticalPager,mVerticalAdapter);
-    }
     
-    
-    
+	@Override
+	public void onActivityCreated(Bundle state){
+		super.onActivityCreated(state);
+		
+		((ItemActivity)getActivity()).onFragmentCreated(mVerticalPager,mVerticalAdapter);
+	}
+	
+	public Item getItem(){
+		int pos = mVerticalPager.getCurrentItem();
+		Log.d(this.getClass().getSimpleName(),"getItem.pos="+pos);
+		ItemDetailFragment fragment = (ItemDetailFragment) mVerticalAdapter.getCurrentItem();
+		return fragment.getItem();
+	}
 }

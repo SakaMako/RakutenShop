@@ -15,21 +15,17 @@ import android.util.Log;
 
 
 
-public class HomeViewPager extends ViewPager 
-implements TabListener
-{
+public class HomeViewPager extends ViewPager implements TabListener {
 
 	public HomeViewPager(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		
-		 super.setOnPageChangeListener(new OnPageListener());
-		 super.setBackgroundColor(Color.WHITE);
-		 super.setOffscreenPageLimit(10);
-	}
-	
-	public void onAttachedActivity(ActionBarActivity activity){
+		super.setOnPageChangeListener(new OnPageListener());
+		super.setBackgroundColor(Color.WHITE);
+		super.setOffscreenPageLimit(10);
+		 
 		if(getAdapter() == null){
-			setAdapter(new HomeAdapter(activity,this));
+			setAdapter(new HomeAdapter(this));
 		}
 	}
 	

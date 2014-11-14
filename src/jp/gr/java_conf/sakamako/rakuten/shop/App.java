@@ -30,15 +30,16 @@ public class App extends Application{
 	  private static String mShopUrl = null;
 	  private static int mGenreId = -1;
 	  private static Properties mConf = null;
-	  private static ImageCache mImageCache= null;
-
-	private static RequestQueue mRequestQueue;
-
-	private static ImageLoader mImageLoader;
+	  private static RequestQueue mRequestQueue;
+	  private static ImageLoader mImageLoader;
 	 
 	  public App() {
 	    super();
 	    instance = this;
+	  }
+	  
+	  public static App getInstance() {
+			return instance;
 	  }
 	  
 	  public static ImageLoader getImageLoader(){
@@ -86,12 +87,7 @@ public class App extends Application{
 		}
 		return mShopUrl;
 	  }
-	  
-	  public static App getInstance() {
-			return instance;
-		}
-	  
-	  
+
 	    /**
 	     * アプリケーションのContextを取得します。
 	     * @return アプリケーションのContext
@@ -99,15 +95,6 @@ public class App extends Application{
 	    public static Context getAppContext() {
 	    	return App.getInstance().getApplicationContext();
 	    }
-	 
-	private static BaseItemAdapter mAdapter = null;
-	public static void setCurrentAdapter(BaseItemAdapter adapter) {
-		mAdapter = adapter;
-	}
-
-	public static BaseItemAdapter getCurrentAdapter() {
-		return mAdapter;
-	}
 
 	public static boolean isRanking() {
 		String sIsRanking = App.getInstance().getProperties().getProperty("jp.gr.java_conf.noappnolife.rakuten.shop.is_ranking");

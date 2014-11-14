@@ -46,7 +46,7 @@ implements DragListener
 				mCat = MyCategory.getInstance().getCategory(categoryName);
 			}
 		}
-		super.setAdapter(new MyItemAdapter(this,R.layout.home_list_item,mCat));
+		super.setAdapter(new MyItemAdapter(this,mCat));
 	}
 	
 	@Override
@@ -89,7 +89,7 @@ implements DragListener
 	//---------------------------------------------------------------
 	@Override
 	public final boolean onStopDrag(int positionFrom, int positionTo) {
-		Log.d("MyItemFragment","onStopDrag = " + positionFrom + " -> " + positionTo);
+		Log.d(this.getClass().getSimpleName(),"onStopDrag = " + positionFrom + " -> " + positionTo);
 		if(positionFrom < 0)return false;
 		mCat.getItemList().move(positionFrom,positionTo);
 		super.setSwipeEnabled(true);

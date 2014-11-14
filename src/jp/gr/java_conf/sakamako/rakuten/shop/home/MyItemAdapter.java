@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
+import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.ItemAPI;
@@ -16,8 +17,8 @@ public class MyItemAdapter extends BaseItemAdapter
 {
 	private Category mCat = null;
 	
-		public MyItemAdapter(BaseFragment fragment,int textViewResourceId,Category cat) {
-			super(App.getAppContext(), textViewResourceId
+		public MyItemAdapter(BaseFragment fragment,Category cat) {
+			super(App.getAppContext(), R.layout.home_list_item
 					,fragment
 					,MyCategory.getInstance().getMyItem(cat)
 					);
@@ -70,5 +71,4 @@ public class MyItemAdapter extends BaseItemAdapter
 		public String getTitle() {
 			return mCat.getLabel();
 		}
-
 }

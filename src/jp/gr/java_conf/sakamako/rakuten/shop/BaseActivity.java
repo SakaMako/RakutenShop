@@ -50,12 +50,8 @@ public abstract class BaseActivity extends ActionBarActivity {
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
 				| WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
  	    //アクションバーメニューを表示する
-		if(isActionBar()){
-			getWindow().requestFeature(Window.FEATURE_ACTION_BAR);	
-		}
+		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 	}
-	
-	protected abstract boolean isActionBar();
 	
 	protected final void addMenu(Menu menu,int id,String text,int icon){
    	    // メニューの要素を追加して取得
