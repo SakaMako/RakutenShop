@@ -2,16 +2,12 @@ package jp.gr.java_conf.sakamako.rakuten.shop.item;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.squareup.otto.Subscribe;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.NewWebFragmentEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.item.ItemVerticalAdapter.OnVerticalPageSelected;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 
@@ -29,9 +25,6 @@ implements OnPageChangeListener ,OnVerticalPageSelected
 	//----------------------------------------------------------
 	
 	private List<ItemBaseFragment> mFragmentList = null;
-	private ViewPager mPager = null;
-	//private ItemWebFragment webFragment = null;
-	//private ItemVerticalFragment mVerticalFragment = null;
 	
 	//----------------------------------------------------------
 
@@ -39,24 +32,21 @@ implements OnPageChangeListener ,OnVerticalPageSelected
 		super(fm);
 		
 		Log.d("ItemDetailPager","start-----------------------");
-
-		//webFragment = new ItemWebFragment();
 		
 		mFragmentList = new ArrayList<ItemBaseFragment>();
 		mFragmentList.add(new ItemBlankFragment());
 		ItemVerticalFragment verticalFragment = new ItemVerticalFragment();
 		mFragmentList.add(verticalFragment);
-		//mItem = item;
 		
 		Log.d("ItemDetailPager","end-----------------------");
 	}
 
 	//----------------------------------------------------------
-	
-	public int getCurrentItem(){
-		return mPager.getCurrentItem();
-	}
 
+	public List<ItemBaseFragment> getFragmentList(){
+		return mFragmentList;
+	}
+	
 	@Override
 	public Fragment getItem(int i) {
 		return mFragmentList.get(i);
@@ -88,8 +78,6 @@ implements OnPageChangeListener ,OnVerticalPageSelected
 			ItemWebFragment webFragment = null;
 			if(mFragmentList.size() == 2){
 				Log.d(this.getClass().getSimpleName(),"ItemWebFragmentの生成");
-				//webFragment = null;
-				//webFragment = new ItemWebFragment();
 				webFragment = new ItemWebFragment();
 				mFragmentList.add(webFragment);
 			}
@@ -110,17 +98,6 @@ implements OnPageChangeListener ,OnVerticalPageSelected
 			}
 		}
 		this.notifyDataSetChanged();
-	}
-	  
-	//ブラウザ代わりに WebView を追加していく。ItemWebFragment.WebClinet から呼ばれる
-	@Subscribe
-	public void onNewWebFragment(NewWebFragmentEvent event) {
-		Log.d(this.getClass().getSimpleName(),(mFragmentList.size()+1) + "のwebを追加="+event.getUrl());
-		ItemWebFragment fragment = new ItemWebFragment();
-		mFragmentList.add(fragment);
-		this.notifyDataSetChanged();
-		mPager.setCurrentItem(mFragmentList.size(),true);
-		fragment.loadWeb(event.getUrl());
 	}
 	
 	//------------------------------------------------------

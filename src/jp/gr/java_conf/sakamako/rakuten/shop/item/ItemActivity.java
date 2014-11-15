@@ -7,6 +7,7 @@ import jp.gr.java_conf.sakamako.rakuten.shop.BaseActivity;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.ItemActivityFinishEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.MakeToastEvent;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.NewWebFragmentEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseItemAdapter;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.HomeActivity;
 import jp.gr.java_conf.sakamako.rakuten.shop.item.ItemVerticalAdapter.OnVerticalPageSelected;
@@ -53,6 +54,19 @@ public class ItemActivity extends BaseActivity {
 		mHorizontalPager.setAdapter(horizontalAdapter);
 		mHorizontalPager.setOnPageChangeListener(horizontalAdapter);
 	    mHorizontalPager.setCurrentItem(1);
+	}
+	
+	@Subscribe
+	public void onNewWebFragment(NewWebFragmentEvent event) {
+		Log.d(this.getClass().getSimpleName(),"onNewWebFragment="+event.getUrl());
+		
+		ItemHorizontalAdapter horizontalAdapter = (ItemHorizontalAdapter)mHorizontalPager.getAdapter();
+
+		ItemWebFragment fragment = new ItemWebFragment();
+		horizontalAdapter.getFragmentList().add(fragment);
+		horizontalAdapter.notifyDataSetChanged();
+		mHorizontalPager.setCurrentItem(horizontalAdapter.getCount(),true);
+		fragment.loadWeb(event.getUrl());
 	}
 
 	// ItemVerticalFragment.onActivityCreated からこれを読んで

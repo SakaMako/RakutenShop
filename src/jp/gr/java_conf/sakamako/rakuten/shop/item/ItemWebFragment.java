@@ -74,6 +74,7 @@ implements OnRefreshListener
 				if (event.getAction() == MotionEvent.ACTION_UP) {
 					if (w.getHitTestResult() != null) {
 						Log.d(this.getClass().getSimpleName(), "[1]HitTestResult.getType() " + w.getHitTestResult().getType());
+						//return true;
 					}
 				}
 				return false;
@@ -127,6 +128,8 @@ implements OnRefreshListener
 	    @Override
 	    public void onPageStarted(WebView view, String url, android.graphics.Bitmap favicon) {
 	        super.onPageStarted(view, url, favicon);
+        	Log.d(this.getClass().getSimpleName(),"onPageStarted="+url);
+
 	    }
 		
         @Override
