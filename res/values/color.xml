@@ -21,6 +21,8 @@
     <item name="cnt_textcolor" type="color">@color/white</item>
     <item name="item_detail_background" type="color">#AADDDDDD</item>
     <item name="item_detail_shadow" type="color">#FFBBBBBB</item>
+    <item name="price_background" type="color">@color/red</item>
+    <item name="price_textcolor" type="color">@color/white</item>
     
  
     <integer-array name="androidcolors">

@@ -3,7 +3,7 @@
 /production/
 /gen/
 .DS_Store
-/res/
+/res/drawable*/
 /.settings/
 .project
 proguard-project.txt
