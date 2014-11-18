@@ -12,10 +12,13 @@ public class RankingFragment extends BaseFragment{
 	private static RankingFragment own = null;
 	
 	public static RankingFragment getInstance(){
-		if(own == null){
-			own = new RankingFragment();
-		}
-		return own;
+		if(own != null) return own;
+		return new RankingFragment();
+	}
+	
+	public RankingFragment(){
+		super();
+		own = this;
 	}
 	
 	@Override

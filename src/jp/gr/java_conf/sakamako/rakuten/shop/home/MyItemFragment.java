@@ -17,17 +17,26 @@ implements DragListener
 	private Category mCat = null;
 	
 	public static MyItemFragment getInstance(Category cat){
-		if(fragmentList == null){
-			fragmentList = new LinkedHashMap<Category,MyItemFragment>();
-		}
-		MyItemFragment fragment = fragmentList.get(cat);
+		MyItemFragment fragment = getInstanceFromList(cat);
 		if(fragment == null){
 			fragment = new MyItemFragment();
-			fragment.setCategory(cat);
+            Bundle args = new Bundle();  
+            args.putString("cat", cat.getLabel());
+            fragment.setArguments(args);
 			fragmentList.put(cat, fragment);
 		}
 		return fragment;
-		
+	}
+	
+	private static MyItemFragment getInstanceFromList(Category cat){
+		if(fragmentList == null){
+			fragmentList = new LinkedHashMap<Category,MyItemFragment>();
+		}
+		return fragmentList.get(cat);
+	}
+	
+	public MyItemFragment(){
+		super();
 	}
 	
 	@Override
@@ -40,7 +49,15 @@ implements DragListener
 				String categoryName = state.getString("cat");
 				mCat = MyCategory.getInstance().getCategory(categoryName);
 			}
+			else{
+				mCat = getCategory();
+			}
 		}
+		MyItemFragment fragment = getInstanceFromList(mCat);
+		if(fragment == null){
+			fragmentList.put(mCat, this);
+		}
+		
 		super.setAdapter(new MyItemAdapter(this,mCat));
 	}
 	
@@ -51,11 +68,12 @@ implements DragListener
 		state.putString("cat",mCat.getLabel());
 	}
 	
-	public void setCategory(Category cat){
-		mCat = cat;
-	}
-	
 	public Category getCategory(){
+		if(mCat == null){
+			Bundle bundle = getArguments();
+			String categoryName = bundle.getString("cat");
+			return MyCategory.getInstance().getCategory(categoryName);
+		}
 		return mCat;
 	}
 	
@@ -81,7 +99,7 @@ implements DragListener
 
 	@Override
 	public String getTabTitle() {
-		return mCat.getLabel();
+		return getCategory().getLabel();
 	}
 	
 	//---------------------------------------------------------------

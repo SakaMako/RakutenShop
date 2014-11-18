@@ -12,8 +12,12 @@ public class SearchFragment extends BaseFragment
 	
 	public static SearchFragment getInstance(){
 		if(own != null) return own;
-		own =  new SearchFragment();
-		return own;
+		return new SearchFragment();
+	}
+	
+	public SearchFragment(){
+		super();
+		own = this;
 	}
 	
 	@Override
