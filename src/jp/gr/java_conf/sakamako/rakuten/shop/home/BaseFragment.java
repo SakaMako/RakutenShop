@@ -27,7 +27,7 @@ public abstract class BaseFragment extends Fragment	{
 	public static final int TYPE_GRID2 = 2;
 	public static final int TYPE_LIST = 3;
 
-	private int mType = -1;
+	private int mType = TYPE_GRID;
 	private AbsListView mView = null;
 	private BaseItemAdapter mAdapter = null;
 	private int mInitPosition = -1;
@@ -35,15 +35,11 @@ public abstract class BaseFragment extends Fragment	{
 	private TextView mCntView = null;
 	//--------------------------------------------------------------------
 	
-	public BaseFragment(int type) {
-		super();
-		mType = type;
-	}
 	@Override
 	public void onCreate(Bundle state){
 		super.onCreate(state);
 		// Type の復活
-		if(mType == -1 && state != null){
+		if(state != null){
 			mType = state.getInt("type");
 		}
 	}

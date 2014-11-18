@@ -1,38 +1,33 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.home;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import com.squareup.otto.Subscribe;
-
-import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.FinishReloadEvent;
-import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory.Category;
 import jp.gr.java_conf.sakamako.view.SortableListView.DragListener;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 public class MyItemFragment extends BaseFragment 
 implements DragListener
 	{
+	private static Map<Category,MyItemFragment> fragmentList = null;
 	private Category mCat = null;
 	
-	public MyItemFragment() {
-		super(TYPE_GRID);
-	}
-	
-	public MyItemFragment(Category cat) {
-		this(TYPE_GRID,cat,null);
-	}
-
-	private MyItemFragment(int type,Category cat,BaseItemAdapter adapter) {
-		super(type);
-		mCat = cat;
-		super.setAdapter(adapter);
-		Log.d("MyItemFragment",mCat.getLabel()+"の作成");
-		Log.d("MyItemFragment","type="+type+","+this.getType());
+	public static MyItemFragment getInstance(Category cat){
+		if(fragmentList == null){
+			fragmentList = new LinkedHashMap<Category,MyItemFragment>();
+		}
+		MyItemFragment fragment = fragmentList.get(cat);
+		if(fragment == null){
+			fragment = new MyItemFragment();
+			fragment.setCategory(cat);
+			fragmentList.put(cat, fragment);
+		}
+		return fragment;
+		
 	}
 	
 	@Override
@@ -52,9 +47,12 @@ implements DragListener
 	@Override
 	public void onSaveInstanceState(Bundle state) {
 		super.onSaveInstanceState(state);
-		Log.d(this.getClass().getSimpleName(),"SavedInstanceState");
+		Log.d(this.getClass().getSimpleName(),"onSavedInstanceState");
 		state.putString("cat",mCat.getLabel());
+	}
 	
+	public void setCategory(Category cat){
+		mCat = cat;
 	}
 	
 	public Category getCategory(){
