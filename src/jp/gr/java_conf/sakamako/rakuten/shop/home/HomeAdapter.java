@@ -7,21 +7,15 @@ import java.util.List;
 import com.squareup.otto.Subscribe;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
-import jp.gr.java_conf.sakamako.rakuten.shop.BaseActivity;
 import jp.gr.java_conf.sakamako.rakuten.shop.dialog.DeleteCategoryDialog.DeleteCategoryListener;
 import jp.gr.java_conf.sakamako.rakuten.shop.dialog.NewCategoryDialog.OnNewCategoryListener;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.SearchPostEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory;
-import jp.gr.java_conf.sakamako.rakuten.shop.model.SearchParams;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory.Category;
-import android.graphics.Color;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
-import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
@@ -45,19 +39,19 @@ implements DeleteCategoryListener, OnNewCategoryListener {
 
     	mList = new ArrayList<BaseFragment>();
     	if(App.isRanking()){
-    		RankingFragment ranking = new RankingFragment();
+    		RankingFragment ranking = RankingFragment.getInstance();
     		mList.add(ranking);
     		sp++;
     	}
 
-    	SearchFragment search = new SearchFragment();
+    	SearchFragment search = SearchFragment.getInstance();
     	mList.add(search);
     	SEARCH_POSITION = sp;
     
     	List<Category> list = MyCategory.getInstance().getList();
     	for(Iterator<Category> i=list.iterator();i.hasNext();){
     		Category cat = i.next();
-    		BaseFragment fragment = new MyItemFragment(cat);
+    		BaseFragment fragment = MyItemFragment.getInstance(cat);
     		mList.add(fragment);
     	}
     	
@@ -109,7 +103,7 @@ implements DeleteCategoryListener, OnNewCategoryListener {
 			return false;
 		}
 		
-		mList.add(new MyItemFragment(cat));
+		mList.add(MyItemFragment.getInstance(cat));
 		Tab tab = this.getActionBar().newTab();
 		tab.setText(cat.getLabel());
 		tab.setTabListener(mViewPager);
