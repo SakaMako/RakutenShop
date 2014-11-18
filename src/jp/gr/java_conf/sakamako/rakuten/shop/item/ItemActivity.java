@@ -74,6 +74,7 @@ public class ItemActivity extends BaseActivity {
 	public void onFragmentCreated(DirectionalViewPager verticalPager, ItemVerticalAdapter verticalAdapter) {
         Item pItem = (Item)getIntent().getSerializableExtra("item");
         BaseItemAdapter baseItemAdapter = HomeActivity.itemAdapter;
+        Log.d(this.getClass().getSimpleName(),"onFragentCreated.size="+baseItemAdapter.getCount());
 		int pos = baseItemAdapter.getPosition(pItem);
 		if(pos < 0){
 			Log.d(this.getClass().getSimpleName(),"pos="+pos+","+pItem.getCode()
@@ -94,6 +95,12 @@ public class ItemActivity extends BaseActivity {
 	public void onPause() {
 	    EventHolder.unregister(mHorizontalPager.getAdapter());
 	    super.onPause();
+	}
+
+	@Override
+	public void onDestroy() {
+	    EventHolder.unregister(mHorizontalPager.getAdapter());
+	    super.onDestroy();
 	}
 	
 	//----------------------------------------------------------------------------------
@@ -140,9 +147,13 @@ public class ItemActivity extends BaseActivity {
 		return true;
 	}
 	
+	private boolean isFinished = false;
 	@Subscribe
 	public void finishItemActivity(ItemActivityFinishEvent event){
+		if(isFinished) return;
+		Log.d(this.getClass().getSimpleName(),"finish");
 		finish();
+		isFinished = true;
 	}
 	
 	@Subscribe
