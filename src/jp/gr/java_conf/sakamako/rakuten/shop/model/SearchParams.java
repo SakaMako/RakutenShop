@@ -1,8 +1,12 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.model;
 
+import java.io.Serializable;
+
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
 
-public class SearchParams {
+public class SearchParams implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private String mSearchString = null;
 	private boolean isZaiko = false;
 	private String itemCode = null;
@@ -25,22 +29,6 @@ public class SearchParams {
 	public void setSearchString(String mSearchString) {
 		this.mSearchString = mSearchString;
 	}
-
-	/**
-	public String getSearchKeyword(){
-		String keyword = "";
-				
-		// 更に検索文字が入っていれば
-		if(mSearchString != null){
-			// まだ何も入っていない場合
-			if(!keyword.equals("")){
-				keyword += " ";
-			}
-			keyword += mSearchString;
-		}
-		return keyword;
-	}
-	*/
 	public static String getShopUrl() {
 		return App.getShopUrl();
 	}
