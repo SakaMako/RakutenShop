@@ -1,9 +1,7 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.home;
 
 import com.squareup.otto.Subscribe;
-
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
-import jp.gr.java_conf.sakamako.rakuten.shop.App;
 import jp.gr.java_conf.sakamako.rakuten.shop.BaseActivity;
 import jp.gr.java_conf.sakamako.rakuten.shop.dialog.DeleteCategoryDialog;
 import jp.gr.java_conf.sakamako.rakuten.shop.dialog.NewCategoryDialog;
@@ -85,7 +83,9 @@ public class HomeActivity<mViewPager> extends BaseActivity
     	
     	// 最初の１回だけでは強制的に０にしてメニューを初期化する
     	// Otto への register はこの後の onResume なので強制的にイベントを作成して呼び出す
-    	onTabChanged(new TabChangedEvent(0));
+    	// SelectedNavigationIndex() への設定は onPostCreate() で実装済み
+    	onTabChanged(new TabChangedEvent(getSupportActionBar().getSelectedNavigationIndex()));
+
     	return true;
     }
     
@@ -109,16 +109,23 @@ public class HomeActivity<mViewPager> extends BaseActivity
         	mDrawerLayout.setDrawerListener(mDrawerToggle);
         }
 	    mDrawerToggle .syncState();
+	    
+		mViewPager  = (HomeViewPager) findViewById(R.id.viewpager);
+		int init_tab_pos = 0;
+		if(savedInstanceState!=null){
+			init_tab_pos = savedInstanceState.getInt("TAB_NUMBER");
+			Log.d(this.getClass().getSimpleName(),"savedInstanceState="+init_tab_pos);    
+		}
+		getSupportActionBar().setSelectedNavigationItem(init_tab_pos);
 	}
 	
 	@Override
 	public void onResume(){
 		super.onResume();
+		
+		Log.d(this.getClass().getSimpleName(),"onResume");    
 
-		// メンバ変数のものが null になっていたら再生成
-		mViewPager  = (HomeViewPager) findViewById(R.id.viewpager);
-
-        if(mDrawerList == null){
+		if(mDrawerList == null){
         	// DrawerList
         	mDrawerList = (ListView) findViewById(R.id.left_drawer);
         	DrawerMenuAdapter adapter = new DrawerMenuAdapter();
@@ -127,6 +134,9 @@ public class HomeActivity<mViewPager> extends BaseActivity
         }
         
         EventHolder.register(mViewPager.getAdapter());
+        
+        int pos = mViewPager.getCurrentItem();
+        Log.d(this.getClass().getSimpleName(),"mViewPager.current="+pos);
 	}
 	
 	@Override
@@ -135,13 +145,18 @@ public class HomeActivity<mViewPager> extends BaseActivity
 	    super.onPause();
 	}
 	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+	    super.onSaveInstanceState(outState);
+	    Log.d(this.getClass().getSimpleName(),"onSaveInstanceState:pos="+mViewPager.getCurrentItem() );
+	    outState.putInt("TAB_NUMBER", mViewPager.getCurrentItem() );
+	}
+	
 	//----------------------------------------------------------------------
 
 	@Override
 	// もしバックボタンを押されても左端で無ければ一旦左端に戻る
 	public boolean dispatchKeyEvent(KeyEvent event) {
-		HomeAdapter homeAdapter = (HomeAdapter) mViewPager.getAdapter();
-
 	    if (event.getAction()==KeyEvent.ACTION_DOWN) {
 	        switch (event.getKeyCode()) {
 	        case KeyEvent.KEYCODE_BACK:
@@ -259,8 +274,8 @@ public class HomeActivity<mViewPager> extends BaseActivity
 	@Subscribe
 	public final void onShowItemDetail(ShowItemDetailEvent event){
 		Intent intent = new Intent(getApplicationContext(),ItemActivity.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		intent.putExtra("item",event.getmItem());		
+		intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		intent.putExtra("item",event.getmItem());
 		itemAdapter = mViewPager.getCurrentFragment().getAdapter();
 		startActivity(intent);
 	}
