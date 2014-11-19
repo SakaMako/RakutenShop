@@ -150,6 +150,10 @@ implements OnScrollListener,OnItemClickListener{
 			Log.d(this.getClass().getSimpleName(),"onPostReload-add="+result.size());
 			this.addAll(result);
 		}
+		if(isReload && (result == null || result.size() == 0)){
+			EventHolder.makeToast("該当件数は0件です。");
+		}
+		
 		this.notifyDataSetChanged();
 	}
 	
