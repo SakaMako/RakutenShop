@@ -30,7 +30,7 @@ public abstract class BaseFragment extends Fragment	{
 	private int mType = TYPE_GRID;
 	private AbsListView mView = null;
 	private BaseItemAdapter mAdapter = null;
-	private int mInitPosition = -1;
+//	private int mInitPosition = -1;
 	private SwipeRefreshLayout mSwipeRefreshLayout =null;
 	private TextView mCntView = null;
 	//--------------------------------------------------------------------
@@ -77,10 +77,10 @@ public abstract class BaseFragment extends Fragment	{
 		((AbsListView)mView).setAdapter(mAdapter);        
 	    ((BaseListView)mView).onAttachedFragment(this);
         
-    	Log.d(this.getClass().getSimpleName(),"initPosition="+mInitPosition);
-		if(mInitPosition >= 0){
-			this.setSelection(mInitPosition);
-		}
+    	//Log.d(this.getClass().getSimpleName(),"initPosition="+mInitPosition);
+		//if(mInitPosition >= 0){
+		//	this.setSelection(mInitPosition);
+		//}
 		
 		if(mAdapter instanceof ReloadbleListener){
 			mSwipeRefreshLayout.setOnRefreshListener((ReloadbleListener)mAdapter);
@@ -163,9 +163,9 @@ public abstract class BaseFragment extends Fragment	{
 		return mView.getFirstVisiblePosition();
 	}
 
-	public final void setInitPosition(int vpos) {
-		mInitPosition = vpos;
-	}
+	//private final void setInitPosition(int vpos) {
+	//	mInitPosition = vpos;
+	//}
 	
 	// ItemVerticalPager 用、後で戻ってきたときに問題無いようにスクロールしておく
 	public final void setSelection(int pos){
@@ -176,7 +176,8 @@ public abstract class BaseFragment extends Fragment	{
 	
 	@Subscribe
 	protected void onFinishReload(FinishReloadEvent event){
-		this.setInitPosition(0);
+		//this.setInitPosition(0);
+		this.setSelection(0);
 		mSwipeRefreshLayout.setRefreshing(false);
 	}
 	
