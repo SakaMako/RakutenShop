@@ -70,7 +70,7 @@ public class HomeActivity<mViewPager> extends BaseActivity
 	    super.onActivityResult(requestCode, resultCode, data);
 	    
 		Log.d(this.getClass().getSimpleName(),"onActivityResult");
-		
+		if(data == null) return;
 	    Bundle bundle = data.getExtras();
 	    switch (requestCode) {
 	    	case INTENT_START_SETTING:
