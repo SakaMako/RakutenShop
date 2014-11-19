@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+    
+    <LinearLayout
+ 	    android:id="@+id/add_category_layout"
+        android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+    	android:orientation="horizontal" >
+        
+		<ImageView
+    	    android:id="@+id/add_category_image_icon"
+        	android:layout_width="50dp"
+			android:layout_height="50dp"
+			android:src="@drawable/ic_action_new_label_dark" />
+	    
+	    <TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textSize="@dimen/category_text_size"
+			android:text="カテゴリの追加" />
+	
+	</LinearLayout>
+
+   	<jp.gr.java_conf.sakamako.rakuten.shop.setting.CategoryListView
+        		android:id="@+id/categoryList"
+        		android:layout_width="match_parent"
+        		android:layout_height="match_parent"
+        		android:layout_gravity="fill"
+        		android:layout_margin="0dp"
+        		android:layout_weight="1"
+        		android:padding="0dp" />
+
+</LinearLayout>

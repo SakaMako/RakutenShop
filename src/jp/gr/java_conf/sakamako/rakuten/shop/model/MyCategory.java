@@ -52,19 +52,22 @@ public class MyCategory extends XmlFileHandler{
 	public Category getCategory(String categoryName){
 		// 最初の初期化時には getInstance() を通さないと null pointer
 		List<Category> list = MyCategory.getInstance().getList();
-		Log.d("getMyItem",list.size()+"件");
+		Log.d(this.getClass().getSimpleName(),"getCategory="+list.size()+"件/"+categoryName);
+
 		for(Iterator<Category> i= list.iterator();i.hasNext();){
 			Category c = i.next();
 			if(categoryName.toUpperCase().equals(c.getLabel().toUpperCase())){
 				return c;
 			}
 		}
+		Log.d(this.getClass().getSimpleName(),"getCategory is null");
+		
 		return null;
 	}
 	public MyItemList getMyItem(Category cat) {
 		// 最初の初期化時には getInstance() を通さないと null pointer
 		List<Category> list = MyCategory.getInstance().getList();
-		Log.d("getMyItem",list.size()+"件");
+		Log.d(this.getClass().getSimpleName(),"getMyItem="+list.size()+"件");
 		for(Iterator<Category> i= list.iterator();i.hasNext();){
 			Category c = i.next();
 			if(cat.getId() == c.getId()){
@@ -211,6 +214,7 @@ public class MyCategory extends XmlFileHandler{
     		XMLWriter writer = new XMLWriter(outStream);
     		writer.write(document);
     		writer.close();
+			Log.e(this.getClass().getSimpleName(),"書き込み完了 "+FILE_NAME);
 		} catch (IOException e) {
 			Log.e(this.getClass().getSimpleName(),"書き込みエラー",e);
 		}
@@ -237,6 +241,12 @@ public class MyCategory extends XmlFileHandler{
 		}
 		public MyItemList getItemList(){
 			return mList;
+		}
+		
+		@Override
+		public boolean equals(Object i){
+			boolean r =  this.getLabel().equals(((Category)i).getLabel());		
+			return r;		
 		}
 	}
 

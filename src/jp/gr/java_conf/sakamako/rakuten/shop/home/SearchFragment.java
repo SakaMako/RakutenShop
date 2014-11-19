@@ -49,10 +49,6 @@ public class SearchFragment extends BaseFragment
 	}
 	
 	//---------------------------------------------------------------
-	@Override
-	public boolean isDeletable() {
-		return false;
-	}
 
 	@Override
 	public String getTabTitle() {

@@ -1,26 +1,4 @@
 <resources>
-
-
-
-    <!-- Application theme. -->
-<!-- 
-    <style name="Theme.Mytheme" parent="@style/Theme.AppCompat.Light">
-        
-        <item name="actionBarItemBackground">@drawable/selectable_background_mytheme</item>
-        <item name="popupMenuStyle">@style/PopupMenu.Mytheme</item>
-        <item name="dropDownListViewStyle">@style/DropDownListView.Mytheme</item>
-        
-        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Mytheme</item>
-        <item name="actionDropDownStyle">@style/DropDownNav.Mytheme</item>
-        <item name="actionBarStyle">@style/ActionBar.Solid.Mytheme</item>
-        <item name="actionModeBackground">@drawable/cab_background_top_mytheme</item>
-        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_mytheme</item>
-        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Mytheme</item>
-        
-        
-    </style>
-    -->
-
     <style name="ActionBar.Solid.Mytheme" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
         <item name="background">@drawable/ab_solid_mytheme</item>
         <item name="backgroundStacked">@drawable/ab_stacked_solid_mytheme</item>
@@ -70,20 +48,11 @@
         <item name="dropDownListViewStyle">@style/DropDownListView.Mytheme</item>
     </style>
     
-    <!-- 
-    <style name="SpinnerTextViewItem" parent="@android:style/Widget.TextView" >
-    <item name="android:textStyle">normal</item>
-    <item name="android:textColor">@color/black</item>
-	</style>
-	-->
-	
-		<style name="Animation" parent="android:Animation" />
+	<style name="Animation" parent="android:Animation" />
 	<style name="Animation.Activity" parent="android:Animation.Activity">
 		<item name="android:activityOpenEnterAnimation">@anim/activity_open_from_right</item>
-		<!--
-		<item name="android:activityOpenExitAnimation">@anim/activity_open_exit</item>
-		<item name="android:activityCloseEnterAnimation">@anim/activity_close_enter</item>
-		<item name="android:activityCloseExitAnimation">@anim/activity_close_exit</item>
-		-->
+	</style>
+		<style name="Animation.Activity.Bottom" parent="android:Animation.Activity">
+		<item name="android:activityOpenEnterAnimation">@anim/activity_open_from_bottom</item>
 	</style>
 </resources>

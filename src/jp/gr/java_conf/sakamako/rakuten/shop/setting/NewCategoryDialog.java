@@ -1,4 +1,4 @@
-package jp.gr.java_conf.sakamako.rakuten.shop.dialog;
+package jp.gr.java_conf.sakamako.rakuten.shop.setting;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import android.app.AlertDialog;

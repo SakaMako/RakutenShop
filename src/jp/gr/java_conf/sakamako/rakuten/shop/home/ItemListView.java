@@ -38,8 +38,6 @@ implements BaseListView{
 		if(fragment.getAdapter() instanceof Scrollable){
 			setOnScrollListener((OnScrollListener) fragment.getAdapter());
 		}
-		
-		setOnItemClickListener(fragment.getAdapter());
 	}
 	
 	@Override

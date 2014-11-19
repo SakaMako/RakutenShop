@@ -1,4 +1,4 @@
-package jp.gr.java_conf.sakamako.rakuten.shop.dialog;
+package jp.gr.java_conf.sakamako.rakuten.shop.item;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;

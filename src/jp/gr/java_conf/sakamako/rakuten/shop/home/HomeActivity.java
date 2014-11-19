@@ -1,10 +1,9 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.home;
 
 import com.squareup.otto.Subscribe;
+
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.BaseActivity;
-import jp.gr.java_conf.sakamako.rakuten.shop.dialog.DeleteCategoryDialog;
-import jp.gr.java_conf.sakamako.rakuten.shop.dialog.NewCategoryDialog;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.MakeToastEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.SearchPreEvent;
@@ -12,6 +11,7 @@ import jp.gr.java_conf.sakamako.rakuten.shop.event.ShowItemDetailEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.TabChangedEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.item.ItemActivity;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.SearchParams;
+import jp.gr.java_conf.sakamako.rakuten.shop.setting.SettingActivity;
 import jp.gr.java_conf.sakamako.view.CustomSearchView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -27,22 +27,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-/**
- * 共通の Activity クラス
- * @author makoto.sakamoto
- * @param <mViewPager>
- *
- */
-
-
 @SuppressLint("NewApi")
 public class HomeActivity<mViewPager> extends BaseActivity 
 	{
-	
-	protected static final int MENU_ID_ADD = 1;
-	protected static final int MENU_ID_DELETE = 2;
-	protected static final int MENU_ID_DISPLAY = 6;
-	protected static final int MENU_ID_INVENTORY = 8;
+	private static final int MENU_ID_DISPLAY = 6;
+	private static final int MENU_ID_INVENTORY = 8;
+	private static final int MENU_ID_SETTING = 9;
+	private static final int INTENT_START_SETTING = 10001;
 	
 	private DrawerLayout mDrawerLayout = null;
 	private ListView mDrawerList = null;
@@ -74,12 +65,38 @@ public class HomeActivity<mViewPager> extends BaseActivity
         mSearchView = (CustomSearchView) actionBarView.findViewById(R.id.action_bar_search);
     }
 	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    super.onActivityResult(requestCode, resultCode, data);
+	    
+		Log.d(this.getClass().getSimpleName(),"onActivityResult");
+		
+	    Bundle bundle = data.getExtras();
+	    switch (requestCode) {
+	    	case INTENT_START_SETTING:
+	    		Log.d(this.getClass().getSimpleName(),"INTENT_START_SETTING");
+
+	    		if (resultCode == SettingActivity.RESULT_ADD) {
+		    		Log.d(this.getClass().getSimpleName(),"RESULT_ADD");
+
+	    			((HomeAdapter)mViewPager.getAdapter()).addCategory(bundle.getString("cat"));
+	    	    }
+	    		else if(resultCode == SettingActivity.RESULT_DELETE){
+		    		Log.d(this.getClass().getSimpleName(),"RESULT_DELETE");
+
+	    			((HomeAdapter)mViewPager.getAdapter()).deleteCategory(bundle.getString("cat"));
+	    		}
+	    		break;
+	    	default:
+	    		break;
+	    }
+	}
+	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 		addMenu(menu,MENU_ID_DISPLAY,"切り替え",R.drawable.ic_action_view_as_grid);
     	addMenu(menu,MENU_ID_INVENTORY,"在庫なし含む",R.drawable.ic_action_location_searching);
-    	addMenu(menu,MENU_ID_DELETE,"カテゴリ削除",R.drawable.ic_action_discard);
-    	addMenu(menu,MENU_ID_ADD,"追加",R.drawable.ic_action_new_label);
+    	addMenu(menu,MENU_ID_SETTING,"設定",R.drawable.ic_action_settings);
     	
     	// 最初の１回だけでは強制的に０にしてメニューを初期化する
     	// Otto への register はこの後の onResume なので強制的にイベントを作成して呼び出す
@@ -182,16 +199,11 @@ public class HomeActivity<mViewPager> extends BaseActivity
 				mDrawerLayout.openDrawer(mDrawerList);
 			}
 			break;
-		case MENU_ID_ADD:
-			showDialog("カテゴリの追加",new NewCategoryDialog(homeAdapter));
+		case MENU_ID_SETTING:
+			Intent intent = new Intent(getApplicationContext(),SettingActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+			startActivityForResult(intent,INTENT_START_SETTING);
             break;
-		case MENU_ID_DELETE:
-			int pos = mViewPager.getCurrentItem();
-			MyItemFragment fragment = (MyItemFragment) homeAdapter.getItem(pos);
-			showDialog("カテゴリの削除",
-					new DeleteCategoryDialog(fragment.getCategory(),homeAdapter)
-			);
-			break;
 		case MENU_ID_DISPLAY:
 			int type = homeAdapter.replace();
 			setListTypeIcon(type);
@@ -261,7 +273,6 @@ public class HomeActivity<mViewPager> extends BaseActivity
 		Log.d(this.getClass().getSimpleName(),"onTabChanged="+pos);
 		
 		BaseFragment fragment = ((HomeAdapter)mViewPager.getAdapter()).getItem(pos);
-		getMenuItem(MENU_ID_DELETE).setVisible(fragment.isDeletable());
 		setListTypeIcon(fragment.getType());
 		
 		getMenuItem(MENU_ID_INVENTORY).setVisible((fragment instanceof SearchFragment));

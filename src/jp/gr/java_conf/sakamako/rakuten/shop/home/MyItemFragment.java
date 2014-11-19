@@ -17,8 +17,12 @@ implements DragListener
 	private Category mCat = null;
 	
 	public static MyItemFragment getInstance(Category cat){
+		Log.d(MyItemFragment.class.getSimpleName(),"フラグメントの取得="+cat.getLabel());
+
 		MyItemFragment fragment = getInstanceFromList(cat);
 		if(fragment == null){
+			Log.d(MyItemFragment.class.getSimpleName(),"フラグメントの作成="+cat.getLabel());
+
 			fragment = new MyItemFragment();
             Bundle args = new Bundle();  
             args.putString("cat", cat.getLabel());
@@ -26,6 +30,10 @@ implements DragListener
 			fragmentList.put(cat, fragment);
 		}
 		return fragment;
+	}
+	
+	public static void removeInstance(Category cat){
+		fragmentList.remove(cat);
 	}
 	
 	private static MyItemFragment getInstanceFromList(Category cat){
@@ -91,11 +99,6 @@ implements DragListener
 	}
 
 	//---------------------------------------------------------------
-	//メニューの切り替え
-	@Override
-	public boolean isDeletable() {
-		return true;
-	}
 
 	@Override
 	public String getTabTitle() {

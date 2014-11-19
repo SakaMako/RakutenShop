@@ -18,6 +18,9 @@
 -->
 
 <resources>
+        <style name="Theme.Mytheme.Trans.Bottom" parent="Theme.Mytheme.Trans">
+        <item name="android:windowAnimationStyle">@style/Animation.Activity.Bottom</item>
+    </style>
     
     <style name="Theme.Mytheme.Trans" parent="Theme.Mytheme">
         <item name="android:windowIsTranslucent">true</item>

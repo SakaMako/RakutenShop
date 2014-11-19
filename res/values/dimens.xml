@@ -7,5 +7,7 @@
     <dimen name="item_detail_margin">15dp</dimen>
     <dimen name="available_icon_size">20dp</dimen>
     <dimen name="available_icon_margin">3dp</dimen>
+    <dimen name="category_text_size">30sp</dimen>
+    
     
 </resources>

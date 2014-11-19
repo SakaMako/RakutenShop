@@ -34,11 +34,6 @@ public class RankingFragment extends BaseFragment{
 	}
 		
 	//---------------------------------------------------------------
-	//メニューの切り替え
-	@Override
-	public boolean isDeletable() {
-		return false;
-	}
 
 	@Override
 	public String getTabTitle() {

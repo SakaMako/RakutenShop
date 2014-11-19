@@ -7,8 +7,6 @@ import java.util.List;
 import com.squareup.otto.Subscribe;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
-import jp.gr.java_conf.sakamako.rakuten.shop.dialog.DeleteCategoryDialog.DeleteCategoryListener;
-import jp.gr.java_conf.sakamako.rakuten.shop.dialog.NewCategoryDialog.OnNewCategoryListener;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.SearchPostEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory.Category;
@@ -19,8 +17,7 @@ import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
-public class HomeAdapter extends FragmentStatePagerAdapter
-implements DeleteCategoryListener, OnNewCategoryListener {
+public class HomeAdapter extends FragmentStatePagerAdapter {
 
 	private ArrayList<BaseFragment> mList = null;
 	private HomeViewPager mViewPager = null;
@@ -55,6 +52,7 @@ implements DeleteCategoryListener, OnNewCategoryListener {
     		mList.add(fragment);
     	}
     	
+    	getActionBar().removeAllTabs();
         for(Iterator<BaseFragment> it = mList.iterator();it.hasNext();){
         	BaseFragment fragment = it.next();
             Tab rtab = this.getActionBar().newTab();
@@ -66,9 +64,9 @@ implements DeleteCategoryListener, OnNewCategoryListener {
     
     //-------------------------------------------------------------------
 	@Override
-	public BaseFragment getItem(int arg0) {
-		return mList.get(arg0);
-	}
+	public BaseFragment getItem(int pos) {
+		return mList.get(pos);
+    }
 
 	@Override
 	public int getCount() {
@@ -76,12 +74,13 @@ implements DeleteCategoryListener, OnNewCategoryListener {
 	}
 	
 	@Override
-	public int getItemPosition(Object object) {		
-		int i = mList.indexOf(object);
-		if(i < 0){
-			return POSITION_NONE;
-		}
-		return POSITION_UNCHANGED;
+	public int getItemPosition(Object object) {	
+        return POSITION_NONE;
+	}
+	
+	@Override
+	public CharSequence getPageTitle (int position){
+		return getItem(position).getTabTitle();
 	}
     //-------------------------------------------------------------------
 	
@@ -94,43 +93,31 @@ implements DeleteCategoryListener, OnNewCategoryListener {
     	}
 	    mViewPager.getCurrentFragment().setSelection(0);
     }
+    
+    public void addCategory(String categoryName){
+    	Log.d(this.getClass().getSimpleName(),"deleteCategory="+categoryName);
 
- 	//カテゴリの追加
-	public boolean onNewCategory(String text) {	
-		Category cat = MyCategory.getInstance().add(text);
-		if(cat == null){
-			Log.d("TabFragmentAdapter","カテゴリの重複"+text);
-			return false;
-		}
+    	MyCategory.getInstance().add(categoryName);
+    	HomeAdapter adapter = new HomeAdapter(mViewPager);
+    	mViewPager.setAdapter(adapter);
+  	  
+    	getActionBar().setSelectedNavigationItem(adapter.getCount()-1);
+    }
+     
+    public void deleteCategory(String categoryName) {
+		Log.d(this.getClass().getSimpleName(),"deleteCategory="+categoryName);
+		Category cat = MyCategory.getInstance().getCategory(categoryName);
+		int pos = MyCategory.getInstance().getList().indexOf(cat);
+		MyCategory.getInstance().remove(cat);
+		MyItemFragment.removeInstance(cat);
 		
-		mList.add(MyItemFragment.getInstance(cat));
-		Tab tab = this.getActionBar().newTab();
-		tab.setText(cat.getLabel());
-		tab.setTabListener(mViewPager);
-		this.getActionBar().addTab(tab);
-		this.notifyDataSetChanged();
-		mViewPager.setCurrentItem(mList.size());
-		return true;
+    	HomeAdapter adapter = new HomeAdapter(mViewPager);
+    	mViewPager.setAdapter(adapter);
+    	
+    	// Search + Ranking + MyItem - 1
+		getActionBar().setSelectedNavigationItem(pos+SEARCH_POSITION+1-1);
 	}
 
-	@Override
-	// カテゴリの削除
-	public void onDeleteCategory() {
-		int currentItem = mViewPager.getCurrentItem();
-		MyItemFragment fragment = (MyItemFragment) mList.get(currentItem);
-		Log.d(this.getClass().getSimpleName(),"カテゴリの削除 = " +currentItem
-				+ ","+fragment.getCategory().getLabel()
-				+ ","+fragment.getCategory().getId());
-		
-		// データの削除
-		MyCategory.getInstance().remove(fragment.getCategory());
-		
-		// フラグメントの削除
-		mList.remove(currentItem);
-		notifyDataSetChanged();
-		this.getActionBar().removeTabAt(currentItem);
-		mViewPager.setCurrentItem(currentItem-1);
-	}
 	
 	public final int replace(){
 		Log.d(this.getClass().getSimpleName(),"replace start ----------------------------");

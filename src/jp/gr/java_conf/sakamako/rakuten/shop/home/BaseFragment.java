@@ -19,7 +19,6 @@ import android.widget.TextView;
 public abstract class BaseFragment extends Fragment	{
 	
 	//--------------------------------------------------------------------
-	public abstract boolean isDeletable();
 	public abstract String getTabTitle(); 
 
 	//--------------------------------------------------------------------
@@ -76,11 +75,6 @@ public abstract class BaseFragment extends Fragment	{
 		super.onActivityCreated(saveInstanceState);
 		((AbsListView)mView).setAdapter(mAdapter);        
 	    ((BaseListView)mView).onAttachedFragment(this);
-        
-    	//Log.d(this.getClass().getSimpleName(),"initPosition="+mInitPosition);
-		//if(mInitPosition >= 0){
-		//	this.setSelection(mInitPosition);
-		//}
 		
 		if(mAdapter instanceof ReloadbleListener){
 			mSwipeRefreshLayout.setOnRefreshListener((ReloadbleListener)mAdapter);
@@ -120,7 +114,7 @@ public abstract class BaseFragment extends Fragment	{
 	@Override
 	public void onSaveInstanceState(Bundle state) {
 		super.onSaveInstanceState(state);
-		Log.d(this.getClass().getSimpleName(),"SavedInstanceState");
+		Log.d(this.getClass().getSimpleName(),"super.onSavedInstanceState");
 		state.putInt("type",mType);
 	
 	}
@@ -192,6 +186,4 @@ public abstract class BaseFragment extends Fragment	{
 			mCntView.setText(last + "/" + all);
 		}
 	}
-
-
 }

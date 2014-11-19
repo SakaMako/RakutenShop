@@ -4,11 +4,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
-import jp.gr.java_conf.sakamako.rakuten.shop.App;
 import jp.gr.java_conf.sakamako.rakuten.shop.BaseActivity;
-import jp.gr.java_conf.sakamako.rakuten.shop.dialog.ItemImageDialog;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.NewWebFragmentEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.SearchParams;
 import android.content.Intent;
@@ -21,8 +18,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-//import android.webkit.CookieManager;
-//import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 

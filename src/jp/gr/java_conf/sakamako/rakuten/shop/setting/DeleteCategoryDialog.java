@@ -1,4 +1,4 @@
-package jp.gr.java_conf.sakamako.rakuten.shop.dialog;
+package jp.gr.java_conf.sakamako.rakuten.shop.setting;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory.Category;
@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -18,7 +19,7 @@ public class DeleteCategoryDialog extends DialogFragment {
 	private DeleteCategoryListener mListener = null;
 	
 	public interface DeleteCategoryListener{
-		public void onDeleteCategory();
+		public void onDeleteCategory(Category cat);
 	};
 	
 	public DeleteCategoryDialog(Category cat,DeleteCategoryListener listener){
@@ -38,7 +39,9 @@ public class DeleteCategoryDialog extends DialogFragment {
         builder.setTitle("カテゴリの削除");
         builder.setPositiveButton("決定", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-            	mListener.onDeleteCategory();
+	    		Log.d(this.getClass().getSimpleName(),"onClick");
+
+            	mListener.onDeleteCategory(mCat);
             }
         });
         builder.setNegativeButton("キャンセル", null);
