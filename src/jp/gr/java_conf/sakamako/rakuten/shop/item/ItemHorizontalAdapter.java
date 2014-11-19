@@ -34,8 +34,8 @@ implements OnPageChangeListener ,OnVerticalPageSelected
 		Log.d("ItemDetailPager","start-----------------------");
 		
 		mFragmentList = new ArrayList<ItemBaseFragment>();
-		mFragmentList.add(new ItemBlankFragment());
-		ItemVerticalFragment verticalFragment = new ItemVerticalFragment();
+		mFragmentList.add(ItemBlankFragment.getInstance());
+		ItemVerticalFragment verticalFragment = ItemVerticalFragment.getInstance();
 		mFragmentList.add(verticalFragment);
 		
 		Log.d("ItemDetailPager","end-----------------------");

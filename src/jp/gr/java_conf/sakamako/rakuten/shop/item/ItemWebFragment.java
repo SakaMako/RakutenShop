@@ -42,8 +42,6 @@ implements OnRefreshListener
 		isLoadStarted = false;
 		if(mWebView != null){
 		mWebView.loadUrl("about:blank");
-        //ItemWebViewClient iwc = new ItemWebViewClient();
-    	//mWebView.setWebViewClient(iwc);
     	mWebView.clearCache(true);
     	mWebView.clearView();
 		}
@@ -89,12 +87,9 @@ implements OnRefreshListener
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
-		Log.d(this.getClass().getSimpleName(),"onDestory-"+ mUrl);
-		
-		//mWebView.stopLoading();
+		Log.d(this.getClass().getSimpleName(),"onDestory-"+ mUrl);		
 		mWebView.setWebChromeClient(null);
 		mWebView.setWebViewClient(null);
-		//mWebView.destroy();
 		mWebView = null;
 	}
 	

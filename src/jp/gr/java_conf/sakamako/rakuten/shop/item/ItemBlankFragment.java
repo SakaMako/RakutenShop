@@ -8,6 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class ItemBlankFragment extends ItemBaseFragment{
+	
+	private static ItemBlankFragment own = null;
+	
+	public static ItemBlankFragment getInstance(){
+		if(own != null) return own;
+		return new ItemBlankFragment();
+	}
+
+	public ItemBlankFragment(){
+		super();
+		own  = this;
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle saveInstanceState){
         View v = inflater.inflate(R.layout.item_detail_blank, container, false);		

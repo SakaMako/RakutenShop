@@ -24,7 +24,7 @@
             android:name="jp.gr.java_conf.sakamako.rakuten.shop.home.HomeActivity"
             android:label="@string/app_name"
             android:alwaysRetainTaskState="true"
-            android:clearTaskOnLaunch="true"
+            android:launchMode="singleTask"
             android:uiOptions="splitActionBarWhenNarrow">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

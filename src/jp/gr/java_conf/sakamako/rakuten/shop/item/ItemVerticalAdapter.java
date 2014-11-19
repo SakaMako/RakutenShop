@@ -17,7 +17,6 @@ public class ItemVerticalAdapter  extends FragmentStatePagerAdapter implements O
 	//------------------------------------------------------------------
 	
 	private BaseItemAdapter mItemAdapter = null;	// 縦方向用のアダプター
-	private Map<Item,ItemDetailFragment> mFragmentList = null;
 	private int mPos = 0;
 	
 	//------------------------------------------------------------------
@@ -41,20 +40,6 @@ public class ItemVerticalAdapter  extends FragmentStatePagerAdapter implements O
 	public ItemVerticalAdapter(FragmentManager fm) {
 		super(fm);
 		Log.d(this.getClass().getSimpleName(),"コンストラクタ生成");
-		mFragmentList = new LinkedHashMap<Item,ItemDetailFragment>(10){
-			
-			@Override
-			protected boolean removeEldestEntry(Map.Entry<Item,ItemDetailFragment> eldest){
-				if(size() > 10){
-					Log.d(this.getClass().getSimpleName(),"removeEldestEntry,size="+size());
-					eldest = null;
-					return true;
-				}
-				return false;
-				
-			}
-		};
-
 	}
 
 	public void setVerticalAdapter(BaseItemAdapter adapter) {
@@ -65,12 +50,7 @@ public class ItemVerticalAdapter  extends FragmentStatePagerAdapter implements O
 	// 縦スクロールをスムーズにさせるために HashMap でキャッシュ化
 	public Fragment getItem(int position) {
 		Item item = mItemAdapter.getItem(position);
-		
-	    ItemDetailFragment fragment = mFragmentList.get(item);
-	    if(fragment == null){
-	    	fragment = new ItemDetailFragment(item);
-	    	mFragmentList.put(item, fragment);
-    	}
+		ItemDetailFragment fragment = ItemDetailFragment.getInstance(item);
 	    return fragment;
 	}
     @Override

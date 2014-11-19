@@ -12,9 +12,16 @@ public class ItemVerticalFragment extends ItemBaseFragment
 {
 	private ItemVerticalAdapter mVerticalAdapter = null;
 	private DirectionalViewPager mVerticalPager = null;
+	private static ItemVerticalFragment own = null;
+	
+	public static ItemVerticalFragment getInstance(){
+		if(own != null) return own;
+		return new ItemVerticalFragment();
+	}
 
 	public ItemVerticalFragment(){
 		super();
+		own  = this;
 
 	}
 	
