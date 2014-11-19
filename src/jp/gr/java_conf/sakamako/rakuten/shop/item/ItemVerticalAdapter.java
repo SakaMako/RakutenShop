@@ -22,7 +22,7 @@ public class ItemVerticalAdapter  extends FragmentStatePagerAdapter implements O
 	//------------------------------------------------------------------
 
 	public interface OnVerticalPageSelected{
-		public void onVerticalPageSelected(Item item);
+		public void onVerticalPageSelected(int pos,Item item);
 	}
 	
 	private OnVerticalPageSelected verticalPageSelectedListener = null;
@@ -44,6 +44,10 @@ public class ItemVerticalAdapter  extends FragmentStatePagerAdapter implements O
 
 	public void setVerticalAdapter(BaseItemAdapter adapter) {
 		mItemAdapter = adapter;
+	}
+	
+	public BaseItemAdapter getVerticalAdapter(){
+		return mItemAdapter;
 	}
 	
 	@Override
@@ -82,12 +86,9 @@ public class ItemVerticalAdapter  extends FragmentStatePagerAdapter implements O
 				((Scrollable)mItemAdapter).onNextPage(false);
 			}
 		}
-		verticalPageSelectedListener.onVerticalPageSelected(mItemAdapter.getItem(pos));
+		verticalPageSelectedListener.onVerticalPageSelected(pos,mItemAdapter.getItem(pos));
 		mItemAdapter.setVisiblePosition(pos);
 		
 		mPos = pos;
 	}
-
-
-
 }

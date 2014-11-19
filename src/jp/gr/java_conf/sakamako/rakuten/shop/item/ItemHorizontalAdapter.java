@@ -31,14 +31,14 @@ implements OnPageChangeListener ,OnVerticalPageSelected
 	public ItemHorizontalAdapter(FragmentManager fm,Item item) {
 		super(fm);
 		
-		Log.d("ItemDetailPager","start-----------------------");
+		Log.d(this.getClass().getSimpleName(),"start-----------------------");
 		
 		mFragmentList = new ArrayList<ItemBaseFragment>();
 		mFragmentList.add(ItemBlankFragment.getInstance());
 		ItemVerticalFragment verticalFragment = ItemVerticalFragment.getInstance();
 		mFragmentList.add(verticalFragment);
 		
-		Log.d("ItemDetailPager","end-----------------------");
+		Log.d(this.getClass().getSimpleName(),"end-----------------------");
 	}
 
 	//----------------------------------------------------------
@@ -70,8 +70,8 @@ implements OnPageChangeListener ,OnVerticalPageSelected
 	//----------------------------------------------------------
 	
 	@Override
-	public void onVerticalPageSelected(Item pItem) {
-		Log.d(this.getClass().getSimpleName(),"onVertincalPageSelected="+pItem.getName());
+	public void onVerticalPageSelected(int pos,Item pItem) {
+		Log.d(this.getClass().getSimpleName(),"onVerticalPageSelected="+pos+","+pItem.getName());
 		
 		// 購入可能なら
 		if(pItem.getIsAvailability() == Item.AVALIABILITY_OK){
@@ -97,6 +97,7 @@ implements OnPageChangeListener ,OnVerticalPageSelected
 				mFragmentList.remove(2);
 			}
 		}
+		((ItemVerticalFragment)mFragmentList.get(1)).updateCount(pos);
 		this.notifyDataSetChanged();
 	}
 	
@@ -114,7 +115,7 @@ implements OnPageChangeListener ,OnVerticalPageSelected
 		else if(arg0 == 1 && arg1 > 0.1){
 			//Log.d(this.getClass().getSimpleName(),"loadWeb");
 			if(getCount() > 2 && !((ItemWebFragment)mFragmentList.get(2)).isLoadStarted()){
-				Item pItem = ((ItemVerticalFragment)mFragmentList.get(1)).getItem();
+				Item pItem = ((ItemVerticalFragment)mFragmentList.get(1)).getVerticalAdapter().getCurrentItem().getItem();
 				Log.d(this.getClass().getSimpleName(),"onPageScrolled.loadWeb="+pItem.getName());
 				((ItemWebFragment)mFragmentList.get(2)).loadWeb(pItem);
 			}
