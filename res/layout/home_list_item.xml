@@ -3,6 +3,8 @@
     android:layout_width="fill_parent" android:layout_height="60dip"
     android:padding="6dip">
     
+
+    
     <FrameLayout
     	android:layout_width="wrap_content"
     	android:layout_height="wrap_content">
@@ -27,7 +29,8 @@
 	<LinearLayout
        android:id="@+id/recent_item_frame"
        android:clickable="true"
-       android:layout_width="fill_parent"
+       android:layout_width="0dip"
+       android:layout_weight="1"
        android:layout_height="wrap_content"
        android:orientation="vertical">
        
@@ -44,5 +47,11 @@
        		android:layout_weight="1"/>
        
 	</LinearLayout>
+	
+	<ImageView android:id="@+id/drawer"
+        android:layout_width="wrap_content"
+    	android:layout_height="match_parent"
+    	android:src="@drawable/ic_drawer"
+        />
 </LinearLayout>  
 
