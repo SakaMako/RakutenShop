@@ -35,7 +35,7 @@ public class NewCategoryDialog extends DialogFragment {
         mTextView = (EditText)view.findViewById(R.id.category_name);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("ブックマークの追加");
+        builder.setTitle("お気に入りの追加");
         builder.setPositiveButton("追加", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
             }
@@ -58,7 +58,7 @@ public class NewCategoryDialog extends DialogFragment {
             {
                 String text = mTextView.getText().toString();
                 if(!mListener.onNewCategory(text)){
-                	Log.d("NewCategoryDialogFragment","ブックマークの重複"+text);
+                	Log.d("NewCategoryDialogFragment","お気に入りの重複"+text);
                 	Toast.makeText(getActivity(), "["+text+"]は重複してます", 10).show();
                 }
                 else{

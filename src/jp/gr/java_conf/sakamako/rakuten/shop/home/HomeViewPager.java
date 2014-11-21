@@ -1,19 +1,14 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.home;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.TabChangedEvent;
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.app.FragmentTransaction;
+import android.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.support.v7.app.ActionBar.Tab;
-import android.support.v7.app.ActionBar.TabListener;
-import android.support.v7.app.ActionBarActivity;
+import android.app.ActionBar.Tab;
+import android.app.ActionBar.TabListener;
 import android.util.AttributeSet;
 import android.util.Log;
-
-
 
 public class HomeViewPager extends ViewPager implements TabListener {
 
@@ -66,5 +61,4 @@ public class HomeViewPager extends ViewPager implements TabListener {
 			EventHolder.changeTab(pos);
 		}
 	}
-
 }

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/dialog_text_size"
         android:textColor="@color/setting_dialog_textcolor"
-        android:text="追加するブックマーク名を入力してください。" />
+        android:text="追加するお気に入り名を入力してください。" />
 
     <EditText
         android:id="@+id/category_name"

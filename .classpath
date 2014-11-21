@@ -8,6 +8,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry exported="true" kind="lib" path="libs/android-directionalviewpager-1.2.1fixed.jar"/>
-	<classpathentry exported="true" kind="lib" path="/appcompat_v7/bin/appcompat_v7.jar"/>
+	<classpathentry kind="lib" path="/appcompat_v7/bin/appcompat_v7.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

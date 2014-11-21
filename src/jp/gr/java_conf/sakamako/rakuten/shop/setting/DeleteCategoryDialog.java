@@ -36,7 +36,7 @@ public class DeleteCategoryDialog extends DialogFragment {
         mTextView.setText(mCat.getLabel());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("ブックマークの削除");
+        builder.setTitle("お気に入りの削除");
         builder.setPositiveButton("削除", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
 	    		Log.d(this.getClass().getSimpleName(),"onClick");

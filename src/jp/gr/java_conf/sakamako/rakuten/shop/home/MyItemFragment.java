@@ -137,6 +137,6 @@ implements DragListener
 
 	@Override
 	public int getTabIcon() {
-		return R.drawable.ic_bookmark_outline_black_18dp;
+		return R.drawable.ic_favorite_outline_black_18dp;
 	}
 }

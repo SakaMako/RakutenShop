@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/dialog_text_size"
         android:textColor="@color/setting_dialog_textcolor"
-        android:text="下記のブックマークを削除してよろしいですか？" />
+        android:text="下記のお気に入りを削除してよろしいですか？" />
 
     <TextView
         android:id="@+id/delete_category_name"

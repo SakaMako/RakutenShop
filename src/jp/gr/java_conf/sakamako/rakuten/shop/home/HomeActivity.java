@@ -26,7 +26,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
+import android.app.ActionBar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -59,7 +59,7 @@ public class HomeActivity<mViewPager> extends BaseActivity
 		Log.d(this.getClass().getSimpleName(),"onCreate Start");    
 		setContentView(R.layout.home);    
 		
-	    ActionBar actionBar = getSupportActionBar();
+	    ActionBar actionBar = getActionBar();
 		actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM, ActionBar.DISPLAY_SHOW_CUSTOM);
         View actionBarView = getLayoutInflater().inflate(R.layout.custom_action_bar_top, null);

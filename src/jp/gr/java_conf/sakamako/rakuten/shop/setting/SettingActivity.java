@@ -38,7 +38,7 @@ implements OnNewCategoryListener,OnItemClickListener,DeleteCategoryListener{
 	
 		setContentView(R.layout.setting);
 		
-		getActionBar().setTitle("ブックマークの追加・編集・削除");
+		getActionBar().setTitle("お気に入りの追加・編集・削除");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		final SettingActivity activity = this;
@@ -47,7 +47,7 @@ implements OnNewCategoryListener,OnItemClickListener,DeleteCategoryListener{
 		addButton.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				showDialog("カテゴリの追加",new NewCategoryDialog(activity));
+				showDialog("お気に入りの追加",new NewCategoryDialog(activity));
 			}
 			
 		});
@@ -113,7 +113,7 @@ implements OnNewCategoryListener,OnItemClickListener,DeleteCategoryListener{
 	public void onItemClick(AdapterView<?> parent, View arg1, int pos, long arg3) {
 		String name = (String) parent.getAdapter().getItem(pos);
 		Category cat = MyCategory.getInstance().getCategory(name);
-		showDialog("カテゴリの削除",new DeleteCategoryDialog(cat,this));
+		showDialog("お気に入りの削除",new DeleteCategoryDialog(cat,this));
 	}
 
 	@Override

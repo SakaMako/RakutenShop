@@ -12,8 +12,8 @@ import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory.Category;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBar.Tab;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
@@ -147,7 +147,7 @@ public class HomeAdapter extends FragmentStatePagerAdapter {
 	}
 	
 	private ActionBar getActionBar(){
-		return ((ActionBarActivity)mViewPager.getContext()).getSupportActionBar();
+		return ((ActionBarActivity)mViewPager.getContext()).getActionBar();
 	}
 
 }
