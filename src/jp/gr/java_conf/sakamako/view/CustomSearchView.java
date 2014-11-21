@@ -38,7 +38,7 @@ implements OnQueryTextListener,OnFocusChangeListener{
                 R.styleable.CustomSearchView);
                 
         setTextColor(a.getColor(R.styleable.CustomSearchView_textColor, Color.BLACK));
-        setIconifiedByDefault(false);
+        setIconifiedByDefault(true);
 	}
 	
 	@Override
