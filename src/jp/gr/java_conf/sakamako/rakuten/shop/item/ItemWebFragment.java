@@ -5,6 +5,7 @@ import java.net.URL;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.BaseActivity;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.ChangePageTitleEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.SearchParams;
@@ -29,6 +30,8 @@ implements OnRefreshListener
 	private WebView mWebView = null;
 	private boolean isLoadStarted = false;
 	private SwipeRefreshLayout mSwipeRefreshLayout =null;
+	
+	private static final String BLANK_URL = "about:blank";
 
 	public ItemWebFragment() {
 	}
@@ -36,7 +39,7 @@ implements OnRefreshListener
 	public void reset() {
 		isLoadStarted = false;
 		if(mWebView != null){
-		mWebView.loadUrl("about:blank");
+		mWebView.loadUrl(BLANK_URL);
     	mWebView.clearCache(true);
     	mWebView.clearView();
 		}
@@ -126,9 +129,12 @@ implements OnRefreshListener
         public void onPageFinished(WebView view, String url){
         	Log.d(this.getClass().getSimpleName(),"onPageFinished");
         	 mSwipeRefreshLayout .setRefreshing(false);
+        	 
+        	 if(!url.equals(BLANK_URL)){
+        		 EventHolder.changePageTitle(view.getTitle());
+        	 }
         }
         
-		
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
         	Log.d(this.getClass().getSimpleName(),"読み込み:"+isLoadStarted+":"+url);

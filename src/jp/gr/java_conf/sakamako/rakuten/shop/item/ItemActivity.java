@@ -4,6 +4,7 @@ import com.squareup.otto.Subscribe;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.BaseActivity;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.ChangePageTitleEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.ItemActivityFinishEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.MakeToastEvent;
@@ -145,6 +146,11 @@ public class ItemActivity extends BaseActivity {
 			break;
 		}
 		return true;
+	}
+	
+	@Subscribe
+	public void changePageTitle(ChangePageTitleEvent event){
+		getActionBar().setTitle(event.getTitle());
 	}
 	
 	private boolean isFinished = false;

@@ -46,7 +46,7 @@ public class ItemVerticalAdapter  extends FragmentStatePagerAdapter implements O
 		mItemAdapter = adapter;
 	}
 	
-	public BaseItemAdapter getVerticalAdapter(){
+	public BaseItemAdapter getItemAdapter(){
 		return mItemAdapter;
 	}
 	

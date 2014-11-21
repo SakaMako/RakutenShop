@@ -140,6 +140,15 @@ implements OnPageChangeListener ,OnVerticalPageSelected
 					((ItemWebFragment)this.getItem(2)).reset();
 				}
 			}
+			try{
+				EventHolder.changePageTitle(((ItemVerticalFragment)mFragmentList.get(1))
+					.getVerticalAdapter()
+					.getItemAdapter()
+					.getTitle());
+			}
+			catch(NullPointerException e){
+				e.printStackTrace();
+			}
 		}
 		if(arg0 >= 2){
 			Log.d(this.getClass().getSimpleName(),"onPageSelected...cnt="+this.getCount());

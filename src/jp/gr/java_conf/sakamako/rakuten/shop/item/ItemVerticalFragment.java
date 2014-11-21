@@ -58,7 +58,7 @@ public class ItemVerticalFragment extends ItemBaseFragment
 		((ItemActivity)getActivity()).onFragmentCreated(mVerticalPager,mVerticalAdapter);
 		
 		if(mCntView != null){
-			if(mVerticalAdapter.getVerticalAdapter() instanceof Countable){
+			if(mVerticalAdapter.getItemAdapter() instanceof Countable){
 				Log.d(this.getClass().getSimpleName(),"VISIBLE");
 
 				mCntView.setVisibility(View.VISIBLE);
@@ -76,9 +76,9 @@ public class ItemVerticalFragment extends ItemBaseFragment
 	}
 
 	public void updateCount(int pos) {
-		if(mVerticalAdapter.getVerticalAdapter() instanceof Countable){
+		if(mVerticalAdapter.getItemAdapter() instanceof Countable){
 			String last = String.format("%1$,5d", pos);
-			String all = String.format("%1$,5d", ((Countable)mVerticalAdapter.getVerticalAdapter()).getAllCount());
+			String all = String.format("%1$,5d", ((Countable)mVerticalAdapter.getItemAdapter()).getAllCount());
 			mCntView.setText(last + "/" + all);
 		}
 	}

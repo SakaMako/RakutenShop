@@ -103,4 +103,9 @@ public class EventHolder {
 		get().post(new SearchPostEvent());
 	}
 
+	// ItemActivity のタイトルを変更する
+	public static void changePageTitle(String title) {
+		get().post(new ChangePageTitleEvent(title));
+	}
+
 }
