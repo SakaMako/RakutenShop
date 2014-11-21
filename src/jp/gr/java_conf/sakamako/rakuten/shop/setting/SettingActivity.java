@@ -8,6 +8,7 @@ import com.squareup.otto.Subscribe;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import jp.gr.java_conf.sakamako.rakuten.shop.BaseActivity;
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.MakeToastEvent;
+import jp.gr.java_conf.sakamako.rakuten.shop.event.TabChangedEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.item.ItemActivity;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory.Category;
@@ -85,6 +87,9 @@ implements OnNewCategoryListener,OnItemClickListener,DeleteCategoryListener{
 
 		Log.d(this.getClass().getSimpleName(),"onCreate end-----------------------");
 	}
+	
+	//---------------------------------------------------------------------
+
 	
  	//カテゴリの追加
 	@Override
