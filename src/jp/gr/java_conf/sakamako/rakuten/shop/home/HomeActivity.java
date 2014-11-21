@@ -254,7 +254,7 @@ public class HomeActivity<mViewPager> extends BaseActivity
 			getMenuItem(MENU_ID_DISPLAY).setIcon(R.drawable.ic_action_view_as_grid);
 			break;
 		case BaseFragment.TYPE_LIST:
-			getMenuItem(MENU_ID_DISPLAY).setIcon(R.drawable.ic_action_view_as_list);
+			getMenuItem(MENU_ID_DISPLAY).setIcon(R.drawable.ic_view_list_white_48dp);
 			break;
 			
 		}
