@@ -27,9 +27,9 @@
 
             <ImageView
                 android:id="@+id/category_image_icon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_action_labels_dark" />
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_favorite_outline_black_48dp" />
 
             <Spinner
                 android:id="@+id/item_category_spinner"
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
                 android:singleLine="true"
-                android:textSize="30sp" />
+                android:textSize="@dimen/category_text_size" />
         </LinearLayout>
         
         <com.android.volley.toolbox.NetworkImageView
