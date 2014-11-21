@@ -26,7 +26,7 @@
 		android:layout_weight="1"
    	    android:layout_height="wrap_content"
    	    android:textSize="@dimen/setting_button_text_size"
-   	    android:drawableLeft="@drawable/ic_transform_grey600_24dp"
+   	    android:drawableLeft="@drawable/ic_add_grey600_24dp"
    	    android:text="追加" />
    	<Button
    	    android:id="@+id/ok"
