@@ -1,7 +1,10 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.home;
 import android.os.Bundle;
 import android.util.Log;
+
 import com.squareup.otto.Subscribe;
+
+import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.FinishReloadEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.SearchParams;
 
@@ -58,5 +61,10 @@ public class SearchFragment extends BaseFragment
 	@Subscribe
 	public void onFinishReload(FinishReloadEvent event){
 		super.onFinishReload(event);
+	}
+
+	@Override
+	public int getTabIcon() {
+		return R.drawable.ic_search_black_18dp;
 	}
 }

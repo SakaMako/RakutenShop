@@ -2,7 +2,10 @@ package jp.gr.java_conf.sakamako.rakuten.shop.home;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 import com.squareup.otto.Subscribe;
+
+import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.FinishReloadEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory.Category;
@@ -97,13 +100,6 @@ implements DragListener
 		super.onActivityCreated(saveInstanceState);
 		mCat.getItemList().addOnChangedListener((MyItemAdapter)getAdapter());
 	}
-
-	//---------------------------------------------------------------
-
-	@Override
-	public String getTabTitle() {
-		return getCategory().getLabel();
-	}
 	
 	//---------------------------------------------------------------
 	@Override
@@ -130,5 +126,17 @@ implements DragListener
 	@Subscribe
 	public void onFinishReload(FinishReloadEvent event){
 		super.onFinishReload(event);
+	}
+	
+	//---------------------------------------------------------------
+
+	@Override
+	public String getTabTitle() {
+		return getCategory().getLabel();
+	}
+
+	@Override
+	public int getTabIcon() {
+		return R.drawable.ic_bookmark_outline_black_18dp;
 	}
 }

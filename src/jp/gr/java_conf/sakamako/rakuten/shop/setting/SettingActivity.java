@@ -25,7 +25,7 @@ import jp.gr.java_conf.sakamako.rakuten.shop.setting.DeleteCategoryDialog.Delete
 import jp.gr.java_conf.sakamako.rakuten.shop.setting.NewCategoryDialog.OnNewCategoryListener;
 
 public class SettingActivity extends BaseActivity
-implements OnClickListener,OnNewCategoryListener,OnItemClickListener,DeleteCategoryListener{
+implements OnNewCategoryListener,OnItemClickListener,DeleteCategoryListener{
 	
 	public static final int RESULT_ADD = 90001;
 	public static final int RESULT_DELETE = 90002;
@@ -36,11 +36,19 @@ implements OnClickListener,OnNewCategoryListener,OnItemClickListener,DeleteCateg
 	
 		setContentView(R.layout.setting);
 		
-		LinearLayout layout = (LinearLayout)findViewById(R.id.add_category_layout);
-		layout.setOnClickListener(this);
-		
-		getActionBar().setTitle("設定(カテゴリの追加・編集・削除)");
+		getActionBar().setTitle("ブックマークの追加・編集・削除");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		final SettingActivity activity = this;
+		
+		Button addButton = (Button)findViewById(R.id.add);
+		addButton.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				showDialog("カテゴリの追加",new NewCategoryDialog(activity));
+			}
+			
+		});
 		
 		Button okButton = (Button)findViewById(R.id.ok);
 		okButton.setOnClickListener(new OnClickListener(){
@@ -76,11 +84,6 @@ implements OnClickListener,OnNewCategoryListener,OnItemClickListener,DeleteCateg
 		});
 
 		Log.d(this.getClass().getSimpleName(),"onCreate end-----------------------");
-	}
-	
-	@Override
-	public void onClick(View v) {
-		showDialog("カテゴリの追加",new NewCategoryDialog(this));
 	}
 	
  	//カテゴリの追加

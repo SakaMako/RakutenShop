@@ -1,11 +1,13 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.home;
 
 import com.squareup.otto.Subscribe;
+
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseItemAdapter.Countable;
 import jp.gr.java_conf.sakamako.rakuten.shop.home.BaseItemAdapter.ReloadbleListener;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.EventHolder;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.FinishReloadEvent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -20,7 +22,7 @@ public abstract class BaseFragment extends Fragment	{
 	
 	//--------------------------------------------------------------------
 	public abstract String getTabTitle(); 
-
+	public abstract int getTabIcon();
 	//--------------------------------------------------------------------
 	public static final int TYPE_GRID = 1;
 	public static final int TYPE_GRID2 = 2;
@@ -186,4 +188,5 @@ public abstract class BaseFragment extends Fragment	{
 			mCntView.setText(last + "/" + all);
 		}
 	}
+
 }

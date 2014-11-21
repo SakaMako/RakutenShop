@@ -8,12 +8,15 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="追加するカテゴリ名を入れて「決定」を押してください。" />
+        android:textSize="@dimen/dialog_text_size"
+        android:textColor="@color/setting_dialog_textcolor"
+        android:text="追加するブックマーク名を入力してください。" />
 
     <EditText
         android:id="@+id/category_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/category_text_size"
         android:ems="10"
         android:inputType="text"
         android:maxLines="1" >

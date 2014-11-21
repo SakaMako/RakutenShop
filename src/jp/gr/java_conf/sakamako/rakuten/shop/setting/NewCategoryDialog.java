@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 public class NewCategoryDialog extends DialogFragment {
 	
-	//private DialogFragment mDialog = null;
 	private EditText mTextView = null;
 	private OnNewCategoryListener mListener = null;
 	
@@ -36,12 +35,12 @@ public class NewCategoryDialog extends DialogFragment {
         mTextView = (EditText)view.findViewById(R.id.category_name);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("カテゴリの追加");
-        builder.setPositiveButton("決定", new DialogInterface.OnClickListener() {
+        builder.setTitle("ブックマークの追加");
+        builder.setPositiveButton("追加", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
             }
         });
-        //builder.setNegativeButton("キャンセル", null);
+        builder.setNegativeButton("キャンセル", null);
         builder.setView(view);
         Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(true);
@@ -59,7 +58,7 @@ public class NewCategoryDialog extends DialogFragment {
             {
                 String text = mTextView.getText().toString();
                 if(!mListener.onNewCategory(text)){
-                	Log.d("NewCategoryDialogFragment","カテゴリの重複"+text);
+                	Log.d("NewCategoryDialogFragment","ブックマークの重複"+text);
                 	Toast.makeText(getActivity(), "["+text+"]は重複してます", 10).show();
                 }
                 else{

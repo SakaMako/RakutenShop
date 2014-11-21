@@ -57,6 +57,7 @@ public class HomeAdapter extends FragmentStatePagerAdapter {
         	BaseFragment fragment = it.next();
             Tab rtab = this.getActionBar().newTab();
             rtab.setText(fragment.getTabTitle());
+            rtab.setIcon(fragment.getTabIcon());
             rtab.setTabListener(mViewPager);
             this.getActionBar().addTab(rtab);
         }

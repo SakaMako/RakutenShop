@@ -23,7 +23,7 @@
     <item name="item_detail_shadow" type="color">#FFBBBBBB</item>
     <item name="price_background" type="color">@color/red</item>
     <item name="price_textcolor" type="color">@color/white</item>
-    
+    <item name="setting_dialog_textcolor" type="color">@color/red</item>
  
     <integer-array name="androidcolors">
         <item>@color/blue</item>

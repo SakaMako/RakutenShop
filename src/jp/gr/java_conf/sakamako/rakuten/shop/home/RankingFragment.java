@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.squareup.otto.Subscribe;
 
+import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.FinishReloadEvent;
 
 public class RankingFragment extends BaseFragment{
@@ -32,6 +33,13 @@ public class RankingFragment extends BaseFragment{
 		}
 		
 	}
+	
+	//---------------------------------------------------------------
+	
+	@Subscribe
+	public void onFinishReload(FinishReloadEvent event){
+		super.onFinishReload(event);
+	}
 		
 	//---------------------------------------------------------------
 
@@ -40,11 +48,8 @@ public class RankingFragment extends BaseFragment{
 		return "ランキング";
 	}
 	
-	//---------------------------------------------------------------
-	
-	@Subscribe
-	public void onFinishReload(FinishReloadEvent event){
-		super.onFinishReload(event);
+	@Override
+	public int getTabIcon() {
+		return R.drawable.ic_star_outline_black_18dp;
 	}
-
 }

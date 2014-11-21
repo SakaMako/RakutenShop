@@ -8,6 +8,7 @@
     <dimen name="available_icon_size">20dp</dimen>
     <dimen name="available_icon_margin">3dp</dimen>
     <dimen name="category_text_size">30sp</dimen>
-    
+    <dimen name="dialog_text_size">18sp</dimen>
+    <dimen name="setting_button_text_size">10sp</dimen>
     
 </resources>
