@@ -6,5 +6,6 @@
 /res/drawable*/
 /.settings/
 .project
+/kit-libs/
 proguard-project.txt
 ic_launcher-web.png

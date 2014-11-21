@@ -1,5 +1,7 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.home;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 
 import com.squareup.otto.Subscribe;
@@ -16,6 +18,9 @@ import jp.gr.java_conf.sakamako.rakuten.shop.model.SearchParams;
 import jp.gr.java_conf.sakamako.rakuten.shop.setting.SettingActivity;
 import jp.gr.java_conf.sakamako.view.CustomSearchView;
 import android.annotation.SuppressLint;
+import android.app.SearchManager;
+import android.app.SearchableInfo;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -49,6 +54,7 @@ public class HomeActivity<mViewPager> extends BaseActivity
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
+		Fabric.with(this, new Crashlytics());
 		
 		Log.d(this.getClass().getSimpleName(),"onCreate Start");    
 		setContentView(R.layout.home);    
@@ -65,6 +71,9 @@ public class HomeActivity<mViewPager> extends BaseActivity
         
         // onCreateOptionsMenu の前に呼ばないと setQuery がうまくいかない
         mSearchView = (CustomSearchView) actionBarView.findViewById(R.id.action_bar_search);
+    	SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
+        SearchableInfo searchableInfo = searchManager.getSearchableInfo(getComponentName());
+        mSearchView.setSearchableInfo(searchableInfo);
     }
 	
 	@Override
