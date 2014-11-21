@@ -74,6 +74,14 @@ implements BaseListView{
             else{
             	avaliabilyIcon.setVisibility(View.GONE);
             }
+            
+			ImageView drawer = (ImageView)view.findViewById(R.id.drawer);
+			if(getSortable()){
+            	drawer.setVisibility(View.VISIBLE);
+			}
+			else{
+            	drawer.setVisibility(View.GONE);
+			}
 		}
 		return view;
 	}
