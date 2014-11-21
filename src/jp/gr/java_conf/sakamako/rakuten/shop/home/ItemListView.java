@@ -62,7 +62,7 @@ implements BaseListView{
 			priceText.setText(item.getPriceString());
 			
 			NetworkImageView urlImageView = (NetworkImageView)view.findViewById(R.id.recent_item_icon);
-    		urlImageView.setImageUrl(item.getImage(), App.getImageLoader());
+    		urlImageView.setImageUrl(item.getMediumImage(), App.getImageLoader());
     		//urlImageView.setLayoutParams(new FrameLayout.LayoutParams(Item.ITEM_SIZE_LIST,Item.ITEM_SIZE_LIST));
     		urlImageView.setPadding(0, 0, 0, 0);
             urlImageView.setErrorImageResId(R.drawable.ic_action_remove);

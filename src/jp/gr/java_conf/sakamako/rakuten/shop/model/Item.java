@@ -9,8 +9,8 @@ public class Item implements Serializable{
 
 	private final static long serialVersionUID = 1L;
 	
-	public final static int ITEM_SIZE_LIST = 400; 
-	public final static int ITEM_SIZE_DETAIL = 400;
+	private final static int ITEM_SIZE_MEDIUM = 400; 
+	private final static int ITEM_SIZE_LARGE = 800;
 	
 	public final static int AVALIABILITY_OK = 1;
 	public final static int AVALIABILITY_NG = 0;
@@ -53,11 +53,11 @@ public class Item implements Serializable{
 	 * @return
 	 */
 	public String getLargeImage(){
-		return image.replaceAll("128x128", ITEM_SIZE_DETAIL + "x" + ITEM_SIZE_DETAIL);
+		return image.replaceAll("¥?_ex=128x128", "");
 	}
-	
-	public String getItemListImage(){
-		return image.replaceAll("128x128", ITEM_SIZE_LIST + "x" + ITEM_SIZE_LIST);
+
+	public String getMediumImage(){
+		return image.replaceAll("128x128", ITEM_SIZE_MEDIUM + "x" + ITEM_SIZE_MEDIUM);
 	}
 	
 	/**

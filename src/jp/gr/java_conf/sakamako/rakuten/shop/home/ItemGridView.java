@@ -57,7 +57,7 @@ implements BaseListView
 			imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
        		//imageView.setPadding(0, 0, 0, 0);
 	       	
-	       	imageView.setImageUrl(item.getItemListImage(), App.getImageLoader());
+	       	imageView.setImageUrl(item.getMediumImage(), App.getImageLoader());
 	        imageView.setErrorImageResId(R.drawable.ic_action_remove);
 	        
             ImageView avaliabilyIcon = (ImageView)view.findViewById(R.id.icon_avaliability);

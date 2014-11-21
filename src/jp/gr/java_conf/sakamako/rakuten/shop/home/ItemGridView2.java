@@ -48,7 +48,7 @@ implements BaseListView
 			imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
        		//imageView.setPadding(0, 0, 0, 0);
 	       	
-	       	imageView.setImageUrl(item.getItemListImage(), App.getImageLoader());
+	       	imageView.setImageUrl(item.getLargeImage(), App.getImageLoader());
 	        imageView.setErrorImageResId(R.drawable.ic_action_remove);
 	        
 			TextView priceText = (TextView)view.findViewById(R.id.recent_item_price);
