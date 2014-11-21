@@ -118,6 +118,13 @@ public class HomeAdapter extends FragmentStatePagerAdapter {
 		getActionBar().setSelectedNavigationItem(pos+SEARCH_POSITION+1-1);
 	}
 
+
+	public void moveCategory(ArrayList<String> list) {
+		
+		MyCategory.getInstance().moveCategory(list);
+    	HomeAdapter adapter = new HomeAdapter(mViewPager);
+    	mViewPager.setAdapter(adapter);
+	}
 	
 	public final int replace(){
 		Log.d(this.getClass().getSimpleName(),"replace start ----------------------------");
@@ -141,4 +148,5 @@ public class HomeAdapter extends FragmentStatePagerAdapter {
 	private ActionBar getActionBar(){
 		return ((ActionBarActivity)mViewPager.getContext()).getSupportActionBar();
 	}
+
 }

@@ -42,6 +42,7 @@ public class MyCategory extends XmlFileHandler{
 	public List<Category> getList(){
 		return mList;
 	}
+
 	
 	public MyItemList getMyItem(String categoryName) {
 		Category cat = getCategory(categoryName);
@@ -119,8 +120,7 @@ public class MyCategory extends XmlFileHandler{
 		MyItemList itemList = getMyItem(label);
 		return itemList.updateItem(item);
 	}
-	
-	
+
 	public void moveCategory(Item item,  String s) {
 		
 		String before = getCategoryByItem(item);
@@ -148,6 +148,19 @@ public class MyCategory extends XmlFileHandler{
     	list.add(MyCategory.CATEGORY_NONE);
     	return list;
     }
+	
+	
+	public void moveCategory(List<String> list){
+		List<Category> tmp = new ArrayList<Category>();
+		
+		for(int i=0;i<list.size();i++){
+			Category cat = this.getCategory(list.get(i));
+			tmp.add(cat);
+		}
+		mList.clear();
+		mList.addAll(tmp);
+		write();
+	}
 
 	public void remove(Category cat) {
 		for(int i=0;i<mList.size();i++){

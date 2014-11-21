@@ -52,7 +52,6 @@ implements DragListener{
 		adapter.insert(fromItem, to);
 		adapter.notifyDataSetChanged();
 		
-		((SettingActivity)getContext()).changeCategory(from,to);
 		return true;
 	}
 	

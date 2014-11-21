@@ -1,5 +1,7 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.home;
 
+import java.util.ArrayList;
+
 import com.squareup.otto.Subscribe;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
@@ -85,6 +87,16 @@ public class HomeActivity<mViewPager> extends BaseActivity
 		    		Log.d(this.getClass().getSimpleName(),"RESULT_DELETE");
 
 	    			((HomeAdapter)mViewPager.getAdapter()).deleteCategory(bundle.getString("cat"));
+	    		}
+	    		else if(resultCode == SettingActivity.RESULT_MOVE){
+		    		Log.d(this.getClass().getSimpleName(),"RESULT_MOVE");
+		    		
+		    		ArrayList<String> list = (ArrayList<String>) bundle.getSerializable("list");
+	    			((HomeAdapter)mViewPager.getAdapter()).moveCategory(list);
+	    		}
+	    		else if(resultCode == RESULT_CANCELED){
+		    		Log.d(this.getClass().getSimpleName(),"RESULT_CANCELED");
+
 	    		}
 	    		break;
 	    	default:
