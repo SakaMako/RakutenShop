@@ -5,46 +5,81 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical" >
-    
-   	<jp.gr.java_conf.sakamako.rakuten.shop.setting.CategoryListView
-   	    android:id="@+id/categoryList"
-   	    android:layout_width="match_parent"
-   	    android:layout_height="0dip"
-   	    android:layout_gravity="fill"
-   	    android:layout_margin="0dp"
-   	    android:layout_weight="1"
-   	    android:padding="0dp" />
-   	
-   	<LinearLayout android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:orientation="horizontal" >
-	    
-   	<Button
-   	    android:id="@+id/add"
-   	    android:layout_width="0dip"
-		android:layout_weight="1"
-   	    android:layout_height="wrap_content"
-   	    android:textSize="@dimen/setting_button_text_size"
-   	    android:drawableLeft="@drawable/ic_add_grey600_24dp"
-   	    android:text="追加" />
-   	<Button
-   	    android:id="@+id/ok"
-   	    android:layout_width="0dip"
-		android:layout_weight="1"
-   	    android:layout_height="wrap_content"
-   	    android:textSize="@dimen/setting_button_text_size"
-   	    android:drawableLeft="@drawable/ic_transform_grey600_24dp"
-   	    android:text="順番切替" />
 
-   	<Button
-   	    android:id="@+id/cancel"
-   	    android:layout_width="0dip"
-		android:layout_weight="1"
-   	    android:layout_height="wrap_content"
-   	    android:textSize="@dimen/setting_button_text_size"
-   	    android:drawableLeft="@drawable/ic_undo_grey600_24dp"
-   	    android:text="キャンセル" />
-   	</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        
+        android:text="ドラッグ＆ドロップで並び替えた後に「並び替え」で反映"
+        android:textColor="@color/red" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+                        android:background="@color/white"
+        
+        android:text="削除は対象のお気に入りをタップ"
+        android:textColor="@color/red" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp" >
+
+            <jp.gr.java_conf.sakamako.rakuten.shop.setting.CategoryListView
+                android:id="@+id/categoryList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill"
+                android:layout_weight="0.79" />
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp" >
+
+        <Button
+            android:id="@+id/add"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_add_grey600_24dp"
+            android:text="追加"
+            
+            android:textSize="@dimen/setting_button_text_size" />
+
+        <Button
+            android:id="@+id/ok"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_drawer"
+            android:text="並び替え"
+            
+            android:textSize="@dimen/setting_button_text_size" />
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_undo_grey600_24dp"
+            android:text="キャンセル"
+            
+            android:textSize="@dimen/setting_button_text_size" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-   <item android:id="@+id/action_bar_search"
-          android:title="商品を探す"
-          android:icon="@android:drawable/ic_menu_search"
-          android:showAsAction="always"
-          android:actionViewClass="jp.gr.java_conf.sakamako.view.CustomSearchView" />
-</menu>
