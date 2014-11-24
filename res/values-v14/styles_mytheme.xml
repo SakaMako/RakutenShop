@@ -41,7 +41,7 @@
     </style>
 
     <style name="ActionBar.Solid.Mytheme" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
-        <item name="android:background">@drawable/ab_solid_mytheme</item>
+        <item name="android:background">@color/action_bar_bgcolor</item>
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_mytheme</item>
         <item name="android:backgroundSplit">@drawable/ab_bottom_solid_mytheme</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Mytheme</item>

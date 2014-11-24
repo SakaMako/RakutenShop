@@ -16,6 +16,8 @@
     <item name="white" type="color">#FFFFFFFF</item>
     
     <item name="action_bar_text" type="color">#FF000000</item>
+    <item name="action_bar_bgcolor" type="color">#FFFF8800</item>
+    
     <item name="side_arrow_background" type="color">@color/orange</item>
     <item name="cnt_background" type="color">@color/red</item>
     <item name="cnt_textcolor" type="color">@color/white</item>

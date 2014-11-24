@@ -15,7 +15,7 @@ import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.ItemAPI;
 
 public class RankingAdapter extends BaseItemAdapter
-implements BaseItemAdapter.Scrollable,BaseItemAdapter.ReloadbleListener
+implements BaseItemAdapter.Scrollable,BaseItemAdapter.ReloadbleListener,BaseItemAdapter.Countable
 {
 	
 	private int mCount = 0;
@@ -64,5 +64,10 @@ implements BaseItemAdapter.Scrollable,BaseItemAdapter.ReloadbleListener
 	@Override
 	public String getTitle() {
 		return "ランキング";
+	}
+
+	@Override
+	public int getAllCount() {
+		return this.getCount();
 	}
 }

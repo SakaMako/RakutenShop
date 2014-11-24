@@ -13,7 +13,7 @@ import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory.Category;
 import android.util.Log;
 
 public class MyItemAdapter extends BaseItemAdapter
-	implements MyItemList.OnChangedMyItemListener,BaseItemAdapter.ReloadbleListener
+	implements MyItemList.OnChangedMyItemListener,BaseItemAdapter.ReloadbleListener,BaseItemAdapter.Countable,BaseItemAdapter.Scrollable
 {
 	private Category mCat = null;
 	
@@ -70,5 +70,15 @@ public class MyItemAdapter extends BaseItemAdapter
 		@Override
 		public String getTitle() {
 			return mCat.getLabel();
+		}
+
+		@Override
+		public int getAllCount() {
+			return mCat.getItemList().size();
+		}
+
+		@Override
+		public boolean isMoreScrollable() {
+			return false;
 		}
 }
