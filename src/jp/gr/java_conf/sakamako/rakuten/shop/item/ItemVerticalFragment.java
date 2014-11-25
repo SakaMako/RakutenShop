@@ -69,6 +69,7 @@ public class ItemVerticalFragment extends ItemBaseFragment
 				mCntView.setVisibility(View.INVISIBLE);
 			}
 		}
+		updateCount(0);
 	}
 	
 	public ItemVerticalAdapter getVerticalAdapter(){
@@ -77,7 +78,7 @@ public class ItemVerticalFragment extends ItemBaseFragment
 
 	public void updateCount(int pos) {
 		if(mVerticalAdapter.getItemAdapter() instanceof Countable){
-			String last = String.format("%1$,5d", pos);
+			String last = String.format("%1$,5d", pos+1);
 			String all = String.format("%1$,5d", ((Countable)mVerticalAdapter.getItemAdapter()).getAllCount());
 			mCntView.setText(last + "/" + all);
 		}
