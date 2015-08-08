@@ -1,6 +1,5 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.model;
 
-
 public class Category {
 		private int mId = -1;
 		private String mLabel = null;
