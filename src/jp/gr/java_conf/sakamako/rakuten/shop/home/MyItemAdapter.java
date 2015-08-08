@@ -9,7 +9,7 @@ import jp.gr.java_conf.sakamako.rakuten.shop.model.Item;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.ItemAPI;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyItemList;
-import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory.Category;
+import jp.gr.java_conf.sakamako.rakuten.shop.model.Category;
 import android.util.Log;
 
 public class MyItemAdapter extends BaseItemAdapter

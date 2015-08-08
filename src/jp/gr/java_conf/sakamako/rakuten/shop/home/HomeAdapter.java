@@ -9,7 +9,7 @@ import com.squareup.otto.Subscribe;
 import jp.gr.java_conf.sakamako.rakuten.shop.App;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.SearchPostEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory;
-import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory.Category;
+import jp.gr.java_conf.sakamako.rakuten.shop.model.Category;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.app.ActionBar;

@@ -8,7 +8,7 @@ import com.squareup.otto.Subscribe;
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.FinishReloadEvent;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory;
-import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory.Category;
+import jp.gr.java_conf.sakamako.rakuten.shop.model.Category;
 import jp.gr.java_conf.sakamako.view.SortableListView.DragListener;
 import android.os.Bundle;
 import android.util.Log;

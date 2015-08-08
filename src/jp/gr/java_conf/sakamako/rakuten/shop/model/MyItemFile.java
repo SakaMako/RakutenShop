@@ -51,7 +51,8 @@ public class MyItemFile extends XmlFileHandler implements MyItemList.OnChangedMy
 		
 		try{
 			/** 設定 xml の読み込み */		
-			FileInputStream input = App.getAppContext().openFileInput(mFileName);
+			//FileInputStream input = App.getAppContext().openFileInput(mFileName);
+			FileInputStream input = super.openInput(mFileName);
 			SAXReader reader = new SAXReader();
 			Document document = reader.read(input);
 
@@ -90,7 +91,8 @@ public class MyItemFile extends XmlFileHandler implements MyItemList.OnChangedMy
 				item.addElement(ITEM_CODE).addText(list.get(i).getCode());
 				item.addElement(AVAILABILITY).addText(""+list.get(i).getIsAvailability());
 			}
-	    	FileOutputStream outStream = App.getAppContext().openFileOutput(mFileName, Context.MODE_PRIVATE);
+	    	//FileOutputStream outStream = App.getAppContext().openFileOutput(mFileName, Context.MODE_PRIVATE);
+			FileOutputStream outStream = super.openOutput(mFileName);
 		    	
 	    	XMLWriter writer = new XMLWriter(outStream);
 	    	writer.write(document);

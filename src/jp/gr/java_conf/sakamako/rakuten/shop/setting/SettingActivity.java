@@ -1,28 +1,23 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.setting;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.squareup.otto.Subscribe;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import jp.gr.java_conf.sakamako.rakuten.shop.BaseActivity;
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
 import jp.gr.java_conf.sakamako.rakuten.shop.event.MakeToastEvent;
-import jp.gr.java_conf.sakamako.rakuten.shop.event.TabChangedEvent;
-import jp.gr.java_conf.sakamako.rakuten.shop.item.ItemActivity;
 import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory;
-import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory.Category;
+import jp.gr.java_conf.sakamako.rakuten.shop.model.Category;
 import jp.gr.java_conf.sakamako.rakuten.shop.setting.DeleteCategoryDialog.DeleteCategoryListener;
 import jp.gr.java_conf.sakamako.rakuten.shop.setting.NewCategoryDialog.OnNewCategoryListener;
 

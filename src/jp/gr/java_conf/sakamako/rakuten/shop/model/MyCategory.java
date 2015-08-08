@@ -1,27 +1,10 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.model;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
-import org.dom4j.Node;
-import org.dom4j.io.SAXReader;
-import org.dom4j.io.XMLWriter;
-
-import android.content.Context;
 import android.util.Log;
-import jp.gr.java_conf.sakamako.rakuten.shop.App;
 
-public class MyCategory extends XmlFileHandler{
+public class MyCategory extends MyCategoryFile{
 	
 	public static final String CATEGORY_NONE = "なし";
 	
@@ -89,7 +72,7 @@ public class MyCategory extends XmlFileHandler{
 		int max = getMaxId();
 		Category cat = new Category(max+1,text,"recent_item_"+(max+1)+".xml");
 		mList.add(cat);
-		write();
+		write(mList);
 		Log.d("MyCategory","カテゴリの追加="+cat.getId()+","+cat.getLabel());
 		return cat;
 	}
@@ -107,7 +90,7 @@ public class MyCategory extends XmlFileHandler{
 	public String getCategoryByItem(Item item) {
 		for(Iterator<Category> it = mList.iterator();it.hasNext();){
 			Category cat = it.next();
-			if(cat.mList.contains(item)){
+			if(cat.getItemList().contains(item)){
 				return cat.getLabel();
 			}
 		}
@@ -159,7 +142,7 @@ public class MyCategory extends XmlFileHandler{
 		}
 		mList.clear();
 		mList.addAll(tmp);
-		write();
+		write(mList);
 	}
 
 	public void remove(Category cat) {
@@ -169,99 +152,15 @@ public class MyCategory extends XmlFileHandler{
     			Log.d("MyCategory","カテゴリの削除="+i+","+c.getLabel()+","+c.getId());
     			c.remove();
     			mList.remove(i);
-    			write();
+    			write(mList);
     			return;
     		}
     	}
 	}
 	
-	private final static String FILE_NAME = "category.xml";
-	private final static String ROOT = "root";
-	private final static String ELEMENTS = "categories";
-	private final static String ELEMENT = "category";
-	private final static String NO = "no";
-	private final static String LABEL = "label";
-	private final static String FILE = "file";
-	private static final String PATH = "/"+ROOT+"/"+ELEMENTS+"/"+ ELEMENT;
-	
-	private List<Category> read() {
-		
-		List<Category> list = new ArrayList<Category>();
-		try{
-			/** 設定 xml の読み込み */		
-			FileInputStream input = App.getAppContext().openFileInput(FILE_NAME);
-			SAXReader reader = new SAXReader();
-			Document document = reader.read(input);
 
-			List<? extends Node> nodes = document.selectNodes(PATH);
-			for(int i=0;i<nodes.size();i++){
-				Node node = (Node)nodes.get(i);
-				Category cat = new Category(
-						Integer.parseInt(convertString(node.selectSingleNode(NO)))
-						,convertString(node.selectSingleNode(LABEL))
-						,convertString(node.selectSingleNode(FILE))
-				);
-				list.add(cat);
-			}
-		} catch (DocumentException e) {
-			Log.e(this.getClass().getSimpleName(),"解析エラー",e);
-		} catch (FileNotFoundException e) {
-			Log.e(this.getClass().getSimpleName(),"読み込みエラー",e);
-		}
-		return list;
-	}
-			
-	public void write(){
 	
-		try{
-    		Document document = DocumentHelper.createDocument();
-    		Element root = document.addElement(ROOT).addElement(ELEMENTS);
-			for(int i=0;i<mList.size();i++){
-				Element item = root.addElement(ELEMENT);
-				item.addElement(NO).addText(""+mList.get(i).getId());
-				item.addElement(LABEL).addText(mList.get(i).getLabel());
-				item.addElement(FILE).addText(mList.get(i).getItemList().getFile().getFileName());
-			}
-    		FileOutputStream outStream = App.getAppContext().openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
-	    	
-    		XMLWriter writer = new XMLWriter(outStream);
-    		writer.write(document);
-    		writer.close();
-			Log.e(this.getClass().getSimpleName(),"書き込み完了 "+FILE_NAME);
-		} catch (IOException e) {
-			Log.e(this.getClass().getSimpleName(),"書き込みエラー",e);
-		}
-	}
-	
-	public class Category {
-		private int mId = -1;
-		private String mLabel = null;
-		private MyItemList mList = null;
-		
-		private Category(int id,String text,String fileName){
-			mId = id;
-			mLabel = text;
-			mList = new MyItemList(fileName);
-		}
-		public void remove() {
-			mList.remove();
-		}
-		public int getId(){
-			return mId;
-		}
-		public String getLabel() {
-			return mLabel;
-		}
-		public MyItemList getItemList(){
-			return mList;
-		}
-		
-		@Override
-		public boolean equals(Object i){
-			boolean r =  this.getLabel().equals(((Category)i).getLabel());		
-			return r;		
-		}
-	}
+
 
 
 

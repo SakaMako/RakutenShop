@@ -1,7 +1,7 @@
 package jp.gr.java_conf.sakamako.rakuten.shop.setting;
 
 import jp.gr.java_conf.sakamako.rakuten.shop.R;
-import jp.gr.java_conf.sakamako.rakuten.shop.model.MyCategory.Category;
+import jp.gr.java_conf.sakamako.rakuten.shop.model.Category;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
